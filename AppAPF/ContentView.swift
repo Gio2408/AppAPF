@@ -6,30 +6,24 @@ struct ContentView: View {
     @State private var selectedTab = 0
     
     func loadErrorScene() -> SKScene {
-        guard let scene = SKScene(fileNamed: "ErrorScene") else {
-            fatalError("Impossibile caricare la scena ErrorScene")
-        }
+        let scene = SKScene(fileNamed: "ErrorScene")
         //scene.size = CGSize(width: 750, height: 1344)
-        scene.scaleMode = .aspectFit
-        return scene
+        scene?.scaleMode = .aspectFill
+        return scene!
     }
 
     func loadSettingsScene() -> SKScene {
-        guard let scene = SKScene(fileNamed: "SettingsScene") else {
-            fatalError("Impossibile caricare la scena SettingsScene")
-        }
+        let scene = SKScene(fileNamed: "SettingsScene")
         //scene.size = CGSize(width: 750, height: 1344)
-        scene.scaleMode = .aspectFit
-        return scene
+        scene?.scaleMode = .aspectFill
+        return scene!
     }
     // Carica la scena HomeScene
     func loadHomeScene() -> SKScene {
-        guard let scene = SKScene(fileNamed: "HomeScene") else {
-            fatalError("Impossibile caricare la scena HomeScene")
-        }
+        let scene = SKScene(fileNamed: "HomeScene")
         //scene.size = CGSize(width: 750, height: 1344)
-        scene.scaleMode = .aspectFit
-        return scene
+        scene?.scaleMode = .aspectFill
+        return scene!
     }
     
     var body: some View {
@@ -37,33 +31,35 @@ struct ContentView: View {
             
             // Tab HomeScene
             VStack {
-                SpriteView(scene: loadHomeScene())
-                    .frame(width: 750, height: 1344)
-                
+                    SpriteView(scene: loadHomeScene())
+                    .edgesIgnoringSafeArea(.all)
+                    
             }
             .tabItem {
                 Label("Home", systemImage: "house.fill")
             }
             .tag(0)
             
-            // Tab Placeholder (Impostazioni o altra schermata)
+            // Tab ErrorScene
             VStack {
                 SpriteView(scene: loadErrorScene())
-                    .frame(width: 750, height: 1344)
+                    .edgesIgnoringSafeArea(.all)
             }
             .tabItem {
                 Label("Errors", systemImage: "x.circle")
             }
             .tag(1)
             
+            //Tab SettingsScene
+            
             VStack {
                 SpriteView(scene: loadSettingsScene())
-                    .frame(width: 750, height: 1344)
+                    .edgesIgnoringSafeArea(.all)
             }
             .tabItem {
                 Label("Settings", systemImage: "gearshape.fill")
             }
-            .tag(3)
+            .tag(2)
         }
     }
 }
