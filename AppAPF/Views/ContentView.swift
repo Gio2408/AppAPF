@@ -1,3 +1,13 @@
+//
+//  ContentView.swift
+//  AppAPF
+//
+//  Created by Gioacchino Augello on 07/02/25.
+//
+
+//aiuto non riesco a fare un button per far aprire QuizView dalla home :\
+
+
 import SwiftUI
 import SpriteKit
 
@@ -5,16 +15,18 @@ import SpriteKit
 
 struct ContentView: View {
     
+    @StateObject var errorManager = ErrorManager()
     @State private var selectedTab = 0
+    @State private var isQuizViewActive = false
     
-    func loadErrorScene() -> SKScene {
+    /*func loadErrorScene() -> SKScene {
         guard let scene = SKScene(fileNamed: "ErrorScene") else {
             fatalError("Impossibile caricare la scena ErrorScene")
         }
         //scene.size = CGSize(width: 750, height: 1344)
         scene.scaleMode = .aspectFit
         return scene
-    }
+    }*/
 
     func loadSettingsScene() -> SKScene {
         guard let scene = SKScene(fileNamed: "SettingsScene") else {
@@ -49,14 +61,13 @@ struct ContentView: View {
             .tag(0)
             
             // Tab Placeholder (Impostazioni o altra schermata)
-            VStack {
-                SpriteView(scene: loadErrorScene())
-                    .frame(width: 750, height: 1344)
-            }
-            .tabItem {
-                Label("Errors", systemImage: "x.circle")
-            }
-            .tag(1)
+            ErrorsView()
+                .tabItem {
+                    Label("Errors", systemImage: "x.circle")
+                }
+                .tag(1)
+                .environmentObject(errorManager)
+            
             
             VStack {
                 SpriteView(scene: loadSettingsScene())
