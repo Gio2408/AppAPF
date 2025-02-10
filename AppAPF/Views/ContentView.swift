@@ -6,6 +6,13 @@
 //
 
 //aiuto non riesco a fare un button per far aprire QuizView dalla home :\
+//per ora l ho messo su TabView
+
+//da fixare(dopo averlo testato sul cellulare):
+//della TabView spunta solo la home e per accedere alle altre sezioni bisogna cliccare nella loro posizione anche se non c è l icona, una volta cliccato spuntano tutte le icone della tb view
+//gli errori vengono salvati, per visualizzarli bisogna chiudere e riaprire l'app :(
+
+//la tab quiz per testarla vai nella sua view perchè qui crasha dato che non ho specificato nulla
 
 
 import SwiftUI
@@ -46,6 +53,15 @@ struct ContentView: View {
         return scene
     }
     
+    //test
+    func presentQuizView(from viewController: UIViewController) {
+        let quizView = QuizView()
+        let hostingController = UIHostingController(rootView: quizView)
+        
+        viewController.present(hostingController, animated: true)
+    }
+
+    
     var body: some View {
         TabView(selection: $selectedTab) {
             
@@ -59,6 +75,12 @@ struct ContentView: View {
                 Label("Home", systemImage: "house.fill")
             }
             .tag(0)
+            
+            QuizView()
+                    .tabItem {
+                        Label("Quiz", systemImage: "questionmark.circle.fill")
+                    }
+                    .tag(2)
             
             // Tab Placeholder (Impostazioni o altra schermata)
             ErrorsView()
