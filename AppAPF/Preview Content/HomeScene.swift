@@ -10,6 +10,6 @@ class HomeScene: SKScene{
     var road = SKSpriteNode()
     
     override func didMove(to view: SKView) {
-        
+        road = childNode(withName: "road") as! SKSpriteNode
     }
 }

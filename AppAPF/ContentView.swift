@@ -30,9 +30,9 @@ struct ContentView: View {
         TabView(selection: $selectedTab) {
             
             // Tab HomeScene
-            VStack {
+            ZStack {
                     SpriteView(scene: loadHomeScene())
-                    .edgesIgnoringSafeArea(.all)
+                        .edgesIgnoringSafeArea(.all)
                     
             }
             .tabItem {
