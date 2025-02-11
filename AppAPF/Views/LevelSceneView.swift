@@ -1,26 +1,28 @@
-//
-//  LevelSceneView.swift
-//  AppAPF
-//
-//  Created by Gioacchino Augello on 11/02/25.
-//
-
 import SwiftUI
 import SpriteKit
 
 struct LevelSceneView: View {
     @Binding var isInLevelScene: Bool  // Stato per tornare indietro
 
-    var scene: LevelScene {
-        let scene = LevelScene(size: UIScreen.main.bounds.size)
+    var scene: SKScene? {
+        guard let scene = SKScene(fileNamed: "LevelScene") else {
+            print("⚠️ Errore: Impossibile caricare LevelScene.sks")
+            return nil
+        }
+        scene.size = CGSize(width: 1170, height: 2532)
         scene.scaleMode = .aspectFill
         return scene
     }
 
     var body: some View {
         ZStack {
-            SpriteView(scene: scene)
-                .ignoresSafeArea()
+            if let scene = scene {
+                SpriteView(scene: scene)
+                    .ignoresSafeArea()
+            } else {
+                Text("Errore nel caricamento della scena")
+                    .foregroundColor(.red)
+            }
 
             VStack {
                 HStack {
@@ -33,11 +35,17 @@ struct LevelSceneView: View {
                             .foregroundColor(.white)
                             .background(Circle().fill(Color.black.opacity(0.5)))
                     }
-                    .padding()
+                    .padding(.leading, 20)
                     Spacer()
                 }
                 Spacer()
             }
         }
+    }
+}
+
+struct LevelSceneView_Previews: PreviewProvider {
+    static var previews: some View {
+        LevelSceneView(isInLevelScene: .constant(true))
     }
 }

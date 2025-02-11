@@ -2,10 +2,14 @@ import SpriteKit
 
 class HomeScene: SKScene {
     var carButton: SKSpriteNode!
-    var onCarButtonTapped: (() -> Void)?  // Callback per SwiftUI
+    var onCarButtonTapped: (() -> Void)? // Closure per comunicare con SwiftUI
 
     override func didMove(to view: SKView) {
-        carButton = childNode(withName: "carButton") as? SKSpriteNode
+        carButton = SKSpriteNode(imageNamed: "carButton")
+        carButton.name = "carButton"
+        carButton.position = CGPoint(x: size.width / 2, y: size.height / 2)
+        carButton.setScale(0.5) // Riduci dimensione se necessario
+        addChild(carButton)
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -14,8 +18,7 @@ class HomeScene: SKScene {
         let node = atPoint(location)
 
         if node.name == "carButton" {
-            print("carButton tapped")
-            onCarButtonTapped?()  // Chiama SwiftUI per cambiare scena
+            onCarButtonTapped?() // Chiamata alla closure per passare a LevelScene
         }
     }
 }
