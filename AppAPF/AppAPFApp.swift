@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct AppAPFApp: App {
+    @StateObject var errorManager = ErrorManager()
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(errorManager)
         }
     }
 }
