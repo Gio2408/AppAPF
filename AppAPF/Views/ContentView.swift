@@ -24,12 +24,7 @@ struct ContentView: View {
     @State private var selectedTab = 0
     
 
-    func loadSettingsScene() -> SKScene {
-        let scene = SKScene(fileNamed: "SettingsScene")
-        //scene.size = CGSize(width: 750, height: 1344)
-        scene?.scaleMode = .aspectFill
-        return scene!
-    }
+    
     // Carica la scena HomeScene
     func loadHomeScene() -> SKScene {
         let scene = SKScene(fileNamed: "HomeScene")
@@ -63,8 +58,7 @@ struct ContentView: View {
             //Tab SettingsScene
             
             VStack {
-                SpriteView(scene: loadSettingsScene())
-                    .edgesIgnoringSafeArea(.all)
+                SettingsView()
             }
             .tabItem {
                 Label("Settings", systemImage: "gearshape.fill")
