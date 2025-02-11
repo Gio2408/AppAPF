@@ -1,3 +1,19 @@
+//
+//  ContentView.swift
+//  AppAPF
+//
+//  Created by Gioacchino Augello on 07/02/25.
+//
+
+//aiuto non riesco a fare un button per far aprire QuizView dalla home :\
+//per ora l ho messo su TabView
+
+//da fixare(dopo averlo testato sul cellulare):
+//della TabView spunta solo la home e per accedere alle altre sezioni bisogna cliccare nella loro posizione anche se non c è l icona, una volta cliccato spuntano tutte le icone della tb view
+//gli errori vengono salvati, per visualizzarli bisogna chiudere e riaprire l'app :(
+
+//la tab quiz per testarla vai nella sua view perchè qui crasha dato che non ho specificato nulla
+
 import SwiftUI
 import SpriteKit
 
