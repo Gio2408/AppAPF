@@ -11,7 +11,7 @@ import SpriteKit
 // SwiftUI View per la HomeScene
 struct HomeSceneView: View {
     var scene: SKScene {
-        let scene = HomeSKScene(fileNamed: "HomeScene")!
+        let scene = HomeScene(fileNamed: "HomeScene")!
         scene.scaleMode = .aspectFill
         return scene
     }
