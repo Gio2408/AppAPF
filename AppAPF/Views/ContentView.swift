@@ -1,75 +1,64 @@
-//
-//  ContentView.swift
-//  AppAPF
-//
-//  Created by Gioacchino Augello on 07/02/25.
-//
-
-
-//aiuto non riesco a fare un button per far aprire QuizView dalla home :\
-//per ora l ho messo su TabView
-
-//da fixare(dopo averlo testato sul cellulare):
-//della TabView spunta solo la home e per accedere alle altre sezioni bisogna cliccare nella loro posizione anche se non c è l icona, una volta cliccato spuntano tutte le icone della tb view
-//gli errori vengono salvati, per visualizzarli bisogna chiudere e riaprire l'app :(
-
-//la tab quiz per testarla vai nella sua view perchè qui crasha dato che non ho specificato nulla
-
 import SwiftUI
 import SpriteKit
 
 struct ContentView: View {
     @StateObject var errorManager = ErrorManager()
-    
     @State private var selectedTab = 0
-    
 
-    
-    // Carica la scena HomeScene
-    func loadHomeScene() -> SKScene {
-        let scene = SKScene(fileNamed: "HomeScene")
-        //scene.size = CGSize(width: 750, height: 1344)
-        scene?.scaleMode = .aspectFill
-        return scene!
-    }
-    
     var body: some View {
-        TabView(selection: $selectedTab) {
-            
-            // Tab HomeScene
-            ZStack {
-                    SpriteView(scene: loadHomeScene())
-                        .edgesIgnoringSafeArea(.all)
-                    
+        ZStack {
+            // Mostra la vista attuale in base alla selezione
+            Group {
+                switch selectedTab {
+                case 0: HomeSceneView()
+                case 1: ErrorsView().environmentObject(errorManager)
+                case 2: SettingsView()
+                default: HomeSceneView()
+                }
             }
-            .tabItem {
-                Label("Home", systemImage: "house.fill")
-            }
-            .tag(0)
+            .transition(.opacity)
+            .ignoresSafeArea()
             
-            // Tab ErrorScene
-                ErrorsView()
-                    .tabItem{
-                        Label("Errors", systemImage: "x.circle")
-                    }
-                    .tag(1)
-                    .environmentObject(errorManager)
-            
-            //Tab SettingsScene
-            
+            // Barra in stile SpriteKit sovrapposta in basso
             VStack {
-                SettingsView()
+                Spacer()
+                HStack {
+                    CustomTabButton(icon: "house.fill", tag: 0, selectedTab: $selectedTab)
+                    CustomTabButton(icon: "x.circle", tag: 1, selectedTab: $selectedTab)
+                    CustomTabButton(icon: "gearshape.fill", tag: 2, selectedTab: $selectedTab)
+                }
+                .padding()
+                .background(.ultraThinMaterial)
+                .cornerRadius(20)
+                .padding(.horizontal, 20)
+                .shadow(radius: 5)
             }
-            .tabItem {
-                Label("Settings", systemImage: "gearshape.fill")
-            }
-            .tag(2)
         }
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
+// Pulsante personalizzato per la tab bar in stile SpriteKit
+struct CustomTabButton: View {
+    var icon: String
+    var tag: Int
+    @Binding var selectedTab: Int
+
+    var body: some View {
+        Button(action: {
+            withAnimation {
+                selectedTab = tag
+            }
+        }) {
+            Image(systemName: icon)
+                .font(.system(size: 24, weight: .bold))
+                .foregroundColor(selectedTab == tag ? .blue : .gray)
+                .padding(10)
+                .background(selectedTab == tag ? Color.blue.opacity(0.2) : Color.clear)
+                .clipShape(Circle())
+        }
     }
+}
+
+#Preview {
+    ContentView()
 }
