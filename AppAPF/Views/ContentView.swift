@@ -1,104 +1,65 @@
-//
-//  ContentView.swift
-//  AppAPF
-//
-//  Created by Gioacchino Augello on 07/02/25.
-//
-
-//aiuto non riesco a fare un button per far aprire QuizView dalla home :\
-//per ora l ho messo su TabView
-
-//da fixare(dopo averlo testato sul cellulare):
-//della TabView spunta solo la home e per accedere alle altre sezioni bisogna cliccare nella loro posizione anche se non c è l icona, una volta cliccato spuntano tutte le icone della tb view
-//gli errori vengono salvati, per visualizzarli bisogna chiudere e riaprire l'app :(
-
-//la tab quiz per testarla vai nella sua view perchè qui crasha dato che non ho specificato nulla
-
-
 import SwiftUI
 import SpriteKit
 
-//prova
-
 struct ContentView: View {
     
-    @StateObject var errorManager = ErrorManager()
     @State private var selectedTab = 0
-    @State private var isQuizViewActive = false
     
-    /*func loadErrorScene() -> SKScene {
-        guard let scene = SKScene(fileNamed: "ErrorScene") else {
-            fatalError("Impossibile caricare la scena ErrorScene")
-        }
+    func loadErrorScene() -> SKScene {
+        let scene = SKScene(fileNamed: "ErrorScene")
         //scene.size = CGSize(width: 750, height: 1344)
-        scene.scaleMode = .aspectFit
-        return scene
-    }*/
+        scene?.scaleMode = .aspectFill
+        return scene!
+    }
 
     func loadSettingsScene() -> SKScene {
-        guard let scene = SKScene(fileNamed: "SettingsScene") else {
-            fatalError("Impossibile caricare la scena SettingsScene")
-        }
+        let scene = SKScene(fileNamed: "SettingsScene")
         //scene.size = CGSize(width: 750, height: 1344)
-        scene.scaleMode = .aspectFit
-        return scene
+        scene?.scaleMode = .aspectFill
+        return scene!
     }
     // Carica la scena HomeScene
     func loadHomeScene() -> SKScene {
-        guard let scene = SKScene(fileNamed: "HomeScene") else {
-            fatalError("Impossibile caricare la scena HomeScene")
-        }
+        let scene = SKScene(fileNamed: "HomeScene")
         //scene.size = CGSize(width: 750, height: 1344)
-        scene.scaleMode = .aspectFit
-        return scene
+        scene?.scaleMode = .aspectFill
+        return scene!
     }
-    
-    //test
-    func presentQuizView(from viewController: UIViewController) {
-        let quizView = QuizView()
-        let hostingController = UIHostingController(rootView: quizView)
-        
-        viewController.present(hostingController, animated: true)
-    }
-
     
     var body: some View {
         TabView(selection: $selectedTab) {
             
             // Tab HomeScene
-            VStack {
-                SpriteView(scene: loadHomeScene())
-                    .frame(width: 750, height: 1344)
-                
+            ZStack {
+                    SpriteView(scene: loadHomeScene())
+                        .edgesIgnoringSafeArea(.all)
+                    
             }
             .tabItem {
                 Label("Home", systemImage: "house.fill")
             }
             .tag(0)
             
-            QuizView()
-                    .tabItem {
-                        Label("Quiz", systemImage: "questionmark.circle.fill")
-                    }
-                    .tag(2)
+            // Tab ErrorScene
+            VStack {
+                SpriteView(scene: loadErrorScene())
+                    .edgesIgnoringSafeArea(.all)
+            }
+            .tabItem {
+                Label("Errors", systemImage: "x.circle")
+            }
+            .tag(1)
             
-            // Tab Placeholder (Impostazioni o altra schermata)
-            ErrorsView()
-                .tabItem {
-                    Label("Errors", systemImage: "x.circle")
-                }
-                .tag(1)
-                .environmentObject(errorManager)
-            
+            //Tab SettingsScene
             
             VStack {
                 SpriteView(scene: loadSettingsScene())
-                    .frame(width: 750, height: 1344)
+                    .edgesIgnoringSafeArea(.all)
             }
             .tabItem {
                 Label("Settings", systemImage: "gearshape.fill")
             }
-            .tag(3)
+            .tag(2)
         }
     }
 }
