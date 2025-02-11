@@ -2,15 +2,10 @@ import SwiftUI
 import SpriteKit
 
 struct ContentView: View {
+    @StateObject var errorManager = ErrorManager()
     
     @State private var selectedTab = 0
     
-    func loadErrorScene() -> SKScene {
-        let scene = SKScene(fileNamed: "ErrorScene")
-        //scene.size = CGSize(width: 750, height: 1344)
-        scene?.scaleMode = .aspectFill
-        return scene!
-    }
 
     func loadSettingsScene() -> SKScene {
         let scene = SKScene(fileNamed: "SettingsScene")
@@ -41,14 +36,12 @@ struct ContentView: View {
             .tag(0)
             
             // Tab ErrorScene
-            VStack {
-                SpriteView(scene: loadErrorScene())
-                    .edgesIgnoringSafeArea(.all)
-            }
-            .tabItem {
-                Label("Errors", systemImage: "x.circle")
-            }
-            .tag(1)
+                ErrorsView()
+                    .tabItem{
+                        Label("Errors", systemImage: "x.circle")
+                    }
+                    .tag(1)
+                    .environmentObject(errorManager)
             
             //Tab SettingsScene
             
