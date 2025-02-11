@@ -1,27 +1,21 @@
-//
-//  HomeSceneView+.swift
-//  AppAPF
-//
-//  Created by Gioacchino Augello on 11/02/25.
-//
-
 import SwiftUI
 import SpriteKit
 
-// SwiftUI View per la HomeScene
 struct HomeSceneView: View {
-    var scene: SKScene {
+    @Binding var isInLevelScene: Bool  // Controllo per LevelScene
+
+    var scene: HomeScene {
         let scene = HomeScene(fileNamed: "HomeScene")!
         scene.scaleMode = .aspectFill
+        scene.onCarButtonTapped = {
+            isInLevelScene = true  // Cambia la scena in SwiftUI
+        }
         return scene
     }
-    
+
     var body: some View {
         SpriteView(scene: scene)
             .ignoresSafeArea()
     }
 }
 
-#Preview {
-    HomeSceneView()
-}

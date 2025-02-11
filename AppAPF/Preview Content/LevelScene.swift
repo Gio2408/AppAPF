@@ -16,8 +16,6 @@ class LevelScene: SKScene {
         label.fontColor = .white
         label.position = CGPoint(x: size.width / 2, y: size.height / 2)
         addChild(label)
-        
-        
     }
 }
 

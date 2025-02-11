@@ -3,6 +3,7 @@ import SwiftUI
 struct QuizView: View {
     @EnvironmentObject var errorManager: ErrorManager
     
+    @State private var score: Int = 0 // Conta gli errori all'inizio, poi calcolerà il punteggio finale
     @State private var selectedAnswer: String?
     @State private var errorMessage: String?
     @State private var currentPhaseIndex: Int = 0 // Traccia la fase corrente
@@ -14,53 +15,62 @@ struct QuizView: View {
     }
     
     let quizTurns = [
-        QuizTurn(question: "Fase 1", correctAnswer: "Go", imageName: "image1"),
-        QuizTurn(question: "Fase 2", correctAnswer: "Wait", imageName: "image2"),
-        QuizTurn(question: "Fase 3", correctAnswer: "Go", imageName: "image3")
+        QuizTurn(question: "If your car battery dies, you can jump-start the engine using cables connected to another car’s battery.", correctAnswer: "T", imageName: "image1"),
+                
+                QuizTurn(question: "You should only change the engine oil when the warning light on the dashboard turns on.", correctAnswer: "F", imageName: "image2"),
+                
+                QuizTurn(question: "Braking distance increases when driving on wet roads compared to dry conditions.", correctAnswer: "T", imageName: "image3"),
+                
+                QuizTurn(question: "At an intersection with no signs or traffic lights, the driver coming from the right has the right of way.", correctAnswer: "T", imageName: "image1"),
+                
+                QuizTurn(question: "Winter tires are mandatory across all regions of Italy from November 15 to April 15.", correctAnswer: "F", imageName: "image2"),
+                
+                QuizTurn(question: "You can use high beams in city areas to improve visibility.", correctAnswer: "F", imageName: "image3"),
+                
+                QuizTurn(question: "If your engine overheats, you should immediately open the radiator to release the steam.", correctAnswer: "F", imageName: "image1"),
+                
+                QuizTurn(question: "While driving, you must keep both hands on the steering wheel at all times, except when using essential controls like turn signals or the gear shift.", correctAnswer: "T", imageName: "image2"),
+                
+                QuizTurn(question: "Using the handbrake while driving at high speed can help you stop the car faster in an emergency.",
+                         correctAnswer: "F", imageName: "image3"),
+        
+                QuizTurn(question: "If you have a tire blowout while driving, you should immediately brake as hard as possible to stop the car.", correctAnswer: "F", imageName: "image1")
+
     ]
     
-    // Funzione per verificare la risposta
     func checkAnswer(turn: QuizTurn) {
         if selectedAnswer != turn.correctAnswer {
-            // Se la risposta è errata, salva l'errore
             let error = QuizError(question: turn.question, correctAnswer: turn.correctAnswer, userAnswer: selectedAnswer ?? "Nessuna risposta")
             errorManager.addError(error)
-            
-            // Imposta il messaggio di errore e non cambia la fase
             errorMessage = "Risposta errata! Riprova."
+            score += 1 // Conta gli errori
         } else {
-            // Risposta corretta, passa alla fase successiva
             errorMessage = "Risposta corretta! Passa alla fase successiva."
-            currentPhaseIndex += 1
         }
+        currentPhaseIndex += 1 // Avanza sempre alla prossima domanda
     }
 
     var body: some View {
-        
         VStack {
-            // Mostra la fase solo se la fase corrente è valida
             if currentPhaseIndex < quizTurns.count {
                 let turn = quizTurns[currentPhaseIndex]
-                
-                // Mostra l'immagine
-                Image("road")  // Sostituisci con il nome dell'immagine dalla fase, da sostituire poi con turn.imageName quando le avremo in Assets
+
+                Image(turn.imageName)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 200, height: 200)
                     .padding(.top, 20)
-                
-                // La domanda
+
                 Text(turn.question)
                     .font(.title)
                     .padding()
 
-                // I bottoni per le risposte
                 HStack {
                     Button(action: {
-                        selectedAnswer = "Go"
+                        selectedAnswer = "T"
                         checkAnswer(turn: turn)
                     }) {
-                        Text("Go")
+                        Text(" T  ")
                             .font(.headline)
                             .padding()
                             .background(Color.green)
@@ -70,10 +80,10 @@ struct QuizView: View {
                     .padding()
 
                     Button(action: {
-                        selectedAnswer = "Wait"
+                        selectedAnswer = "F"
                         checkAnswer(turn: turn)
                     }) {
-                        Text("Wait")
+                        Text(" F  ")
                             .font(.headline)
                             .padding()
                             .background(Color.red)
@@ -83,16 +93,15 @@ struct QuizView: View {
                     .padding()
                 }
 
-                // Mostra il messaggio di errore o successo
                 if let errorMessage = errorMessage {
                     Text(errorMessage)
                         .font(.subheadline)
-                        .foregroundColor(errorMessage == "Risposta corretta!" ? .green : .red)
+                        .foregroundColor(errorMessage == "Risposta corretta! Passa alla fase successiva." ? .green : .red)
                         .padding()
                 }
             } else {
-                // Messaggio finale: il quiz è completato
-                Text("Hai completato il quiz!")
+                let finalScore = quizTurns.count - score // Calcolo punteggio finale
+                Text("Hai completato il quiz! Punteggio: \(finalScore)/\(quizTurns.count)")
                     .font(.title)
                     .foregroundColor(.green)
                     .padding()
