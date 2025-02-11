@@ -12,12 +12,13 @@ class HomeScene: SKScene {
         addChild(carButton)
     }
 
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else { return }
         let location = touch.location(in: self)
         let node = atPoint(location)
 
         if node.name == "carButton" {
+            print("carButton tapped")
             onCarButtonTapped?() // Chiamata alla closure per passare a LevelScene
         }
     }
