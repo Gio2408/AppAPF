@@ -15,31 +15,36 @@ struct LevelSceneView: View {
     }
 
     var body: some View {
-        ZStack {
-            if let scene = scene {
-                SpriteView(scene: scene)
-                    .ignoresSafeArea()
-            } else {
-                Text("Errore nel caricamento della scena")
-                    .foregroundColor(.red)
-            }
+        NavigationStack {
+            ZStack {
+                if let scene = scene {
+                    SpriteView(scene: scene)
+                        .ignoresSafeArea()
+                } else {
+                    Text("Errore nel caricamento della scena")
+                        .foregroundColor(.red)
+                }
 
-            VStack {
-                HStack {
-                    Button(action: {
-                        isInLevelScene = false  // Torna alla HomeSceneView
-                    }) {
-                        Image(systemName: "arrow.left.circle.fill")
-                            .resizable()
-                            .frame(width: 50, height: 50)
-                            .foregroundColor(.white)
-                            .background(Circle().fill(Color.black.opacity(0.5)))
+                VStack {
+                    HStack {
+                        // Aggiungi un NavigationLink che porta a ContentView
+                        NavigationLink(destination: ContentView()
+                            .navigationBarBackButtonHidden()) {
+                            Image(systemName: "arrow.left.circle.fill")
+                                .resizable()
+                                .frame(width: 50, height: 50)
+                                .foregroundColor(.white)
+                                .background(Circle().fill(Color.black.opacity(0.5)))
+                        }
+                        .padding(.leading, 20)
+                        Spacer()
                     }
-                    .padding(.leading, 20)
                     Spacer()
                 }
-                Spacer()
             }
+            .navigationBarBackButtonHidden(true) // Nascondiamo il back button di default
+            .navigationBarHidden(true) // Nascondiamo la barra di navigazione
+            .transition(.move(edge: .leading)) // Impostiamo la transizione da sinistra
         }
     }
 }
