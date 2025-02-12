@@ -21,3 +21,4 @@ struct QuizError: Codable, Identifiable {
         self.userAnswer = userAnswer
     }
 }
+
