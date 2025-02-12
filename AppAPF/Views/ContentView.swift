@@ -43,7 +43,7 @@ struct ContentView: View {
                                     .scaledToFit()
                                     .frame(width: 200, height: 80)
                             }
-                            .padding(.top, 50)
+                            .position(x: 100, y: 370)
                         }
                     Spacer()
                     
