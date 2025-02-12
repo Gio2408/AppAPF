@@ -2,8 +2,10 @@ import SwiftUI
 import SpriteKit
 
 struct ContentView: View {
+
+    @StateObject var scoreManager = ScoreManager(score: QuizScore(quiz: "Quiz Incroci", totalScore: 8, totalAnswers: 10), currentScore: 0, quizManager: QuizManager())
     @StateObject var errorManager = ErrorManager()
-    @State private var selectedTab = 0
+    @State private var selectedTab = 1
     @State private var isInLevelScene = false  // Controllo per LevelScene
 
     var body: some View {
@@ -14,8 +16,11 @@ struct ContentView: View {
                 // Mostra la vista attuale in base alla selezione
                 Group {
                     switch selectedTab {
-                    case 0: HomeSceneView(isInLevelScene: $isInLevelScene)
-                    case 1: ErrorsView().environmentObject(errorManager)
+                    case 0:
+                        ScoreView()
+                            .environmentObject(scoreManager)
+                    case 1: HomeSceneView(isInLevelScene: $isInLevelScene)
+                    case 2: ErrorsView().environmentObject(errorManager)
                     default: HomeSceneView(isInLevelScene: $isInLevelScene)
                     }
                 }
@@ -27,8 +32,9 @@ struct ContentView: View {
                     VStack {
                         Spacer()
                         HStack {
-                            CustomTabButton(icon: "house.fill", tag: 0, selectedTab: $selectedTab)
-                            CustomTabButton(icon: "x.circle", tag: 1, selectedTab: $selectedTab)
+                            CustomTabButton(icon: "trophy.fill", tag: 0, selectedTab: $selectedTab)
+                            CustomTabButton(icon: "house.fill", tag: 1, selectedTab: $selectedTab)
+                            CustomTabButton(icon: "x.circle", tag: 2, selectedTab: $selectedTab)
                         }
                         .padding()
                         .background(.ultraThinMaterial)
