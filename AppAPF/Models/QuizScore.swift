@@ -8,17 +8,18 @@
 
 import Foundation
 
-struct QuizError: Codable, Identifiable {
-    let id: UUID //codice univoco di ogni incrocio, Se sbagli due volte la stessa domanda gli errori avranno ID diversi anche se la question è uguale (da definire se va bene uesta modalità) uuid crea un codice in automatico
-    let question: String
-    let correctAnswer: String
-    let userAnswer: String
+struct QuizScore: Codable {
+     var quiz: String //Tipo del quiz che si aggiorna con una variabile per il tipo di quiz. ad esempiuo Quiz incroci, quiz vero falso ecc.
+     var record: Int   //Punteggio per il singolo quiz. es: Quiz 1: 6/10
+     let totalAnswers: Int // Risposte totali del quiz
     
-    init(question: String, correctAnswer: String, userAnswer: String) {
-        self.id = UUID()
-        self.question = question
-        self.correctAnswer = correctAnswer
-        self.userAnswer = userAnswer
-    }
+     
+    //builder delle costanti di sopra
+     init(quiz: String, record: Int) {
+     self.quiz = quiz
+     self.record = record
+     self.totalAnswers = 10
+     }
 }
+
 

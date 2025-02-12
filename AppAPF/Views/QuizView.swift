@@ -6,7 +6,7 @@ struct QuizView: View {
     @State private var score: Int = 0 // Conta gli errori all'inizio, poi calcolerà il punteggio finale
     @State private var selectedAnswer: String?
     @State private var errorMessage: String?
-    @State private var currentPhaseIndex: Int = 0 // Traccia la fase corrente
+    @State public var currentPhaseIndex: Int = 0 // Traccia la fase corrente
     
     struct QuizTurn {
         let question: String
