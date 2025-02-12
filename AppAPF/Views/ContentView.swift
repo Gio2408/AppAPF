@@ -16,7 +16,6 @@ struct ContentView: View {
                     switch selectedTab {
                     case 0: HomeSceneView(isInLevelScene: $isInLevelScene)
                     case 1: ErrorsView().environmentObject(errorManager)
-                    case 2: SettingsView()
                     default: HomeSceneView(isInLevelScene: $isInLevelScene)
                     }
                 }
@@ -30,7 +29,6 @@ struct ContentView: View {
                         HStack {
                             CustomTabButton(icon: "house.fill", tag: 0, selectedTab: $selectedTab)
                             CustomTabButton(icon: "x.circle", tag: 1, selectedTab: $selectedTab)
-                            CustomTabButton(icon: "gearshape.fill", tag: 2, selectedTab: $selectedTab)
                         }
                         .padding()
                         .background(.ultraThinMaterial)
