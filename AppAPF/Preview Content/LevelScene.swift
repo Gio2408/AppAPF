@@ -8,6 +8,8 @@ class LevelScene: SKScene {
     var go: SKSpriteNode?
     var wait: SKSpriteNode?
     
+    var correctSequence: [String] = ["go", "wait"]
+    
     override func didMove(to view: SKView) {
         // Verifica e assegna il nodo esistente
         incrocioCroce = childNode(withName: "incrocioCroce") as! SKSpriteNode?
