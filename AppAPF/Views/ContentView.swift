@@ -3,83 +3,94 @@ import SwiftUI
 struct ContentView: View {
     @StateObject var scoreManager = ScoreManager(score: QuizScore(quiz: "Quiz Incroci", totalScore: 8, totalAnswers: 10), currentScore: 0, quizManager: QuizManager())
     @StateObject var errorManager = ErrorManager()
-    @StateObject var quizManager = QuizManager() // Aggiunto per evitare il crash
-    @State private var selectedTab = 1
+    @StateObject var quizManager = QuizManager()
     @State private var isInLevelScene = false
     @State private var isInQuizView = false
-    @State private var isShowingPreHomeScene = true  // Stato per mostrare la schermata iniziale
+    @State private var isShowingPreHomeScene = true
+    @State private var isInErrorsView = false
+    @State private var isInScoreView = false
 
     var body: some View {
         ZStack {
             if isShowingPreHomeScene {
                 PreHomeSceneView()
-                    .transition(.opacity) // Fade-in / Fade-out della PreHomeScene
+                    .transition(.opacity)
             } else {
                 if isInLevelScene {
                     LevelSceneView(isInLevelScene: $isInLevelScene)
-                        .transition(.opacity) // Transizione fade
+                        .transition(.opacity)
                 } else if isInQuizView {
                     QuizView(isInQuizView: $isInQuizView)
                         .environmentObject(quizManager)
                         .environmentObject(scoreManager)
                         .environmentObject(errorManager)
                         .transition(.opacity)
+                } else if isInErrorsView {
+                    ErrorsView(isInErrorsView: $isInErrorsView)
+                        .environmentObject(errorManager)
+                        .transition(.opacity)
+                } else if isInScoreView {
+                    ScoreView(isInScoreView: $isInScoreView)
+                        .environmentObject(scoreManager)
+                        .transition(.opacity)
                 } else {
-                    Group {
-                        switch selectedTab {
-                        case 0:
-                            ScoreView()
-                                .environmentObject(scoreManager)
-                        case 1:
-                            HomeSceneView(isInLevelScene: $isInLevelScene)
-                        case 2:
-                            ErrorsView().environmentObject(errorManager)
-                        default:
-                            HomeSceneView(isInLevelScene: $isInLevelScene)
-                        }
-                    }
-                    .transition(.opacity) // Effetto dissolvenza quando si cambia tab
-                    .ignoresSafeArea()
-                    
-                    VStack {
-                        if selectedTab == 1 {
-                            Button(action: {
-                                withAnimation {
-                                    isInQuizView = true
-                                }
-                            }) {
-                                Image("quizButton")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 100, height: 100)
+                    HomeSceneView(isInLevelScene: $isInLevelScene)
+                        .transition(.opacity)
+                }
+            }
+
+            // Pulsanti visibili solo dopo che la schermata iniziale è scomparsa
+            if !isShowingPreHomeScene {
+                VStack {
+                    Spacer()
+
+                    // Pulsante del quiz visibile solo nella HomeSceneView
+                    if !isInLevelScene {
+                        Button(action: {
+                            withAnimation {
+                                isInQuizView = true
                             }
-                            .position(x: 100, y: 370)
+                        }) {
+                            Image("quizButton")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 100, height: 100)
                         }
-                        Spacer()
-                        
-                        VStack {
-                            Spacer()
-                            if !isInLevelScene {
-                                HStack {
-                                    CustomTabButton(icon: "trophy.fill", tag: 0, selectedTab: $selectedTab)
-                                    CustomTabButton(icon: "house.fill", tag: 1, selectedTab: $selectedTab)
-                                    CustomTabButton(icon: "x.circle", tag: 2, selectedTab: $selectedTab)
-                                }
-                                .padding()
-                                .background(.ultraThinMaterial)
-                                .cornerRadius(20)
-                                .padding(.horizontal, 20)
-                                .shadow(radius: 5)
-                                .animation(.easeInOut, value: selectedTab)
-                                .transition(.scale)
-                            }
-                        }
+                        .position(x: 100, y: 370)
                     }
                 }
+                // Pulsanti "Errori" e "Punteggi" con icone in basso a sinistra
+                VStack(spacing: 10) {
+                    Button(action: {
+                        withAnimation {
+                            isInErrorsView = true
+                        }
+                    }) {
+                        Image(systemName: "x.circle")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 45, height: 45)
+                            .foregroundColor(.white)
+                    }
+
+                    Button(action: {
+                        withAnimation {
+                            isInScoreView = true
+                        }
+                    }) {
+                        Image(systemName: "trophy.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 45, height: 45)
+                            .foregroundColor(.white)
+                    }
+                }
+                .padding()
+                .position(x: 40, y: UIScreen.main.bounds.height - 120) // Posizione in basso a sinistra
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
         }
         .onAppear {
-            // Nasconde la schermata iniziale dopo 2 secondi con animazione
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 withAnimation {
                     isShowingPreHomeScene = false
@@ -88,6 +99,7 @@ struct ContentView: View {
         }
     }
 }
+
 
 #Preview {
     ContentView()
