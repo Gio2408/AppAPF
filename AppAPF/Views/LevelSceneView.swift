@@ -2,7 +2,7 @@ import SwiftUI
 import SpriteKit
 
 struct LevelSceneView: View {
-    @Binding var isInLevelScene: Bool  // Stato per tornare indietro
+    @Binding var isInLevelScene: Bool  // Stato per tornare in ContentView
 
     var scene: SKScene? {
         guard let scene = SKScene(fileNamed: "LevelScene") else {
@@ -15,42 +15,35 @@ struct LevelSceneView: View {
     }
 
     var body: some View {
-        NavigationStack {
-            ZStack {
-                if let scene = scene {
-                    SpriteView(scene: scene)
-                        .ignoresSafeArea()
-                } else {
-                    Text("Errore nel caricamento della scena")
-                        .foregroundColor(.red)
-                }
+        ZStack {
+            if let scene = scene {
+                SpriteView(scene: scene)
+                    .ignoresSafeArea()
+            } else {
+                Text("Errore nel caricamento della scena")
+                    .foregroundColor(.red)
+            }
 
-                VStack {
-                    HStack {
-                        // Aggiungi un NavigationLink che porta a ContentView
-                        NavigationLink(destination: ContentView()
-                            .navigationBarBackButtonHidden()) {
-                            Image(systemName: "arrow.left.circle.fill")
-                                .resizable()
-                                .frame(width: 50, height: 50)
-                                .foregroundColor(.white)
-                                .background(Circle().fill(Color.black.opacity(0.5)))
+            VStack {
+                HStack {
+                    Button(action: {
+                        withAnimation(.easeInOut(duration: 0.5)) {
+                            isInLevelScene = false  // Torna a ContentView con animazione fade
                         }
-                        .padding(.leading, 20)
-                        Spacer()
+                    }) {
+                        Image(systemName: "arrow.left.circle.fill")
+                            .resizable()
+                            .frame(width: 50, height: 50)
+                            .foregroundColor(.white)
+                            .background(Circle().fill(Color.black.opacity(0.5)))
                     }
+                    .padding(.leading, 20)
+
                     Spacer()
                 }
+                Spacer()
             }
-            .navigationBarBackButtonHidden(true) // Nascondiamo il back button di default
-            .navigationBarHidden(true) // Nascondiamo la barra di navigazione
-            .transition(.move(edge: .leading)) // Impostiamo la transizione da sinistra
         }
-    }
-}
-
-struct LevelSceneView_Previews: PreviewProvider {
-    static var previews: some View {
-        LevelSceneView(isInLevelScene: .constant(true))
+        .transition(.opacity)  // Transizione fade-in e fade-out
     }
 }

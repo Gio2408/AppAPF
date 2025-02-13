@@ -11,21 +11,19 @@ struct ContentView: View {
 
     var body: some View {
         ZStack {
-            // Mostra la schermata iniziale se attiva
             if isShowingPreHomeScene {
                 PreHomeSceneView()
-                    .transition(.opacity) // Transizione di dissolvenza
+                    .transition(.opacity) // Fade-in / Fade-out della PreHomeScene
             } else {
-                // Contenuto principale con transizioni tra scene
                 if isInLevelScene {
                     LevelSceneView(isInLevelScene: $isInLevelScene)
-                        .transition(.move(edge: .trailing))
+                        .transition(.opacity) // Transizione fade
                 } else if isInQuizView {
                     QuizView(isInQuizView: $isInQuizView)
                         .environmentObject(quizManager)
                         .environmentObject(scoreManager)
                         .environmentObject(errorManager)
-                        .transition(.move(edge: .trailing))
+                        .transition(.opacity)
                 } else {
                     Group {
                         switch selectedTab {
@@ -40,9 +38,9 @@ struct ContentView: View {
                             HomeSceneView(isInLevelScene: $isInLevelScene)
                         }
                     }
-                    .transition(.move(edge: .leading))
+                    .transition(.opacity) // Effetto dissolvenza quando si cambia tab
                     .ignoresSafeArea()
-
+                    
                     VStack {
                         if selectedTab == 1 {
                             Button(action: {
@@ -59,18 +57,22 @@ struct ContentView: View {
                         }
                         Spacer()
                         
-                        if !isInLevelScene {
-                            HStack {
-                                CustomTabButton(icon: "trophy.fill", tag: 0, selectedTab: $selectedTab)
-                                CustomTabButton(icon: "house.fill", tag: 1, selectedTab: $selectedTab)
-                                CustomTabButton(icon: "x.circle", tag: 2, selectedTab: $selectedTab)
+                        VStack {
+                            Spacer()
+                            if !isInLevelScene {
+                                HStack {
+                                    CustomTabButton(icon: "trophy.fill", tag: 0, selectedTab: $selectedTab)
+                                    CustomTabButton(icon: "house.fill", tag: 1, selectedTab: $selectedTab)
+                                    CustomTabButton(icon: "x.circle", tag: 2, selectedTab: $selectedTab)
+                                }
+                                .padding()
+                                .background(.ultraThinMaterial)
+                                .cornerRadius(20)
+                                .padding(.horizontal, 20)
+                                .shadow(radius: 5)
+                                .animation(.easeInOut, value: selectedTab)
+                                .transition(.scale)
                             }
-                            .padding()
-                            .background(.ultraThinMaterial)
-                            .cornerRadius(20)
-                            .padding(.horizontal, 20)
-                            .shadow(radius: 5)
-                            .animation(.easeInOut, value: selectedTab)
                         }
                     }
                 }

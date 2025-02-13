@@ -44,16 +44,19 @@ struct QuizView: View {
             VStack {
                 // Back button in the top-left corner using NavigationLink
                 HStack {
-                    NavigationLink(destination: ContentView().navigationBarBackButtonHidden(true)) {
-                        HStack {
-                            Image(systemName: "arrow.left")
-                                .font(.title)
-                            Text("Back")
-                                .font(.headline)
+                    Button(action: {
+                        withAnimation(.easeInOut(duration: 0.5)) {
+                            isInQuizView = false  // Torna a ContentView con animazione fade
                         }
-                        .padding()
-                        .foregroundColor(.blue)
+                    }) {
+                        Image(systemName: "arrow.left.circle.fill")
+                            .resizable()
+                            .frame(width: 50, height: 50)
+                            .foregroundColor(.white)
+                            .background(Circle().fill(Color.black.opacity(0.5)))
                     }
+                    .padding(.leading, 20)
+
                     Spacer()
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
