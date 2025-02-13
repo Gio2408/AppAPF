@@ -1,16 +1,10 @@
-//
-//  ScoreView.swift
-//  AppAPF
-//
-//  Created by Michele Vassallo Todaro on 12/02/25.
-//
-
-import Foundation
 import SwiftUI
 
 struct ScoreView: View {
     @EnvironmentObject var scoreManager: ScoreManager
     @Binding var isInScoreView: Bool // Binding per tornare alla schermata precedente
+    @Environment(\.presentationMode) var presentationMode
+
 
     var body: some View {
         VStack {
@@ -27,6 +21,7 @@ struct ScoreView: View {
                 Spacer()
             }
             .padding()
+
 
             Text("Punteggi dei Quiz")
                 .font(.largeTitle)
@@ -77,28 +72,71 @@ struct ScoreView: View {
                 }
             }
             .padding(.horizontal)
+
+                        // Visualizza la lista dei quiz completati
+                        List(scoreManager.completedQuizzes, id: \.quiz) { completedQuiz in
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    Text(String(completedQuiz.quiz)) // Forza la conversione a String
+                                        .font(.headline)
+                                    Text("Punteggio: \(completedQuiz.totalScore)/\(completedQuiz.totalAnswers)")
+                                        .font(.subheadline)
+                                        .foregroundColor(.gray)
+                                }
+                                Spacer()
+                                Text("\(completedQuiz.totalScore)")
+                                    .font(.headline)
+                                    .foregroundColor(.green)
+                            }
+                            .padding(.vertical, 5)
+                        }
+                    }
+                    .padding(.horizontal)
+                    
+                    // Bottone per tornare a ContentView
+                    Button(action: {
+                        withAnimation(.easeInOut(duration: 0.5)) {
+                            presentationMode.wrappedValue.dismiss()
+                        }
+                    }) {
+                        HStack {
+                            Image(systemName: "arrow.left.circle.fill")
+                                .font(.title)
+                            Text("Torna Indietro")
+                                .font(.headline)
+                        }
+                        .padding()
+                        .foregroundColor(.blue)
+                    }
+                    .padding(.top, 20)
+                }
+            }
+            .navigationTitle("Score")
+            .gesture(
+                DragGesture().onEnded { gesture in
+                    if gesture.translation.width > 100 {
+                        withAnimation(.easeInOut(duration: 0.5)) {
+                            presentationMode.wrappedValue.dismiss()
+                        }
+                    }
+                }
+            )
+
         }
     }
 }
 
 /*
 #Preview {
-    // Crea l'istanza di QuizManager
     let quizManager = QuizManager()
-
-    // Crea l'istanza di QuizScore (Punteggio per il quiz attuale)
     let score = QuizScore(quiz: "Quiz Incroci", totalScore: 8, totalAnswers: 10)
-
-    // Crea ScoreManager con score iniziale e quizManager
     let scoreManager = ScoreManager(score: score, currentScore: 8, quizManager: quizManager)
 
-    // Aggiungi alcuni quiz completati per la visualizzazione
     scoreManager.completedQuizzes = [
         QuizScore(quiz: "Quiz Patente", totalScore: 8, totalAnswers: 10),
         QuizScore(quiz: "Quiz Sicurezza", totalScore: 7, totalAnswers: 10)
     ]
 
-    // Restituisce la ScoreView con scoreManager come environmentObject
     return ScoreView()
         .environmentObject(scoreManager)
 }
