@@ -14,11 +14,14 @@ struct PreHomeSceneView: View {
             
             VStack {
                
-                Text("Benvenuto nel gioco!")
+                Image("icon")
+                    .resizable()
+                    .frame(width: 150, height: 150)
+                    .cornerRadius(55)
+                Text("Way to Go")
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .foregroundColor(.white)
-                    .padding(.top, 10)
             }
             .opacity(0.8) // Effetto leggermente trasparente
         }

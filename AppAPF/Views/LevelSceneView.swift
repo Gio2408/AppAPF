@@ -47,3 +47,9 @@ struct LevelSceneView: View {
         .transition(.opacity)  // Transizione fade-in e fade-out
     }
 }
+
+struct LevelSceneView_Previews: PreviewProvider {
+    static var previews: some View {
+        LevelSceneView(isInLevelScene: .constant(true))
+    }
+}

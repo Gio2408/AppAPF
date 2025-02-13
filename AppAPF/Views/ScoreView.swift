@@ -76,14 +76,7 @@ struct ScoreView: View {
                     presentationMode.wrappedValue.dismiss()
                 }
             }) {
-                HStack {
-                    Image(systemName: "arrow.left.circle.fill")
-                        .font(.title)
-                    Text("Torna Indietro")
-                        .font(.headline)
-                }
-                .padding()
-                .foregroundColor(.blue)
+                
             }
             .padding(.top, 20)
         }

@@ -1,20 +1,27 @@
 import SwiftUI
+import AVFoundation
 
 struct ContentView: View {
     @StateObject var scoreManager = ScoreManager(score: QuizScore(quiz: "Quiz Incroci", totalScore: 8, totalAnswers: 10), currentScore: 0, quizManager: QuizManager())
     @StateObject var errorManager = ErrorManager()
     @StateObject var quizManager = QuizManager()
+    
     @State private var isInLevelScene = false
     @State private var isInQuizView = false
     @State private var isShowingPreHomeScene = true
     @State private var isInErrorsView = false
     @State private var isInScoreView = false
 
+    @State private var audioPlayer: AVAudioPlayer?
+
     var body: some View {
         ZStack {
             if isShowingPreHomeScene {
                 PreHomeSceneView()
                     .transition(.opacity)
+                    .onAppear {
+                        playPreHomeSound() // Avvia il suono all'apertura della PreHomeScene
+                    }
             } else {
                 if isInLevelScene {
                     LevelSceneView(isInLevelScene: $isInLevelScene)
@@ -39,12 +46,10 @@ struct ContentView: View {
                 }
             }
 
-            // Pulsanti visibili solo dopo che la schermata iniziale è scomparsa
             if !isShowingPreHomeScene {
                 VStack {
                     Spacer()
 
-                    // Pulsante del quiz visibile solo nella HomeSceneView
                     if !isInLevelScene {
                         Button(action: {
                             withAnimation {
@@ -56,10 +61,13 @@ struct ContentView: View {
                                 .scaledToFit()
                                 .frame(width: 100, height: 100)
                         }
+                        .opacity(isInQuizView ? 0 : 1)
+                        .opacity(isInScoreView ? 0 : 1)
+                        .opacity(isInErrorsView ? 0 : 1)
                         .position(x: 100, y: 370)
                     }
                 }
-                // Pulsanti "Errori" e "Punteggi" con icone in basso a sinistra
+
                 VStack(spacing: 10) {
                     Button(action: {
                         withAnimation {
@@ -70,7 +78,7 @@ struct ContentView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(width: 45, height: 45)
-                            .foregroundColor(.white)
+                            .foregroundColor(.yellow)
                     }
 
                     Button(action: {
@@ -82,12 +90,14 @@ struct ContentView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(width: 45, height: 45)
-                            .foregroundColor(.white)
+                            .foregroundColor(.yellow)
                     }
                 }
                 .padding()
-                .position(x: 40, y: UIScreen.main.bounds.height - 120) // Posizione in basso a sinistra
+                .position(x: 40, y: UIScreen.main.bounds.height - 120)
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .opacity((isInScoreView || isInErrorsView || isInQuizView
+                         || isInLevelScene) ? 0 : 1)
             }
         }
         .onAppear {
@@ -98,8 +108,22 @@ struct ContentView: View {
             }
         }
     }
+    
+    // Funzione per avviare il suono
+    func playPreHomeSound() {
+        guard let url = Bundle.main.url(forResource: "preHome", withExtension: "mp3") else {
+            print("Errore: File audio non trovato")
+            return
+        }
+        
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: url)
+            audioPlayer?.play()
+        } catch {
+            print("Errore nella riproduzione audio: \(error.localizedDescription)")
+        }
+    }
 }
-
 
 #Preview {
     ContentView()
