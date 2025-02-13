@@ -1,15 +1,8 @@
-//
-//  ScoreView.swift
-//  AppAPF
-//
-//  Created by Michele Vassallo Todaro on 12/02/25.
-//
-
-import Foundation
 import SwiftUI
 
 struct ScoreView: View {
     @EnvironmentObject var scoreManager: ScoreManager
+    @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
         NavigationView {
@@ -63,33 +56,51 @@ struct ScoreView: View {
                             }
                             .padding(.vertical, 5)
                         }
-
                     }
                     .padding(.horizontal)
+                    
+                    // Bottone per tornare a ContentView
+                    Button(action: {
+                        withAnimation(.easeInOut(duration: 0.5)) {
+                            presentationMode.wrappedValue.dismiss()
+                        }
+                    }) {
+                        HStack {
+                            Image(systemName: "arrow.left.circle.fill")
+                                .font(.title)
+                            Text("Torna Indietro")
+                                .font(.headline)
+                        }
+                        .padding()
+                        .foregroundColor(.blue)
+                    }
+                    .padding(.top, 20)
                 }
             }
             .navigationTitle("Score")
+            .gesture(
+                DragGesture().onEnded { gesture in
+                    if gesture.translation.width > 100 {
+                        withAnimation(.easeInOut(duration: 0.5)) {
+                            presentationMode.wrappedValue.dismiss()
+                        }
+                    }
+                }
+            )
         }
     }
 }
 
 #Preview {
-    // Crea l'istanza di QuizManager
     let quizManager = QuizManager()
-
-    // Crea l'istanza di QuizScore (Punteggio per il quiz attuale)
     let score = QuizScore(quiz: "Quiz Incroci", totalScore: 8, totalAnswers: 10)
-
-    // Crea ScoreManager con score iniziale e quizManager
     let scoreManager = ScoreManager(score: score, currentScore: 8, quizManager: quizManager)
 
-    // Aggiungi alcuni quiz completati per la visualizzazione
     scoreManager.completedQuizzes = [
         QuizScore(quiz: "Quiz Patente", totalScore: 8, totalAnswers: 10),
         QuizScore(quiz: "Quiz Sicurezza", totalScore: 7, totalAnswers: 10)
     ]
 
-    // Restituisce la ScoreView con scoreManager come environmentObject
     return ScoreView()
         .environmentObject(scoreManager)
 }
