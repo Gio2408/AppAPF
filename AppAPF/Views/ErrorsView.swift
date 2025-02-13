@@ -10,20 +10,37 @@ import SwiftUI
 
 struct ErrorsView: View {
     @EnvironmentObject var errorManager: ErrorManager
+    @Binding var isInErrorsView: Bool
 
     var body: some View {
         NavigationView {
-            List {
-                ForEach(errorManager.errors) { error in
-                    VStack(alignment: .leading) {
-                        Text(error.question)
-                            .font(.headline)
-                        Text("Risposta corretta: \(error.correctAnswer)")
-                            .foregroundColor(.green)
-                        Text("Tua risposta: \(error.userAnswer)")
-                            .foregroundColor(.red)
+            VStack {
+                HStack {
+                    Button(action: {
+                        withAnimation {
+                            isInErrorsView = false // Torna alla schermata precedente
+                        }
+                    }) {
+                        Image(systemName: "arrow.backward")
+                            .font(.title)
+                            .foregroundColor(.blue)
                     }
-                    .padding()
+                    Spacer()
+                }
+                .padding()
+
+                List {
+                    ForEach(errorManager.errors) { error in
+                        VStack(alignment: .leading) {
+                            Text(error.question)
+                                .font(.headline)
+                            Text("Risposta corretta: \(error.correctAnswer)")
+                                .foregroundColor(.green)
+                            Text("Tua risposta: \(error.userAnswer)")
+                                .foregroundColor(.red)
+                        }
+                        .padding()
+                    }
                 }
             }
             .navigationTitle("Errori Salvati")
@@ -32,9 +49,10 @@ struct ErrorsView: View {
 }
 
 
+
 //esempio di view
 
-struct ErrorsView_Previews: PreviewProvider {
+/*struct ErrorsView_Previews: PreviewProvider {
     static var previews: some View {
         // Creo degli errori inventati
         let errorManager = ErrorManager()
@@ -48,4 +66,4 @@ struct ErrorsView_Previews: PreviewProvider {
             .environmentObject(errorManager)
     }
 }
-
+*/
