@@ -11,9 +11,8 @@ struct ContentView: View {
     @State private var isShowingPreHomeScene = true
     @State private var isInErrorsView = false
     @State private var isInScoreView = false
-
     @State private var audioPlayer: AVAudioPlayer?
-
+    
     var body: some View {
         ZStack {
             // Display PreHomeScene if necessary
