@@ -1,50 +1,118 @@
 import SwiftUI
-import SpriteKit
+import AVFoundation
 
 struct ContentView: View {
+    @StateObject var scoreManager = ScoreManager(score: QuizScore(quiz: "Quiz Incroci", totalScore: 8, totalAnswers: 10), currentScore: 0, quizManager: QuizManager())
     @StateObject var errorManager = ErrorManager()
-    @State private var selectedTab = 0
-    @State private var isInLevelScene = false  // Controllo per LevelScene
+    @StateObject var quizManager = QuizManager()
+    
+    @State private var isInLevelScene = false
+    @State private var isInQuizView = false
+    @State private var isShowingPreHomeScene = true
+    @State private var isInErrorsView = false
+    @State private var isInScoreView = false
+
+    @State private var audioPlayer: AVAudioPlayer?
 
     var body: some View {
         ZStack {
-            if isInLevelScene {
-                LevelSceneView(isInLevelScene: $isInLevelScene)  // Mostra LevelScene a tutto schermo
+            // Display PreHomeScene if necessary
+            if isShowingPreHomeScene {
+                PreHomeSceneView()
+                    .transition(.opacity)
+                    .onAppear {
+                        playPreHomeSound() // Start the sound when PreHomeScene appears
+                    }
             } else {
-                // Mostra la vista attuale in base alla selezione
-                Group {
-                    switch selectedTab {
-                    case 0: HomeSceneView(isInLevelScene: $isInLevelScene)
-                    case 1: ErrorsView().environmentObject(errorManager)
-                   // case 2: ScoreView()
-                    //        .environmentObject(ScoreManager())
-                    default: HomeSceneView(isInLevelScene: $isInLevelScene)
-                    }
+                // Switch between different views based on the state
+                if isInLevelScene {
+                    LevelSceneView(isInLevelScene: $isInLevelScene)
+                } else if isInQuizView {
+                    QuizView(isInQuizView: $isInQuizView)
+                        .environmentObject(quizManager)
+                        .environmentObject(scoreManager)
+                        .environmentObject(errorManager)
+                } else if isInErrorsView {
+                    ErrorsView(isInErrorsView: $isInErrorsView)
+                        .environmentObject(errorManager)
+                } else if isInScoreView {
+                    ScoreView(isInScoreView: $isInScoreView)
+                        .environmentObject(scoreManager)
+                } else {
+                    HomeSceneView(isInLevelScene: $isInLevelScene)
                 }
-                .transition(.opacity)
-                .ignoresSafeArea()
-                
-                // Mostra la barra solo se NON siamo in LevelScene
-                if !isInLevelScene {
-                    VStack {
-                        Spacer()
-                        HStack {
-                            CustomTabButton(icon: "flame.fill", tag: 2, selectedTab: $selectedTab)
-                            CustomTabButton(icon: "house.fill", tag: 0, selectedTab: $selectedTab)
-                            CustomTabButton(icon: "x.circle", tag: 1, selectedTab: $selectedTab)
-                            
+            }
+
+            // Home Scene Buttons (Quiz, Errors, Score)
+            if !isShowingPreHomeScene {
+                VStack {
+                    Spacer()
+                    // Quiz Button to navigate to the quiz view
+                    if !isInLevelScene {
+                        Button(action: {
+                            withAnimation { isInQuizView = true }
+                        }) {
+                            Image("quizButton")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 100, height: 100)
                         }
-                        .padding()
-                        .background(.ultraThinMaterial)
-                        .cornerRadius(20)
-                        .padding(.horizontal, 20)
-                        .shadow(radius: 5)
+                        .opacity(isInQuizView || isInScoreView || isInErrorsView ? 0 : 1)
+                        .position(x: 100, y: 370)
                     }
                 }
+
+                // Error and Score Buttons
+                VStack(spacing: 10) {
+                    Button(action: {
+                        withAnimation { isInErrorsView = true }
+                    }) {
+                        Image(systemName: "x.circle")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 45, height: 45)
+                            .foregroundColor(.yellow)
+                    }
+
+                    Button(action: {
+                        withAnimation { isInScoreView = true }
+                    }) {
+                        Image(systemName: "trophy.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 45, height: 45)
+                            .foregroundColor(.yellow)
+                    }
+                }
+                .padding()
+                .position(x: 40, y: UIScreen.main.bounds.height - 120)
+                // Hide the buttons when in any other view
+                .opacity(isInScoreView || isInErrorsView || isInQuizView || isInLevelScene ? 0 : 1)
+            }
+        }
+        .onAppear {
+            // Hide the PreHomeScene after 2 seconds
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                withAnimation { isShowingPreHomeScene = false }
             }
         }
     }
+    
+    // Function to play sound when the PreHomeScene is shown
+    func playPreHomeSound() {
+        guard let url = Bundle.main.url(forResource: "preHome", withExtension: "mp3") else {
+            print("Error: Audio file not found")
+            return
+        }
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: url)
+            audioPlayer?.play()
+        } catch {
+            print("Error playing audio: \(error.localizedDescription)")
+        }
+    }
 }
+
 #Preview {
     ContentView()
 }

@@ -4,9 +4,7 @@
 //
 //  Created by Michele Vassallo Todaro on 10/02/25.
 //
-//Salva gli errori per non farli resettare ogni volta che si riavvia l'app
-//Adesso si può usare @StateObject var errorManager = ErrorManager() nelle view
-
+// Manages quiz errors persistently to retain data across app restarts.
 
 import Foundation
 
@@ -19,20 +17,20 @@ class ErrorManager: ObservableObject {
         loadErrors()
     }
 
-    // Salva l'errore singolo
+    /// Adds a new error to the list and saves it persistently.
     func addError(_ error: QuizError) {
         errors.append(error)
         saveErrors()
     }
 
-    // Salva gli errori in UserDefaults
+    /// Saves the current list of errors to UserDefaults.
     private func saveErrors() {
         if let encoded = try? JSONEncoder().encode(errors) {
             UserDefaults.standard.set(encoded, forKey: key)
         }
     }
 
-    // Carica gli errori salvati
+    /// Loads previously saved errors from UserDefaults.
     private func loadErrors() {
         if let savedData = UserDefaults.standard.data(forKey: key),
            let decoded = try? JSONDecoder().decode([QuizError].self, from: savedData) {
