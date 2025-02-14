@@ -2,18 +2,18 @@ import SwiftUI
 
 struct ScoreView: View {
     @EnvironmentObject var scoreManager: ScoreManager
-    @Binding var isInScoreView: Bool // Binding per tornare alla schermata precedente
-    @Environment(\.presentationMode) var presentationMode
+    @Binding var isInScoreView: Bool // Binding to navigate back to the previous screen
+    @Environment(\.presentationMode) var presentationMode // Used to dismiss the view
 
     var body: some View {
         VStack {
             HStack {
                 Button(action: {
                     withAnimation {
-                        isInScoreView = false // Torna alla schermata precedente
+                        isInScoreView = false // Navigate back to the previous screen with animation
                     }
                 }) {
-                    Image(systemName: "arrow.backward")
+                    Image(systemName: "arrow.backward") // Back button
                         .font(.title)
                         .foregroundColor(.blue)
                 }
@@ -21,32 +21,32 @@ struct ScoreView: View {
             }
             .padding()
 
-            Text("Punteggi dei Quiz")
+            Text("Punteggi dei Quiz") // Title
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .padding()
 
-            // Mostra il punteggio attuale
+            // Show current quiz score
             VStack(alignment: .leading, spacing: 10) {
-                Text("Quiz attuale: \(scoreManager.score.quiz)")
+                Text("Quiz attuale: \(scoreManager.score.quiz)") // Current quiz title
                     .font(.title2)
                     .fontWeight(.semibold)
 
-                Text("Punteggio: \(scoreManager.score.totalScore)/\(scoreManager.score.totalAnswers)")
+                Text("Punteggio: \(scoreManager.score.totalScore)/\(scoreManager.score.totalAnswers)") // Current score
                     .font(.headline)
                     .foregroundColor(.green)
                     .padding(.bottom, 20)
 
-                // Barra di progresso
+                // Progress bar showing the score as a fraction of total answers
                 ProgressView(value: Double(scoreManager.score.totalScore), total: Double(scoreManager.score.totalAnswers))
                     .progressViewStyle(LinearProgressViewStyle())
                     .padding(.bottom, 20)
             }
             .padding(.horizontal)
 
-            // Lista dei punteggi passati
+            // Show previous quiz scores
             VStack {
-                Text("Punteggi precedenti")
+                Text("Punteggi precedenti") // Previous scores section title
                     .font(.title2)
                     .fontWeight(.semibold)
                     .padding(.top)
@@ -54,14 +54,14 @@ struct ScoreView: View {
                 List(scoreManager.completedQuizzes, id: \.quiz) { completedQuiz in
                     HStack {
                         VStack(alignment: .leading) {
-                            Text(completedQuiz.quiz) // Non serve `String()`
+                            Text(completedQuiz.quiz) // Quiz name
                                 .font(.headline)
-                            Text("Punteggio: \(completedQuiz.totalScore)/\(completedQuiz.totalAnswers)")
+                            Text("Punteggio: \(completedQuiz.totalScore)/\(completedQuiz.totalAnswers)") // Previous quiz score
                                 .font(.subheadline)
                                 .foregroundColor(.gray)
                         }
                         Spacer()
-                        Text("\(completedQuiz.totalScore)")
+                        Text("\(completedQuiz.totalScore)") // Displaying the score in green
                             .font(.headline)
                             .foregroundColor(.green)
                     }
@@ -70,20 +70,23 @@ struct ScoreView: View {
             }
             .padding(.horizontal)
 
-            // Bottone per tornare a ContentView
+            // Button to go back to the main content view
             Button(action: {
                 withAnimation(.easeInOut(duration: 0.5)) {
-                    presentationMode.wrappedValue.dismiss()
+                    presentationMode.wrappedValue.dismiss() // Dismiss the current view with animation
                 }
             }) {
-                
+                Text("Go Back")
+                    .font(.title2)
+                    .foregroundColor(.blue)
             }
             .padding(.top, 20)
         }
-        .navigationTitle("Score")
+        .navigationTitle("Score") // Title for the navigation bar
         .gesture(
             DragGesture().onEnded { gesture in
                 if gesture.translation.width > 100 {
+                    // If user swipes right, dismiss the view with animation
                     withAnimation(.easeInOut(duration: 0.5)) {
                         presentationMode.wrappedValue.dismiss()
                     }

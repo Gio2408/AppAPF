@@ -16,14 +16,17 @@ struct QuizView: View {
         let imageName: String
     }
     
+    // Quiz questions and answers
     let quizTurns = [
         QuizTurn(question: "If your car battery dies, you can jump-start the engine using cables connected to another car’s battery.", correctAnswer: "T", imageName: "image1"),
         QuizTurn(question: "You should only change the engine oil when the warning light on the dashboard turns on.", correctAnswer: "F", imageName: "image2"),
         QuizTurn(question: "Braking distance increases when driving on wet roads compared to dry conditions.", correctAnswer: "T", imageName: "image3")
     ]
     
+    // Function to check if the selected answer is correct
     func checkAnswer(turn: QuizTurn) {
         if selectedAnswer != turn.correctAnswer {
+            // Add the error if the answer is wrong
             let error = QuizError(question: turn.question, correctAnswer: turn.correctAnswer, userAnswer: selectedAnswer ?? "N/A")
             errorManager.addError(error)
             errorMessage = "Wrong answer!"
@@ -33,6 +36,7 @@ struct QuizView: View {
         }
         quizManager.currentPhaseIndex += 1
         
+        // If all questions have been answered, finalize the score
         if quizManager.currentPhaseIndex == quizTurns.count {
             let finalScore = quizTurns.count - score
             scoreManager.score.totalScore = finalScore
@@ -42,11 +46,11 @@ struct QuizView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                // Back button in the top-left corner using NavigationLink
+                // Back button to return to the previous view
                 HStack {
                     Button(action: {
                         withAnimation(.easeInOut(duration: 0.5)) {
-                            isInQuizView = false  // Torna a ContentView con animazione fade
+                            isInQuizView = false
                         }
                     }) {
                         Image(systemName: "arrow.left.circle.fill")
@@ -63,15 +67,18 @@ struct QuizView: View {
                 .padding(.top, 10)
                 .padding(.leading, 10)
 
+                // Display quiz content if there are remaining questions
                 if quizManager.currentPhaseIndex < quizTurns.count {
                     let turn = quizTurns[quizManager.currentPhaseIndex]
 
+                    // Display image related to the quiz question
                     Image(turn.imageName)
                         .resizable()
                         .scaledToFit()
                         .frame(width: 250, height: 250)
                         .padding(.top, 30)
 
+                    // Display the question
                     Text(turn.question)
                         .font(.title)
                         .fontWeight(.medium)
@@ -79,6 +86,7 @@ struct QuizView: View {
                         .padding(.top, 20)
                         .padding(.horizontal, 30)
 
+                    // Answer buttons
                     HStack {
                         Button(action: {
                             selectedAnswer = "T"
@@ -111,6 +119,7 @@ struct QuizView: View {
                         .padding()
                     }
 
+                    // Show error message (correct or incorrect answer)
                     if let errorMessage = errorMessage {
                         Text(errorMessage)
                             .font(.subheadline)
@@ -118,6 +127,7 @@ struct QuizView: View {
                             .padding(.top, 20)
                     }
                 } else {
+                    // Final score display after completing the quiz
                     let finalScore = quizTurns.count - score
                     Text("You completed the quiz! Score: \(finalScore)/\(quizTurns.count)")
                         .font(.title)
@@ -133,6 +143,7 @@ struct QuizView: View {
         }
     }
 }
+
 #Preview {
     QuizView(isInQuizView: .constant(true))
         .environmentObject(ScoreManager(score: QuizScore(quiz: "Quiz Incroci", totalScore: 8, totalAnswers: 10), currentScore: 0, quizManager: QuizManager()))

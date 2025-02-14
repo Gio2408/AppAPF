@@ -10,20 +10,23 @@ import SwiftUI
 struct PreHomeSceneView: View {
     var body: some View {
         ZStack {
-            Color.black.ignoresSafeArea() // Sfondo nero o personalizzabile
-            
+            // Black background covering the entire screen
+            Color.black.ignoresSafeArea()
+
             VStack {
-               
+                // App icon displayed with size and rounded corners
                 Image("icon")
                     .resizable()
                     .frame(width: 150, height: 150)
                     .cornerRadius(55)
+
+                // Title text displayed in large, bold, white font
                 Text("Way to Go")
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .foregroundColor(.white)
             }
-            .opacity(0.8) // Effetto leggermente trasparente
+            .opacity(0.8)  // Slight transparency effect for the content
         }
     }
 }
