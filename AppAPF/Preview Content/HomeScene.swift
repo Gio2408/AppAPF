@@ -1,28 +1,18 @@
 import SpriteKit
+import SwiftUI
 
 class HomeScene: SKScene {
+    var road = SKSpriteNode()
+    var carButton = SKSpriteNode()
+    var onCarButtonTapped: (() -> Void)? // Closure per comunicare con SwiftUI
     
-    var carButton: SKSpriteNode!
-    var onCarButtonTapped: (() -> Void)?
-    
+    var quizButton = SKSpriteNode()
+    //var onQuizButtonTapped: (() -> Void)?
+
     override func didMove(to view: SKView) {
-        // Initialize and configure the car button
-        carButton = SKSpriteNode(imageNamed: "carButton")
-        carButton.name = "carButton"
-        carButton.position = CGPoint(x: size.width / 2, y: size.height / 2)
-        carButton.setScale(0.5)
-        addChild(carButton)
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first else { return }
-        let location = touch.location(in: self)
-        let node = atPoint(location)
-        
-        if node.name == "carButton" {
-            print("carButton tapped")
-            node.alpha = 0.5 // Rendi il pulsante trasparente mentre viene toccato
-        }
+        road = childNode(withName: "road") as! SKSpriteNode
+        carButton = road.childNode(withName: "carButton") as! SKSpriteNode
+        quizButton = road.childNode(withName: "quizButton") as! SKSpriteNode
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -35,9 +25,24 @@ class HomeScene: SKScene {
             print("🚗 Car button tapped")
             onCarButtonTapped?() // Trigger closure to transition to LevelScene
         }
+        
+        if node.name == "quizButton" {
+            print("quizButton tapped")
+            openSwiftUIView()
+            //onQuizButtonTapped?() // Chiamata alla closure per passare a QuizView
+        }
     }
-
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        carButton.alpha = 1.0 // Se il tocco viene annullato, ripristina la trasparenza
+    
+    func openSwiftUIView() {
+        if let sceneView = self.view {
+            let swiftUIView = QuizView(isInQuizView: .constant(true)).environmentObject(ScoreManager(score: QuizScore(quiz: "Quiz Incroci", totalScore: 8, totalAnswers: 10), currentScore: 0, quizManager: QuizManager()))
+                .environmentObject(ErrorManager())
+                .environmentObject(QuizManager())
+            let hostingController = UIHostingController(rootView: swiftUIView)
+            hostingController.modalPresentationStyle = .fullScreen
+            sceneView.window?.rootViewController?.present(hostingController, animated: true)
+            
+        }
     }
 }
+
