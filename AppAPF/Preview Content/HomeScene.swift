@@ -21,11 +21,13 @@ class HomeScene: SKScene {
         
         if node == carButton {
             carButton.alpha = 0.5 // Rendi semi trasparente quando premuto
+            run(SKAction.playSoundFileNamed("car-engine.mp3", waitForCompletion: false))
         }
         
         if node == quizButton {
             quizButton.alpha = 0.5 // Rendi semi trasparente quando premuto
         }
+
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
