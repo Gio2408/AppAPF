@@ -100,8 +100,16 @@ class LevelScene: SKScene {
     
     /// Ripristina la posizione delle macchine
     func resetCarsPosition() {
-        bumblebee?.position = CGPoint(x: 0, y: -500) // Posizione iniziale di Bumblebee
-        car1?.position = CGPoint(x: 500, y: 0) // Posizione iniziale di Car1
+        switch numberLevel {
+        case 1:
+            bumblebee?.position = CGPoint(x: 81, y: -400) // Posizione iniziale di Bumblebee
+            car1?.position = CGPoint(x: 320, y: 80) // Posizione iniziale di Car1
+        
+        default:
+            bumblebee?.position = CGPoint(x: 0, y: 0)
+            car1?.position = CGPoint(x: 0, y: 0)
+        }
+        
     }
     
     /// Aggiorna la sequenza corretta di "go" e "wait" per ogni livello
@@ -128,7 +136,7 @@ class LevelScene: SKScene {
     func moveBumblebee(completion: @escaping () -> Void) {
         guard let bumblebee = bumblebee else { return }
         
-        let moveForward = SKAction.moveBy(x: 0, y: 280, duration: 1.5)
+        let moveForward = SKAction.moveBy(x: 0, y: 350, duration: 1.5)
         let rotateRight = SKAction.rotate(toAngle: -.pi / 2, duration: 0.3, shortestUnitArc: true)
         let moveRight = SKAction.moveBy(x: 750, y: 0, duration: 1.5)
         
