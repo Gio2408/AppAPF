@@ -1,9 +1,7 @@
-//
 //  PreHomeSceneView.swift
 //  AppAPF
-//
 //  Created by Gioacchino Augello on 13/02/25.
-//
+
 
 import SwiftUI
 
@@ -17,8 +15,8 @@ struct PreHomeSceneView: View {
                 // App icon displayed with size and rounded corners
                 Image("icon")
                     .resizable()
-                    .frame(width: 150, height: 150)
-                    .cornerRadius(55)
+                    .frame(width: 170, height: 170)
+                    .cornerRadius(40)
 
                 // Title text displayed in large, bold, white font
                 Text("Way to Go")
@@ -30,6 +28,7 @@ struct PreHomeSceneView: View {
         }
     }
 }
+
 
 #Preview {
     PreHomeSceneView()

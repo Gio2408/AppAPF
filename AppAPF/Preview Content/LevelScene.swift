@@ -75,7 +75,7 @@ class LevelScene: SKScene {
         }
     }
     
-    /// Passa al livello successivo
+    // Passa al livello successivo
     func nextLevel() {
         numberLevel += 1
         indexCorrectSequence = 0
@@ -90,7 +90,7 @@ class LevelScene: SKScene {
         updateSequence()
     }
     
-    /// Cambia l'immagine di sfondo in base al livello
+    // Cambia l'immagine di sfondo in base al livello
     func changeBackground() {
         guard let incrocioCroce = incrocioCroce else { return }
         let textureName = "incrocioCroce_\(numberLevel)" // Usa immagini diverse per i livelli
@@ -98,7 +98,7 @@ class LevelScene: SKScene {
         incrocioCroce.texture = newTexture
     }
     
-    /// Ripristina la posizione delle macchine
+    // Ripristina la posizione delle macchine
     func resetCarsPosition() {
         switch numberLevel {
         case 1:
@@ -112,7 +112,7 @@ class LevelScene: SKScene {
         
     }
     
-    /// Aggiorna la sequenza corretta di "go" e "wait" per ogni livello
+    // Aggiorna la sequenza corretta di "go" e "wait" per ogni livello
     func updateSequence() {
         switch numberLevel {
         case 2:
@@ -124,7 +124,7 @@ class LevelScene: SKScene {
         }
     }
     
-    /// Muove Car1 orizzontalmente
+    // Muove Car1 orizzontalmente
     func moveCar1(completion: @escaping () -> Void) {
         guard let car1 = car1 else { return }
         let moveAction = SKAction.moveBy(x: -1200, y: 0, duration: 2.0)
@@ -132,7 +132,7 @@ class LevelScene: SKScene {
         car1.run(moveAction, completion: completion)
     }
     
-    /// Muove Bumblebee con una curva a destra
+    // Muove Bumblebee con una curva a destra
     func moveBumblebee(completion: @escaping () -> Void) {
         guard let bumblebee = bumblebee else { return }
         

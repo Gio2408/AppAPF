@@ -1,10 +1,13 @@
 import SwiftUI
 
 struct QuizView: View {
+    
     @Binding var isInQuizView: Bool
     @EnvironmentObject var errorManager: ErrorManager
     @EnvironmentObject var scoreManager: ScoreManager
     @EnvironmentObject var quizManager: QuizManager
+    
+    @Environment(\.presentationMode) var presentationMode //per abiltare il dismiss della scene
     
     @State private var score: Int = 0
     @State private var selectedAnswer: String?
@@ -43,14 +46,17 @@ struct QuizView: View {
         }
     }
 
+
     var body: some View {
         NavigationStack {
             VStack {
-                // Back button to return to the previous view
+                // Back button in the top-left corner using NavigationLink
                 HStack {
                     Button(action: {
                         withAnimation(.easeInOut(duration: 0.5)) {
-                            isInQuizView = false
+                            isInQuizView = false  // Torna a ContentView con animazione fade
+                            print ("Back to HomeView")
+                            presentationMode.wrappedValue.dismiss()
                         }
                     }) {
                         Image(systemName: "arrow.left.circle.fill")
@@ -60,12 +66,12 @@ struct QuizView: View {
                             .background(Circle().fill(Color.black.opacity(0.5)))
                     }
                     .padding(.leading, 20)
-
                     Spacer()
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.top, 10)
                 .padding(.leading, 10)
+                
 
                 // Display quiz content if there are remaining questions
                 if quizManager.currentPhaseIndex < quizTurns.count {
@@ -83,8 +89,10 @@ struct QuizView: View {
                         .font(.title)
                         .fontWeight(.medium)
                         .multilineTextAlignment(.center)
+                        .foregroundColor(.black) 
                         .padding(.top, 20)
                         .padding(.horizontal, 30)
+
 
                     // Answer buttons
                     HStack {
@@ -102,6 +110,7 @@ struct QuizView: View {
                                 .shadow(radius: 5)
                         }
                         .padding()
+
 
                         Button(action: {
                             selectedAnswer = "F"
@@ -140,10 +149,13 @@ struct QuizView: View {
             .background(Color.white)
             .cornerRadius(10)
             .shadow(radius: 10)
+            
+        
         }
+        
+        
     }
 }
-
 #Preview {
     QuizView(isInQuizView: .constant(true))
         .environmentObject(ScoreManager(score: QuizScore(quiz: "Quiz Incroci", totalScore: 8, totalAnswers: 10), currentScore: 0, quizManager: QuizManager()))
