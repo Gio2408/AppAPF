@@ -13,6 +13,17 @@ class HomeScene: SKScene {
         carButton.setScale(0.5)
         addChild(carButton)
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touch = touches.first else { return }
+        let location = touch.location(in: self)
+        let node = atPoint(location)
+        
+        if node.name == "carButton" {
+            print("carButton tapped")
+            node.alpha = 0.5 // Rendi il pulsante trasparente mentre viene toccato
+        }
+    }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else { return }
@@ -24,5 +35,9 @@ class HomeScene: SKScene {
             print("🚗 Car button tapped")
             onCarButtonTapped?() // Trigger closure to transition to LevelScene
         }
+    }
+
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        carButton.alpha = 1.0 // Se il tocco viene annullato, ripristina la trasparenza
     }
 }

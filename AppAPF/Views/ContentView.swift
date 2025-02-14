@@ -50,7 +50,9 @@ struct ContentView: View {
                     // Quiz Button to navigate to the quiz view
                     if !isInLevelScene {
                         Button(action: {
-                            withAnimation { isInQuizView = true }
+                            withAnimation(.easeIn(duration: 0.01)) { // Animazione più veloce
+                                isInQuizView = true
+                            }
                         }) {
                             Image("quizButton")
                                 .resizable()
@@ -58,6 +60,7 @@ struct ContentView: View {
                                 .frame(width: 100, height: 100)
                         }
                         .opacity(isInQuizView || isInScoreView || isInErrorsView ? 0 : 1)
+                        .animation(.easeInOut(duration: 0.2), value: isInQuizView) // Applica l'animazione all'opacità
                         .position(x: 100, y: 370)
                     }
                 }
