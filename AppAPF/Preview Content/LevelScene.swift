@@ -15,7 +15,7 @@ class LevelScene: SKScene {
     var correctSequenceLevel1: [String] = ["bumblebee", "car3", "car2", "car1"]
     var correctSequenceLevel2: [String] = ["car1", "car2", "car3", "bumbleBee"]
     var indexCorrectSequence: Int = 0
-    var isTouched: Bool = false
+    var isTouched: [Int] = [0, 0, 0, 0]
     
     override func didMove(to view: SKView) {
         // Inizializza gli sprite con il nome definito nell'editor di SpriteKit
@@ -89,11 +89,11 @@ class LevelScene: SKScene {
             if node == bumblebee{
                 if correctSequenceLevel1[indexCorrectSequence] == "bumblebee" {
                     print("🚙 Bumblebee is moving...")
-                    if !isTouched {
+                    if isTouched[0] == 0{
                         moveBumblebee {
                             self.indexCorrectSequence += 1
                         }
-                        self.isTouched = true
+                        self.isTouched[0] = 1
                     }
                     
                 } else {
@@ -104,18 +104,25 @@ class LevelScene: SKScene {
             if node == car1 {
                 if correctSequenceLevel1[indexCorrectSequence] == "car1" {
                     print("🚗 Car1 is moving...")
-                    moveCar1 {
-                        self.indexCorrectSequence += 1
+                    if isTouched[1] == 0 {
+                        moveCar1 {
+                            self.indexCorrectSequence += 1
+                        }
+                        self.isTouched[1] = 1
                     }
                 } else {
                     print("⛔ It's not Car1's turn yet!")
                 }
             }
+            
             if node == car2 {
                 if correctSequenceLevel1[indexCorrectSequence] == "car2" {
                     print("🚗 Car2 is moving...")
-                    moveCar2 {
-                        self.indexCorrectSequence += 1
+                    if isTouched[2] == 0 {
+                        moveCar2 {
+                            self.indexCorrectSequence += 1
+                        }
+                        self.isTouched[2] = 1
                     }
                 } else {
                     print("⛔ It's not Car2's turn yet!")
@@ -125,8 +132,11 @@ class LevelScene: SKScene {
             if node == car3 {
                 if correctSequenceLevel1[indexCorrectSequence] == "car3" {
                     print("🚗 Car3 is moving...")
-                    moveCar3 {
-                        self.indexCorrectSequence += 1
+                    if isTouched[3] == 0 {
+                        moveCar3 {
+                            self.indexCorrectSequence += 1
+                        }
+                        self.isTouched[3] = 1
                     }
                 } else {
                     print("⛔ It's not Car3's turn yet!")
