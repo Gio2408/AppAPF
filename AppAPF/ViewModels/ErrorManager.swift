@@ -33,5 +33,11 @@ class ErrorManager: ObservableObject {
            let decoded = try? JSONDecoder().decode([QuizError].self, from: savedData) {
             errors = decoded
         }
+        
+    func deleteAllErrors() {
+            errors.removeAll()
+            saveErrors()
+        }
+        
     }
 }

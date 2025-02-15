@@ -2,34 +2,38 @@ import SwiftUI
 import AVFoundation
 
 struct ContentView: View {
-    @StateObject var scoreManager = ScoreManager(score: QuizScore(quiz: "Quiz Incroci", totalScore: 8, totalAnswers: 10), currentScore: 0, quizManager: QuizManager())
+    @StateObject var scoreManager = ScoreManager()
     @StateObject var errorManager = ErrorManager()
-    @StateObject var quizManager = QuizManager()
+    @State private var selectedTab = 1
     @State private var isInLevelScene = false
     @State private var isInQuizView = false
     @State private var isShowingPreHomeScene = true
     @State private var isInErrorsView = false
     @State private var isInScoreView = false
+    @State private var dragOffset: CGFloat = 0  // Per gestire il gesto di swipe
     @State private var audioPlayer: AVAudioPlayer?
     @State private var path = NavigationPath() // NavigationPath per la navigazione
 
     var body: some View {
-        NavigationStack(path: $path) { // NavigationStack principale
-            ZStack {
-                // Display PreHomeScene if necessary
-                if isShowingPreHomeScene {
-                    PreHomeSceneView()
-                        .transition(.opacity)
-                        .onAppear {
-                            playPreHomeSound() // Start the sound when PreHomeScene appears
-                        }
-                } else {
-                    if isInLevelScene {
-                        LevelSceneView(isInLevelScene: $isInLevelScene)
-                            .transition(.opacity)
-                    } else if isInQuizView {
-                        QuizView(isInQuizView: $isInQuizView)
-                            .environmentObject(quizManager)
+        ZStack {
+            // Gestisci la navigazione tra le scene
+            if isInLevelScene {
+                LevelSceneView(isInLevelScene: $isInLevelScene)
+                    .transition(.move(edge: .trailing))  // Transizione quando entri in LevelScene
+            } else if isInQuizView {
+                QuizView(isInQuizView: $isInQuizView)
+                    .environmentObject(scoreManager) // Passa ScoreManager
+                    .environmentObject(errorManager) // Passa ErrorManager
+                    .transition(.move(edge: .trailing))  // Transizione quando entri in QuizView
+            /*} else if isInScoreView {
+                ScoreView(isInScoreView: $isInScoreView)
+                    .environmentObject(scoreManager)
+                    .transition(.move(edge: .trailing))*/
+            } else {
+                Group {
+                    switch selectedTab {
+                    case 0:
+                        ScoreView()
                             .environmentObject(scoreManager)
                             .environmentObject(errorManager)
                             .transition(.opacity)
