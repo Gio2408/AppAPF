@@ -33,13 +33,14 @@ struct QuizView: View {
             
         } else {
             errorMessage = "Correct answer!"
-            scoreManager.addTotalScore() // tiene il conteggio del numero delle risposte corrette
+            scoreManager.incrementScore() // tiene il conteggio del numero delle risposte corrette
         }
         
-        scoreManager.addCurrentQuestion() // tiene il conteggio della domanda corrente, per confrontarla dopo
+        scoreManager.incrementQuestion() // tiene il conteggio della domanda corrente, per confrontarla dopo
         
         if scoreManager.currentQuestion == quizTurns.count { // confronta la domanda corrente con il totale delle domande
             scoreManager.score.totalAnswers = quizTurns.count // assegna il valore delle domande totali a totalAnswers, per riportarlo nella ScoreView
+            scoreManager.saveScore()
         }
     }
 
@@ -51,7 +52,7 @@ struct QuizView: View {
                 Text("ScoreManager ObjectIdentifier: \(ObjectIdentifier(scoreManager))")
                 // Back button in the top-left corner using NavigationLink
                 HStack {
-                    Button(action: {
+                    Button(action: { //questo  bottone è diverso
                         withAnimation(.easeInOut(duration: 0.5)) {
                             isInQuizView = false  // Torna a ContentView con animazione fade
                             print ("Back to HomeView")
