@@ -6,7 +6,6 @@ struct QuizView: View {
     @EnvironmentObject var errorManager: ErrorManager
     @EnvironmentObject var scoreManager: ScoreManager
     @Environment(\.presentationMode) var presentationMode //per abiltare il dismiss della scene
-    
     @State private var selectedAnswer: String?
     @State private var errorMessage: String?
     
@@ -20,11 +19,17 @@ struct QuizView: View {
     let quizTurns = [
         QuizTurn(question: "If your car battery dies, you can jump-start the engine using cables connected to another car’s battery.", correctAnswer: "T", imageName: "image1"),
         QuizTurn(question: "You should only change the engine oil when the warning light on the dashboard turns on.", correctAnswer: "F", imageName: "image2"),
+        QuizTurn(question: "Braking distance increases when driving on wet roads compared to dry conditions.", correctAnswer: "T", imageName: "image3"),
+        QuizTurn(question: "Braking distance increases when driving on wet roads compared to dry conditions.", correctAnswer: "T", imageName: "image3"),
         QuizTurn(question: "Braking distance increases when driving on wet roads compared to dry conditions.", correctAnswer: "T", imageName: "image3")
         
     ]
     
     func checkAnswer(turn: QuizTurn) { // turn: variabile che serve per la funzione, in modo che non dia errore (turn = quizTurns)
+        if scoreManager.currentQuestion == 0 { // If: re-inizializzare tutte le variabili per sicurezza
+            scoreManager.resetScore()
+            errorManager.errors.removeAll() // Rimuove tutti gli errori precedenti, così da far vedere solo quelli appena commessi
+        }
         if selectedAnswer != turn.correctAnswer {
             // Add the error if the answer is wrong
             let error = QuizError(question: turn.question, correctAnswer: turn.correctAnswer, userAnswer: selectedAnswer ?? "N/A")
@@ -40,7 +45,10 @@ struct QuizView: View {
         
         if scoreManager.currentQuestion == quizTurns.count { // confronta la domanda corrente con il totale delle domande
             scoreManager.score.totalAnswers = quizTurns.count // assegna il valore delle domande totali a totalAnswers, per riportarlo nella ScoreView
-            scoreManager.saveScore()
+            scoreManager.saveAnswers() // salva il numero totale delle domande
+            if scoreManager.mTotalScore > scoreManager.score.totalScore { //if necessario: aggiorna lo score delle risposte giuste solo se sono di più di quelle precedenti
+                scoreManager.saveScore()
+            }
         }
     }
 
@@ -48,8 +56,6 @@ struct QuizView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                Text("QuizView")
-                Text("ScoreManager ObjectIdentifier: \(ObjectIdentifier(scoreManager))")
                 // Back button in the top-left corner using NavigationLink
                 HStack {
                     Button(action: { //questo  bottone è diverso
@@ -132,7 +138,7 @@ struct QuizView: View {
                             .padding(.top, 20)
                     }
                 } else {
-                    Text("You completed the quiz! Score: \(scoreManager.score.totalScore)/\(quizTurns.count)")
+                    Text("You completed the quiz! Score: \(scoreManager.mTotalScore)/\(quizTurns.count)")
                         .font(.title)
                         .fontWeight(.bold)
                         .foregroundColor(.green)

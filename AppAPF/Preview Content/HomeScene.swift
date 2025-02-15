@@ -46,7 +46,7 @@ class HomeScene: SKScene {
         }
         
         if node == quizButton {
-            print("quizButton tapped")
+            print("\nquizButton tapped\n")
             openSwiftUIView()
         }
     }
@@ -62,7 +62,6 @@ class HomeScene: SKScene {
             let swiftUIView = QuizView(isInQuizView: .constant(true))
                 .environmentObject(ScoreManager())
                 .environmentObject(ErrorManager())
-                .environmentObject(QuizManager())
             
             let hostingController = UIHostingController(rootView: swiftUIView)
             hostingController.modalPresentationStyle = .fullScreen

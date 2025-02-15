@@ -4,7 +4,6 @@ import AVFoundation
 struct ContentView: View {
     @StateObject var scoreManager = ScoreManager()
     @StateObject var errorManager = ErrorManager()
-    @StateObject var quizManager = QuizManager()
     @State private var isInLevelScene = false
     @State private var isInQuizView = false
     @State private var isShowingPreHomeScene = true
@@ -30,7 +29,6 @@ struct ContentView: View {
                             .transition(.opacity)
                     } else if isInQuizView {
                         QuizView(isInQuizView: $isInQuizView)
-                            .environmentObject(quizManager)
                             .environmentObject(scoreManager)
                             .environmentObject(errorManager)
                             .transition(.opacity)
@@ -86,7 +84,7 @@ struct ContentView: View {
                 }
             }
             .onAppear {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // modifica tempo di permanenza della schermata
                     withAnimation {
                         isShowingPreHomeScene = false
                     }
