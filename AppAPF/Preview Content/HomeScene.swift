@@ -60,7 +60,7 @@ class HomeScene: SKScene {
     func openSwiftUIView() {
         if let sceneView = self.view {
             let swiftUIView = QuizView(isInQuizView: .constant(true))
-                .environmentObject(ScoreManager(score: QuizScore(quiz: "Quiz Incroci", totalScore: 8, totalAnswers: 10), currentScore: 0, quizManager: QuizManager()))
+                .environmentObject(ScoreManager())
                 .environmentObject(ErrorManager())
                 .environmentObject(QuizManager())
             

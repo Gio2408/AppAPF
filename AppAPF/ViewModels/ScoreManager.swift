@@ -7,30 +7,26 @@ import Foundation
 import SwiftUI
 
 class ScoreManager: ObservableObject {
-    @Published var score: QuizScore
-    @Published var currentScore: Int = 0
-    @Published var completedQuizzes: [QuizScore] = []
     
-    private var quizManager: QuizManager
+    @Published var currentQuestion: Int // Questa variabile serve per andare a definire la domanda attuale, in modo da confrontarla con il numero delle domande totali
+    @Published var score : QuizScore //variabile-struttura di tipo QuizScore che serve a prendere i punteggi da mettere nello score.                                                Variabili in QuizScore:                                                                                                                     - totalScore: numero di risposte corrette                                                                                                - totalAnswer: numero di risposte totali
     
-    // Initializes the ScoreManager with the given parameters.
-    // Parameters:
-    // score: The initial quiz score.
-    // currentScore: The user's current score.
-    // quizManager: The QuizManager instance for tracking quiz phases.
-    init(score: QuizScore, currentScore: Int, quizManager: QuizManager) {
+    private let key = "totalScore"
+    
+    init(score: QuizScore = QuizScore(quiz: "", totalScore: 0, totalAnswers: 0), currentQuestion: Int = 0){
         self.score = score
-        self.currentScore = currentScore
-        self.quizManager = quizManager
+        self.currentQuestion = currentQuestion
     }
     
-    // Retrieves the current phase index from the QuizManager.
-    // Returns: The index of the current quiz phase.
-    func getCurrentPhaseIndex() -> Int {
-        return quizManager.currentPhaseIndex
+    func addCurrentQuestion(){ // aggiorna il contatore della domanda corrente
+        self.currentQuestion += 1
     }
-}
-
-class QuizManager: ObservableObject {
-    @Published var currentPhaseIndex: Int = 0  // Current quiz phase index.
+    
+    func addTotalScore(){ // contatore delle risposte corrette
+        score.totalScore += 1
+    }
+    
+    func saveScore(){ // ancora da definire bene
+        
+    }
 }
