@@ -2,14 +2,16 @@ import SwiftUI
 import AVFoundation
 
 struct ContentView: View {
-    @StateObject var scoreManager = ScoreManager(score: QuizScore(quiz: "Quiz Incroci", totalScore: 8, totalAnswers: 10), currentScore: 0, quizManager: QuizManager())
+    @StateObject var scoreManager = ScoreManager()
     @StateObject var errorManager = ErrorManager()
     @StateObject var quizManager = QuizManager()
+    @State private var selectedTab = 1
     @State private var isInLevelScene = false
     @State private var isInQuizView = false
     @State private var isShowingPreHomeScene = true
     @State private var isInErrorsView = false
     @State private var isInScoreView = false
+    @State private var dragOffset: CGFloat = 0  // Per gestire il gesto di swipe
     @State private var audioPlayer: AVAudioPlayer?
     @State private var path = NavigationPath() // NavigationPath per la navigazione
 

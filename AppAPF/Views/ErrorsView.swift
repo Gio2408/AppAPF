@@ -11,19 +11,22 @@ struct ErrorsView: View {
 
     var body: some View {
         NavigationView {
-            
-            // List to display all errors
-            List {
-                ForEach(errorManager.errors) { error in
-                    VStack(alignment: .leading) {
-                        Text(error.question)
-                            .font(.headline) // Display the question in a bold font
-                        Text("Correct Answer: \(error.correctAnswer)")
-                            .foregroundColor(.green) // Green color for the correct answer
-                        Text("Your Answer: \(error.userAnswer)")
-                            .foregroundColor(.red) // Red color for the user's answer
+            VStack {
+                Button("Elimina") {
+                    errorManager.errors.removeAll()
+                }
+                List {
+                    ForEach(errorManager.errors) { error in
+                        VStack(alignment: .leading) {
+                            Text(error.question)
+                                .font(.headline)
+                            Text("Risposta corretta: \(error.correctAnswer)")
+                                .foregroundColor(.green)
+                            Text("Tua risposta: \(error.userAnswer)")
+                                .foregroundColor(.red)
+                        }
+                        .padding()
                     }
-                    .padding()
                 }
             }
             .navigationTitle("Saved Errors") // Title for the navigation bar
