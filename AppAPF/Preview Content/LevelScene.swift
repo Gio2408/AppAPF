@@ -154,7 +154,10 @@ class LevelScene: SKScene {
     // Passa al livello successivo
     func nextLevel() {
         numberLevel += 1
-
+        self.isTouched[0] = 0
+        self.isTouched[1] = 0
+        self.isTouched[2] = 0
+        self.isTouched[3] = 0
         resetCarsPosition(){
             self.indexCorrectSequence = 0
         }
