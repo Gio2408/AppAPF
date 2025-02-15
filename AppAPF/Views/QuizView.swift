@@ -149,11 +149,7 @@ struct QuizView: View {
             .background(Color.white)
             .cornerRadius(10)
             .shadow(radius: 10)
-            
-        
         }
-        
-        
     }
 }
 #Preview {
