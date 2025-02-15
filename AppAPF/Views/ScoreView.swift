@@ -7,23 +7,28 @@ struct ScoreView: View {
     var body: some View {
         NavigationView {
                 ScrollView {
-                        VStack {
+                    VStack {
+                                Text("Punteggio Totale Salvato:")
+                                    .font(.title)
+                        Text("\(scoreManager.score.totalScore)") // Mostra il punteggio da ScoreManager
+                                    .font(.largeTitle)
+                                    .fontWeight(.bold)
+                            }
+                            .onAppear {
+                                scoreManager.loadScore() // **AGGIUNGI QUI: Carica il punteggio quando la vista appare**
+                                print("ScoreView is appeared, loaded score again just to be sure: \(scoreManager.score.totalScore)") // Debug
+                            }
+                        /*VStack {
                                     // Titolo della schermata
                                     Text("Punteggi dei Quiz")
                                         .font(.largeTitle)
                                         .fontWeight(.bold)
                                         .padding()
-                            Text("ScoreView")
-                                        if scoreManager == nil {
-                                            Text("scoreManager è NIL!") // Verifica se scoreManager è nil
-                                        } else {
-                                            Text("scoreManager NON è nil")
-                                            Text("ScoreManager ObjectIdentifier: \(ObjectIdentifier(scoreManager))") // AGGIUNGI QUESTO PRINT
-                                                                    Text("\(scoreManager.score.totalScore) \(scoreManager.score.totalAnswers == 1 ? "risposta" : "risposte")")
+                                Text("\nScoreManager \(ObjectIdentifier(scoreManager))") // AGGIUNGI QUESTO PRINT
+                                                        Text("\n\(scoreManager.score.totalScore) \(scoreManager.score.totalAnswers == 1 ? "risposta" : "risposte")")
 
-                                        }
                                 
-                            }
+                            }*/
                             .padding(.horizontal)
                     }
                     .navigationTitle("Score")
@@ -31,12 +36,12 @@ struct ScoreView: View {
     }
 }
 
-struct ScoreView_Previews: PreviewProvider {
+/*struct ScoreView_Previews: PreviewProvider {
     static var previews: some View {
         ScoreView()
             .environmentObject(ScoreManager()) // Fornisci l'environment object!
     }
-}
+}*/
 
 
 /* COPIA BODY

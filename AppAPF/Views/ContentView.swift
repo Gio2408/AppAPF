@@ -5,7 +5,6 @@ struct ContentView: View {
     @StateObject var scoreManager = ScoreManager()
     @StateObject var errorManager = ErrorManager()
     @StateObject var quizManager = QuizManager()
-    @State private var selectedTab = 1
     @State private var isInLevelScene = false
     @State private var isInQuizView = false
     @State private var isShowingPreHomeScene = true
