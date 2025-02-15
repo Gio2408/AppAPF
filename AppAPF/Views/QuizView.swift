@@ -5,8 +5,8 @@ struct QuizView: View {
     @Binding var isInQuizView: Bool
     @EnvironmentObject var errorManager: ErrorManager
     @EnvironmentObject var scoreManager: ScoreManager
+    @Environment(\.presentationMode) var presentationMode //per abiltare il dismiss della scene
     
-
     @State private var selectedAnswer: String?
     @State private var errorMessage: String?
     

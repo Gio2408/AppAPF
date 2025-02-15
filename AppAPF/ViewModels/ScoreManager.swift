@@ -27,9 +27,6 @@ class ScoreManager: ObservableObject {
     }
     
     func saveScore(){ // ancora da definire bene
-            
+        
     }
-
-class QuizManager: ObservableObject {
-    @Published var currentPhaseIndex: Int = 0  // Current quiz phase index.
 }
