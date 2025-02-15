@@ -1,15 +1,13 @@
-//
 //  ErrorsView.swift
 //  AppAPF
-//
 //  Created by Michele Vassallo Todaro on 10/02/25.
-//
-//  la UI l'ho fatta al volo, non so quale sarà l'estetica finale
+
 
 import SwiftUI
 
 struct ErrorsView: View {
-    @EnvironmentObject var errorManager: ErrorManager
+    @EnvironmentObject var errorManager: ErrorManager // Access to the errorManager object
+    //@Binding var isInErrorsView: Bool // Binding to control the state of this view
 
     var body: some View {
         NavigationView {
@@ -31,13 +29,13 @@ struct ErrorsView: View {
                     }
                 }
             }
-            .navigationTitle("Errori Salvati")
+            .navigationTitle("Saved Errors") // Title for the navigation bar
         }
     }
 }
 
 
-//esempio di view
+// Example preview of the ErrorsView
 
 struct ErrorsView_Previews: PreviewProvider {
     static var previews: some View {
@@ -53,4 +51,3 @@ struct ErrorsView_Previews: PreviewProvider {
             .environmentObject(errorManager)
     }
 }
-

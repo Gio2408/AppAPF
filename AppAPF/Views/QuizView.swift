@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct QuizView: View {
+    
     @Binding var isInQuizView: Bool
     @EnvironmentObject var errorManager: ErrorManager
     @EnvironmentObject var scoreManager: ScoreManager
@@ -15,6 +16,7 @@ struct QuizView: View {
         let imageName: String
     }
     
+    // Quiz questions and answers
     let quizTurns = [
         QuizTurn(question: "If your car battery dies, you can jump-start the engine using cables connected to another car’s battery.", correctAnswer: "T", imageName: "image1"),
         QuizTurn(question: "You should only change the engine oil when the warning light on the dashboard turns on.", correctAnswer: "F", imageName: "image2"),
@@ -24,6 +26,7 @@ struct QuizView: View {
     
     func checkAnswer(turn: QuizTurn) { // turn: variabile che serve per la funzione, in modo che non dia errore (turn = quizTurns)
         if selectedAnswer != turn.correctAnswer {
+            // Add the error if the answer is wrong
             let error = QuizError(question: turn.question, correctAnswer: turn.correctAnswer, userAnswer: selectedAnswer ?? "N/A")
             errorManager.addError(error)
             errorMessage = "Wrong answer!"
@@ -40,6 +43,7 @@ struct QuizView: View {
         }
     }
 
+
     var body: some View {
         NavigationStack {
             VStack {
@@ -47,21 +51,26 @@ struct QuizView: View {
                 Text("ScoreManager ObjectIdentifier: \(ObjectIdentifier(scoreManager))")
                 // Back button in the top-left corner using NavigationLink
                 HStack {
-                    NavigationLink(destination: ContentView().navigationBarBackButtonHidden(true)) {
-                        HStack {
-                            Image(systemName: "arrow.left")
-                                .font(.title)
-                            Text("Back")
-                                .font(.headline)
+                    Button(action: {
+                        withAnimation(.easeInOut(duration: 0.5)) {
+                            isInQuizView = false  // Torna a ContentView con animazione fade
+                            print ("Back to HomeView")
+                            presentationMode.wrappedValue.dismiss()
                         }
-                        .padding()
-                        .foregroundColor(.blue)
+                    }) {
+                        Image(systemName: "arrow.left.circle.fill")
+                            .resizable()
+                            .frame(width: 50, height: 50)
+                            .foregroundColor(.white)
+                            .background(Circle().fill(Color.black.opacity(0.5)))
                     }
+                    .padding(.leading, 20)
                     Spacer()
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.top, 10)
                 .padding(.leading, 10)
+                
 
                 if  scoreManager.currentQuestion < quizTurns.count {
                     let turn = quizTurns[scoreManager.currentQuestion]
@@ -75,9 +84,12 @@ struct QuizView: View {
                         .font(.title)
                         .fontWeight(.medium)
                         .multilineTextAlignment(.center)
+                        .foregroundColor(.black) 
                         .padding(.top, 20)
                         .padding(.horizontal, 30)
 
+
+                    // Answer buttons
                     HStack {
                         Button(action: {
                             selectedAnswer = "T"
@@ -93,6 +105,7 @@ struct QuizView: View {
                                 .shadow(radius: 5)
                         }
                         .padding()
+
 
                         Button(action: {
                             selectedAnswer = "F"
@@ -110,6 +123,7 @@ struct QuizView: View {
                         .padding()
                     }
 
+                    // Show error message (correct or incorrect answer)
                     if let errorMessage = errorMessage {
                         Text(errorMessage)
                             .font(.subheadline)
@@ -129,7 +143,11 @@ struct QuizView: View {
             .background(Color.white)
             .cornerRadius(10)
             .shadow(radius: 10)
+            
+        
         }
+        
+        
     }
 }
 /*#Preview {

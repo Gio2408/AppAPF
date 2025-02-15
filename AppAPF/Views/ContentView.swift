@@ -1,4 +1,5 @@
 import SwiftUI
+import AVFoundation
 
 struct ContentView: View {
     @StateObject var scoreManager = ScoreManager()
@@ -6,8 +7,12 @@ struct ContentView: View {
     @State private var selectedTab = 1
     @State private var isInLevelScene = false
     @State private var isInQuizView = false
+    @State private var isShowingPreHomeScene = true
+    @State private var isInErrorsView = false
     @State private var isInScoreView = false
     @State private var dragOffset: CGFloat = 0  // Per gestire il gesto di swipe
+    @State private var audioPlayer: AVAudioPlayer?
+    @State private var path = NavigationPath() // NavigationPath per la navigazione
 
     var body: some View {
         ZStack {
@@ -30,70 +35,88 @@ struct ContentView: View {
                     case 0:
                         ScoreView()
                             .environmentObject(scoreManager)
-                    case 1: HomeSceneView(isInLevelScene: $isInLevelScene)
-                    case 2: ErrorsView().environmentObject(errorManager)
-                    default: HomeSceneView(isInLevelScene: $isInLevelScene)
+                            .environmentObject(errorManager)
+                            .transition(.opacity)
+                    } else {
+                        HomeSceneView(isInLevelScene: $isInLevelScene)
+                            .transition(.opacity)
                     }
                 }
-                .transition(.opacity) // Animazione di dissolvenza tra le schermate
-                .ignoresSafeArea()
                 
-                VStack {
-                    if selectedTab == 1 { // Mostra il tasto solo quando siamo nella HomeScene
-                        Button(action: {
-                            withAnimation {
-                                isInQuizView = true
+                
+                // Home Scene Buttons (Quiz, Errors, Score)
+                if !isShowingPreHomeScene {
+                    VStack {
+                        Spacer()
+                        VStack(spacing: 16) { // Mettiamo i pulsanti in colonna con spazio tra loro
+                            Button(action: {
+                                path.append("errors")
+                            }) {
+                                Image(systemName: "x.circle")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 45, height: 45)
+                                    .foregroundColor(.white)
+                                
                             }
-                        }) {
-                            Image("quizButton")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 200, height: 80)
-                        }
-                        .position(x: 100, y: 370)
-                    }
-                    Spacer()
-                    
-                    if !isInLevelScene {
-                        HStack {
-                            CustomTabButton(icon: "trophy.fill", tag: 0, selectedTab: $selectedTab)
-                            CustomTabButton(icon: "house.fill", tag: 1, selectedTab: $selectedTab)
-                            CustomTabButton(icon: "x.circle", tag: 2, selectedTab: $selectedTab)
+                            Button(action: {
+                                path.append("score")
+                            }) {
+                                Image(systemName: "trophy.fill")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 45, height: 45)
+                                    .foregroundColor(.white)
+                            }
                         }
                         .padding()
-                        .background(.ultraThinMaterial)
-                        .cornerRadius(20)
-                        .padding(.horizontal, 20)
-                        .shadow(radius: 5)
+                        .position(x: 40, y: UIScreen.main.bounds.height - 130)
+                        // Hide the buttons when in any other view
+                        .opacity(isInScoreView || isInErrorsView || isInQuizView || isInLevelScene ? 0 : 1)
+                    }
+                }
+            }
+            .navigationDestination(for: String.self) { destination in // Gestione delle destinazioni
+                switch destination {
+                case "errors":
+                    ErrorsView()
+                        .environmentObject(errorManager)
+                case "score":
+                    ScoreView()
+                        .environmentObject(scoreManager)
+                default:
+                    EmptyView() // Gestisci eventuali altre destinazioni
+                }
+            }
+            .onAppear {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    withAnimation {
+                        isShowingPreHomeScene = false
                     }
                 }
             }
         }
-        .gesture(
-            DragGesture()
-                .onChanged { value in
-                    // Rileva il movimento orizzontale
-                    if value.translation.width > 100 {
-                        // Se l'utente ha fatto uno swipe verso destra (più di 100 punti)
-                        withAnimation {
-                            // Torna alla schermata precedente
-                            if isInQuizView {
-                                isInQuizView = false
-                            } else if isInLevelScene {
-                                isInLevelScene = false
-                            }
-                        }
-                    }
-                }
-                .onEnded { value in
-                    // Gestisci l'animazione finale se necessario
-                    dragOffset = 0
-                }
-        )
-        .animation(.default, value: isInLevelScene) // Applica l'animazione a tutto il cambiamento di stato
     }
+    
+    
+    // Function to play sound when the PreHomeScene is shown
+    func playPreHomeSound() {
+        guard let url = Bundle.main.url(forResource: "preHome", withExtension: "mp3") else {
+            print("Error: Audio file not found")
+            return
+        }
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: url)
+            audioPlayer?.play()
+        } catch {
+            print("Error playing audio: \(error.localizedDescription)")
+        }
+    }
+
 }
 
+
+    
 #Preview {
     ContentView()
 }

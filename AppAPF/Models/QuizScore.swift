@@ -4,7 +4,7 @@
 //
 //  Created by Michele Vassallo Todaro on 10/02/25.
 //
-//Errore nei minigiochi ad incriocioid
+// Represents the score of a quiz, including total points and the number of answers.
 
 import Foundation
 
@@ -20,6 +20,5 @@ struct QuizScore: Observable {
         self.totalAnswers = totalAnswers
     }
 }
-
 
 

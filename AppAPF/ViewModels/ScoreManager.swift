@@ -1,9 +1,7 @@
-//
 //  ScoreManager.swift
 //  AppAPF
-//
 //  Created by Michele Vassallo Todaro on 12/02/25.
-//
+// Manages quiz scores and tracks completed quizzes.
 
 import Foundation
 import SwiftUI
@@ -32,5 +30,6 @@ class ScoreManager: ObservableObject {
             
     }
 
+class QuizManager: ObservableObject {
+    @Published var currentPhaseIndex: Int = 0  // Current quiz phase index.
 }
-
