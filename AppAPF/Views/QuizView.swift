@@ -5,11 +5,8 @@ struct QuizView: View {
     @Binding var isInQuizView: Bool
     @EnvironmentObject var errorManager: ErrorManager
     @EnvironmentObject var scoreManager: ScoreManager
-    @EnvironmentObject var quizManager: QuizManager
     
-    @Environment(\.presentationMode) var presentationMode //per abiltare il dismiss della scene
-    
-    @State private var score: Int = 0
+
     @State private var selectedAnswer: String?
     @State private var errorMessage: String?
     
@@ -24,25 +21,25 @@ struct QuizView: View {
         QuizTurn(question: "If your car battery dies, you can jump-start the engine using cables connected to another car’s battery.", correctAnswer: "T", imageName: "image1"),
         QuizTurn(question: "You should only change the engine oil when the warning light on the dashboard turns on.", correctAnswer: "F", imageName: "image2"),
         QuizTurn(question: "Braking distance increases when driving on wet roads compared to dry conditions.", correctAnswer: "T", imageName: "image3")
+        
     ]
     
-    // Function to check if the selected answer is correct
-    func checkAnswer(turn: QuizTurn) {
+    func checkAnswer(turn: QuizTurn) { // turn: variabile che serve per la funzione, in modo che non dia errore (turn = quizTurns)
         if selectedAnswer != turn.correctAnswer {
             // Add the error if the answer is wrong
             let error = QuizError(question: turn.question, correctAnswer: turn.correctAnswer, userAnswer: selectedAnswer ?? "N/A")
             errorManager.addError(error)
             errorMessage = "Wrong answer!"
-            score += 1
+            
         } else {
             errorMessage = "Correct answer!"
+            scoreManager.addTotalScore() // tiene il conteggio del numero delle risposte corrette
         }
-        quizManager.currentPhaseIndex += 1
         
-        // If all questions have been answered, finalize the score
-        if quizManager.currentPhaseIndex == quizTurns.count {
-            let finalScore = quizTurns.count - score
-            scoreManager.score.totalScore = finalScore
+        scoreManager.addCurrentQuestion() // tiene il conteggio della domanda corrente, per confrontarla dopo
+        
+        if scoreManager.currentQuestion == quizTurns.count { // confronta la domanda corrente con il totale delle domande
+            scoreManager.score.totalAnswers = quizTurns.count // assegna il valore delle domande totali a totalAnswers, per riportarlo nella ScoreView
         }
     }
 
@@ -50,6 +47,8 @@ struct QuizView: View {
     var body: some View {
         NavigationStack {
             VStack {
+                Text("QuizView")
+                Text("ScoreManager ObjectIdentifier: \(ObjectIdentifier(scoreManager))")
                 // Back button in the top-left corner using NavigationLink
                 HStack {
                     Button(action: {
@@ -73,19 +72,15 @@ struct QuizView: View {
                 .padding(.leading, 10)
                 
 
-                // Display quiz content if there are remaining questions
-                if quizManager.currentPhaseIndex < quizTurns.count {
-                    let turn = quizTurns[quizManager.currentPhaseIndex]
-
-                    // Display image related to the quiz question
-                    Image(turn.imageName)
+                if  scoreManager.currentQuestion < quizTurns.count {
+                    let turn = quizTurns[scoreManager.currentQuestion]
+                    Image(quizTurns[scoreManager.currentQuestion].imageName) // entra nell'array in posizione attuale rispetto la domanda e di questa posizione prende l'immagine
                         .resizable()
                         .scaledToFit()
                         .frame(width: 250, height: 250)
                         .padding(.top, 30)
 
-                    // Display the question
-                    Text(turn.question)
+                    Text(quizTurns[scoreManager.currentQuestion].question)
                         .font(.title)
                         .fontWeight(.medium)
                         .multilineTextAlignment(.center)
@@ -136,13 +131,12 @@ struct QuizView: View {
                             .padding(.top, 20)
                     }
                 } else {
-                    // Final score display after completing the quiz
-                    let finalScore = quizTurns.count - score
-                    Text("You completed the quiz! Score: \(finalScore)/\(quizTurns.count)")
+                    Text("You completed the quiz! Score: \(scoreManager.score.totalScore)/\(quizTurns.count)")
                         .font(.title)
                         .fontWeight(.bold)
                         .foregroundColor(.green)
                         .padding(.top, 30)
+                    
                 }
             }
             .padding()
@@ -156,9 +150,5 @@ struct QuizView: View {
         
     }
 }
-#Preview {
-    QuizView(isInQuizView: .constant(true))
-        .environmentObject(ScoreManager(score: QuizScore(quiz: "Quiz Incroci", totalScore: 8, totalAnswers: 10), currentScore: 0, quizManager: QuizManager()))
-        .environmentObject(ErrorManager())
-        .environmentObject(QuizManager())
-}
+/*#Preview {
+}*/
