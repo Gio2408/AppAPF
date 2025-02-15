@@ -1,12 +1,12 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject var scoreManager = ScoreManager(score: QuizScore(quiz: "Quiz Incroci", totalScore: 8, totalAnswers: 10), currentScore: 0, quizManager: QuizManager())
+    @StateObject var scoreManager = ScoreManager()
     @StateObject var errorManager = ErrorManager()
-    @StateObject var quizManager = QuizManager() // Aggiunto per evitare il crash
     @State private var selectedTab = 1
     @State private var isInLevelScene = false
     @State private var isInQuizView = false
+    @State private var isInScoreView = false
     @State private var dragOffset: CGFloat = 0  // Per gestire il gesto di swipe
 
     var body: some View {
@@ -17,10 +17,13 @@ struct ContentView: View {
                     .transition(.move(edge: .trailing))  // Transizione quando entri in LevelScene
             } else if isInQuizView {
                 QuizView(isInQuizView: $isInQuizView)
-                    .environmentObject(quizManager)  // Passa il QuizManager
                     .environmentObject(scoreManager) // Passa ScoreManager
                     .environmentObject(errorManager) // Passa ErrorManager
                     .transition(.move(edge: .trailing))  // Transizione quando entri in QuizView
+            /*} else if isInScoreView {
+                ScoreView(isInScoreView: $isInScoreView)
+                    .environmentObject(scoreManager)
+                    .transition(.move(edge: .trailing))*/
             } else {
                 Group {
                     switch selectedTab {

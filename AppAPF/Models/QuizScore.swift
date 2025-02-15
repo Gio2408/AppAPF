@@ -8,13 +8,13 @@
 
 import Foundation
 
-struct QuizScore: Codable {
+struct QuizScore: Observable {
     var quiz: String        // Tipo del quiz (es. "Quiz Incroci")
-    var totalScore: Int     // Punteggio attuale (es. 2)
+    var totalScore: Int     // Risposte giuste (es. 2)
     var totalAnswers: Int   // Risposte totali (es. 10)
     
     // Inizializzazione con il tipo di quiz e il punteggio
-    init(quiz: String, totalScore: Int, totalAnswers: Int = 10) {
+    init(quiz: String, totalScore: Int, totalAnswers: Int) {
         self.quiz = quiz
         self.totalScore = totalScore
         self.totalAnswers = totalAnswers

@@ -13,17 +13,22 @@ struct ErrorsView: View {
 
     var body: some View {
         NavigationView {
-            List {
-                ForEach(errorManager.errors) { error in
-                    VStack(alignment: .leading) {
-                        Text(error.question)
-                            .font(.headline)
-                        Text("Risposta corretta: \(error.correctAnswer)")
-                            .foregroundColor(.green)
-                        Text("Tua risposta: \(error.userAnswer)")
-                            .foregroundColor(.red)
+            VStack {
+                Button("Elimina") {
+                    errorManager.errors.removeAll()
+                }
+                List {
+                    ForEach(errorManager.errors) { error in
+                        VStack(alignment: .leading) {
+                            Text(error.question)
+                                .font(.headline)
+                            Text("Risposta corretta: \(error.correctAnswer)")
+                                .foregroundColor(.green)
+                            Text("Tua risposta: \(error.userAnswer)")
+                                .foregroundColor(.red)
+                        }
+                        .padding()
                     }
-                    .padding()
                 }
             }
             .navigationTitle("Errori Salvati")
