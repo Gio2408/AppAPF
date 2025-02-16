@@ -5,18 +5,23 @@ struct ScoreView: View {
     @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
-        ZStack { // Inizia ZStack per lo sfondo
-            Image("road2") // Immagine di sfondo
-                .resizable() // Rendi l'immagine ridimensionabile
-                .scaledToFill() // Scala l'immagine per riempire lo spazio
-                .opacity(0.8) // Opacità dello sfondo (opzionale, se vuoi renderlo semi-trasparente)
-                .ignoresSafeArea() // Assicura che lo sfondo si estenda sotto la safe area
+        
             
             NavigationView {
+                ZStack { // Inizia ZStack per lo sfondo
+                    Image("road2") // Immagine di sfondo
+                        .resizable() // Rendi l'immagine ridimensionabile
+                        .scaledToFill() // Scala l'immagine per riempire lo spazio
+                        //.opacity(0.75) // Opacità dello sfondo (opzionale, se vuoi renderlo semi-trasparente)
+                        .blur(radius: 5)
+                        .ignoresSafeArea() // Assicura che lo sfondo si estenda sotto la safe area
+                        
                 ScrollView {
-                    VStack {
+                    VStack{
+                        Spacer()
+                            .frame(height: 90)
                         /// QUIZ UNO - DA AGGIORNARE
-                        VStack(alignment: .leading, spacing: 10) {
+                        VStack(alignment: .leading, spacing: 5) {
                             Text("Quiz uno: \(scoreManager.score.quiz)")
                                 .font(.title2)
                                 .fontWeight(.semibold)
@@ -41,13 +46,17 @@ struct ScoreView: View {
                             // Barra di progresso QUIZ UNO
                             ProgressView(value: Double(scoreManager.score.totalScore), total: Double(scoreManager.score.totalAnswers))
                                 .progressViewStyle(LinearProgressViewStyle())
-                                .padding(.bottom, 40)
+                                .padding(.bottom, 20)
                         }
-                        .padding(.horizontal)
+                        .padding()
+                        .background(Color.white.opacity(0.9))
+                        .cornerRadius(10)
+                        .shadow(color: .black, radius: 3)
+                        .padding()
                         
                         
                         /// QUIZ DUE - DA AGGIORNARE
-                        VStack(alignment: .leading, spacing: 10) {
+                        VStack(alignment: .leading, spacing: 5) {
                             Text("Quiz due: \(scoreManager.score.quiz)")
                                 .font(.title2)
                                 .fontWeight(.semibold)
@@ -71,13 +80,17 @@ struct ScoreView: View {
                             // Barra di progresso quiz DUE
                             ProgressView(value: Double(scoreManager.score.totalScore), total: Double(scoreManager.score.totalAnswers))
                                 .progressViewStyle(LinearProgressViewStyle())
-                                .padding(.bottom, 40)
+                                .padding(.bottom, 20)
                         }
-                        .padding(.horizontal)
+                        .padding()
+                        .background(Color.white.opacity(0.9))
+                        .cornerRadius(10)
+                        .shadow(color: .black, radius: 3)
+                        .padding()
                         
                         
                         /// QUIZ TRE - DA AGGIORNARE
-                        VStack(alignment: .leading, spacing: 10) {
+                        VStack(alignment: .leading, spacing: 5) {
                             Text("Quiz tre: \(scoreManager.score.quiz)")
                                 .font(.title2)
                                 .fontWeight(.semibold)
@@ -103,15 +116,29 @@ struct ScoreView: View {
                                 .progressViewStyle(LinearProgressViewStyle())
                                 .padding(.bottom, 20)
                         }
-                        .padding(.horizontal)
+                        .padding()
+                        .background(Color.white.opacity(0.9))
+                        .cornerRadius(10)
+                        .shadow(color: .black, radius: 3)
+                        .padding()
                     }
                     .onAppear {
                         scoreManager.loadScore()
                         scoreManager.loadAnswers()
                     }
-                    .padding(.horizontal)
+                    
                 }
                 .navigationTitle("Score")
+                /*.toolbar {
+                            ToolbarItem(placement: .principal) {
+                                
+                                            Text("Score")
+                                                .font(.largeTitle)
+                                                .fontWeight(.semibold)
+                                
+                                        }
+                                    }*/
+                //.navigationBarTitleDisplayMode(.inline)
             }
             .background(Color.clear)
         }
