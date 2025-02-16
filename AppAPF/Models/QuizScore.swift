@@ -14,7 +14,7 @@ struct QuizScore: Observable {
     var totalAnswers: Int   // Risposte totali (es. 10)
     
     // Inizializzazione con il tipo di quiz e il punteggio
-    init(quiz: String, totalScore: Int, totalAnswers: Int) {
+    init(quiz: String, totalScore: Int = 0, totalAnswers: Int) {
         self.quiz = quiz
         self.totalScore = totalScore
         self.totalAnswers = totalAnswers

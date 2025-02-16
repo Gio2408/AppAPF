@@ -8,27 +8,73 @@ struct ScoreView: View {
         NavigationView {
                 ScrollView {
                     VStack {
-                                Text("Punteggio Totale Salvato:")
-                                    .font(.title)
-                        Text("\(scoreManager.score.totalScore)") // Mostra il punteggio da ScoreManager
-                                    .font(.largeTitle)
-                                    .fontWeight(.bold)
-                            }
+                        Button(action: { // reinizializza a 0 lo score
+                            scoreManager.score.totalScore = 0
+                            scoreManager.saveScore()
+                            scoreManager.score.totalAnswers = 0
+                            scoreManager.saveAnswers()
+                            
+                        }) {
+                            Text("Elimina")
+                        }
+                        // Mostra il punteggio del primo quiz
+                        VStack(alignment: .leading, spacing: 10) {
+                            Text("Quiz uno: \(scoreManager.score.quiz)")
+                                .font(.title2)
+                                .fontWeight(.semibold)
+                            
+                            Text("Punteggio: \(scoreManager.score.totalScore)/\(scoreManager.score.totalAnswers)")
+                                .font(.headline)
+                                .foregroundColor(.green)
+                                .padding(.bottom, 20)
+                            
+                            // Barra di progresso
+                            ProgressView(value: Double(scoreManager.score.totalScore), total: Double(scoreManager.score.totalAnswers))
+                                .progressViewStyle(LinearProgressViewStyle())
+                                .padding(.bottom, 40)
+                        }
+                        .padding(.horizontal)
+                        
+                        // Punteggio del secondo quiz DA AGGIORNARE
+                        VStack(alignment: .leading, spacing: 10) {
+                            Text("Quiz due: \(scoreManager.score.quiz)")
+                                .font(.title2)
+                                .fontWeight(.semibold)
+                            
+                            Text("Punteggio: \(scoreManager.score.totalScore)/\(scoreManager.score.totalAnswers)")
+                                .font(.headline)
+                                .foregroundColor(.green)
+                                .padding(.bottom, 20)
+                            
+                            // Barra di progresso
+                            ProgressView(value: Double(scoreManager.score.totalScore), total: Double(scoreManager.score.totalAnswers))
+                                .progressViewStyle(LinearProgressViewStyle())
+                                .padding(.bottom, 40)
+                        }
+                        .padding(.horizontal)
+                        
+                        // Punteggio del terzo quiz DA AGGIORNARE
+                        VStack(alignment: .leading, spacing: 10) {
+                            Text("Quiz due: \(scoreManager.score.quiz)")
+                                .font(.title2)
+                                .fontWeight(.semibold)
+                            
+                            Text("Punteggio: \(scoreManager.score.totalScore)/\(scoreManager.score.totalAnswers)")
+                                .font(.headline)
+                                .foregroundColor(.green)
+                                .padding(.bottom, 20)
+                            
+                            // Barra di progresso
+                            ProgressView(value: Double(scoreManager.score.totalScore), total: Double(scoreManager.score.totalAnswers))
+                                .progressViewStyle(LinearProgressViewStyle())
+                                .padding(.bottom, 20)
+                        }
+                        .padding(.horizontal)
+                    }
                             .onAppear {
                                 scoreManager.loadScore() // **AGGIUNGI QUI: Carica il punteggio quando la vista appare**
-                                print("ScoreView is appeared, loaded score again just to be sure: \(scoreManager.score.totalScore)") // Debug
+                                scoreManager.loadAnswers()
                             }
-                        /*VStack {
-                                    // Titolo della schermata
-                                    Text("Punteggi dei Quiz")
-                                        .font(.largeTitle)
-                                        .fontWeight(.bold)
-                                        .padding()
-                                Text("\nScoreManager \(ObjectIdentifier(scoreManager))") // AGGIUNGI QUESTO PRINT
-                                                        Text("\n\(scoreManager.score.totalScore) \(scoreManager.score.totalAnswers == 1 ? "risposta" : "risposte")")
-
-                                
-                            }*/
                             .padding(.horizontal)
                     }
                     .navigationTitle("Score")
@@ -36,12 +82,12 @@ struct ScoreView: View {
     }
 }
 
-/*struct ScoreView_Previews: PreviewProvider {
+struct ScoreView_Previews: PreviewProvider {
     static var previews: some View {
         ScoreView()
             .environmentObject(ScoreManager()) // Fornisci l'environment object!
     }
-}*/
+}
 
 
 /* COPIA BODY
