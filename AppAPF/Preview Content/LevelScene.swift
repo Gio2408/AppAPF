@@ -16,6 +16,7 @@ class LevelScene: SKScene {
     var correctSequenceLevel2: [String] = ["car1", "car2", "car3", "bumbleBee"]
     var indexCorrectSequence: Int = 0
     var isTouched: [Int] = [0, 0, 0, 0]
+    var infoButtonIsTouched: Bool = false
     
     override func didMove(to view: SKView) {
         // Inizializza gli sprite con il nome definito nell'editor di SpriteKit
@@ -53,11 +54,23 @@ class LevelScene: SKScene {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else { return }
         let location = touch.location(in: self)
-        _ = atPoint(location)
-        
-        infoButton?.alpha = 1.0
-        
+        let node = atPoint(location)
+
+        if node == infoButton {
+            // Se infoButton non è stato toccato prima, mostra l'info
+            if !infoButtonIsTouched {
+                infoButton?.alpha = 1.0
+                info.run(SKAction.fadeIn(withDuration: 0.3))
+                infoButtonIsTouched = true  // Imposta il flag a true
+            } else {
+                // Se infoButton è stato già toccato, nascondi l'info
+                info.run(SKAction.fadeOut(withDuration: 0.3))
+                infoButton?.alpha = 1.0  // Rendi visibile di nuovo il bottone
+                infoButtonIsTouched = false  // Imposta il flag a false
+            }
+        }
     }
+
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else { return }
@@ -65,16 +78,9 @@ class LevelScene: SKScene {
         let node = atPoint(location)
         
         if node == infoButton {
-                infoButton?.alpha = 0.5
-                
-                if let info = info {
-                    let fadeIn = SKAction.fadeIn(withDuration: 0.3)
-                    let fadeOut = SKAction.fadeOut(withDuration: 0.3)
-                    let delay = SKAction.wait(forDuration: 5.0) // L'immagine rimane visibile per 3 secondi
-                    let sequence = SKAction.sequence([fadeIn, delay, fadeOut])
-                    info.run(sequence)
-                }
-            }
+            infoButton?.alpha = 0.5
+        }
+        
         
         switch numberLevel {
         case 1:

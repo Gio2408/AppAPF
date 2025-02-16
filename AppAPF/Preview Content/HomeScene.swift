@@ -7,6 +7,7 @@ class HomeScene: SKScene {
     var quizButton = SKSpriteNode()
     
     var onCarButtonTapped: (() -> Void)? // Closure per comunicare con SwiftUI
+    var onExitTapped: (() -> Void)? // Closure per fermare l'audio quando esci
     
     override func didMove(to view: SKView) {
         road = childNode(withName: "road") as! SKSpriteNode
@@ -20,14 +21,12 @@ class HomeScene: SKScene {
         let node = atPoint(location)
         
         if node == carButton {
-            carButton.alpha = 0.5 // Rendi semi trasparente quando premuto
-            run(SKAction.playSoundFileNamed("car-engine.mp3", waitForCompletion: false))
+            carButton.alpha = 0.5
         }
         
         if node == quizButton {
-            quizButton.alpha = 0.5 // Rendi semi trasparente quando premuto
+            quizButton.alpha = 0.5
         }
-
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -35,14 +34,12 @@ class HomeScene: SKScene {
         let location = touch.location(in: self)
         let node = atPoint(location)
         
-        // Ripristina l'opacità
         carButton.alpha = 1.0
         quizButton.alpha = 1.0
         
-        // Controlla quale pulsante è stato premuto
         if node == carButton {
             print("🚗 Car button tapped")
-            onCarButtonTapped?() // Trigger closure to transition to LevelScene
+            onCarButtonTapped?() // Passa alla LevelScene
         }
         
         if node == quizButton {
@@ -50,9 +47,8 @@ class HomeScene: SKScene {
             openSwiftUIView()
         }
     }
-    
+
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        // Se il tocco viene annullato, ripristina l'opacità
         carButton.alpha = 1.0
         quizButton.alpha = 1.0
     }
