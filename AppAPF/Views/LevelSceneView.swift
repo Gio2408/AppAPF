@@ -53,16 +53,33 @@ struct LevelSceneView: View {
                 Spacer()
 
                 // Mostra il pulsante "Continue" se il livello è completato
-                if isLevelComplete {
-                    Button("Continue") {
+                if !isLevelComplete {
+                    Button(action: {
                         isInLevelScene = false  // Torna alla ContentView
                         isLevelComplete = false
+                    }) {
+                        Text("Continue")
+                            .font(.title)
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 40)
+                            .padding(.vertical, 15)
+                            .background(
+                                LinearGradient(
+                                    gradient: Gradient(colors: [Color.green, Color.gray]),
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                )
+                            )
+                            .clipShape(Capsule())
+                            .shadow(color: Color.black.opacity(0.3), radius: 10, x: 5, y: 5)
+                            .overlay(
+                                Capsule()
+                                    .stroke(Color.white, lineWidth: 2)
+                            )
                     }
-                    .font(.title)
-                    .foregroundColor(.green)
                     .padding()
-                    .background(Capsule().fill(Color.white).shadow(radius: 10))
                 }
+
             }
         }
         .transition(.opacity)
