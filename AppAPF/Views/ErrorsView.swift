@@ -68,7 +68,7 @@ struct ErrorsView: View {
                 
                 
             }
-            .navigationTitle("Saved Errors")
+            .navigationTitle("Mistakes")
         }
         
     }
@@ -79,12 +79,17 @@ struct ErrorsView: View {
 
 struct ErrorsView_Previews: PreviewProvider {
     static var previews: some View {
-        // Creo degli errori inventati
-        let errorManager = ErrorManager()
+        let errorManager = ErrorManager() // Crea un'istanza di ErrorManager
+
+        // Aggiungi 3 errori di esempio
         errorManager.errors = [
+            QuizError(question: "Qual è la capitale d'Italia?", correctAnswer: "Roma", userAnswer: "Milano"),
+            QuizError(question: "Chi ha dipinto la Gioconda?", correctAnswer: "Leonardo da Vinci", userAnswer: "Michelangelo"),
+            QuizError(question: "In che anno è caduto il Muro di Berlino?", correctAnswer: "1989", userAnswer: "1991")
         ]
-        
+
+        errorManager.saveErrors()
         return ErrorsView()
-            .environmentObject(errorManager)
+            .environmentObject(errorManager) // Inietta errorManager nell'ambiente
     }
 }
