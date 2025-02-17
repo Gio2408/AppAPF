@@ -1,8 +1,3 @@
-//  ErrorsView.swift
-//  AppAPF
-//  Created by Michele Vassallo Todaro on 10/02/25.
-
-
 import SwiftUI
 
 struct ErrorsView: View {
@@ -16,11 +11,11 @@ struct ErrorsView: View {
                     List {
                         ForEach(errorManager.errors) { error in
                             VStack(alignment: .leading) {
-                                Text(error.question)
+                                Text(error.question) // Question
                                     .font(.headline)
-                                Text("Risposta corretta: \(error.correctAnswer)")
+                                Text("Correct Answer: \(error.correctAnswer)") // Correct Answer
                                     .foregroundColor(.green)
-                                Text("Tua risposta: \(error.userAnswer)")
+                                Text("Your Answer: \(error.userAnswer)") // Your Answer
                                     .foregroundColor(.red)
                             }
                             .padding()
@@ -28,7 +23,7 @@ struct ErrorsView: View {
                         }
                     }
                 }
-                .navigationTitle("Saved Errors") // Title for the navigation bar
+                .navigationTitle("Saved Errors") // Saved Errors
                 Button(action: { errorManager.errors.removeAll()
                 }) {
                     Image(systemName: "trash")
@@ -52,18 +47,14 @@ struct ErrorsView: View {
 
 struct ErrorsView_Previews: PreviewProvider {
     static var previews: some View {
-        // Creo degli errori inventati
         let errorManager = ErrorManager()
         errorManager.errors = [
-            QuizError(question: "Incrocio numero: 3", correctAnswer: "wait", userAnswer: "Go"),
-            //poi mettiamo una variabile che si collega a QuizView
-            QuizError(question: "Incrocio numero X", correctAnswer: "Go", userAnswer: "wait"),
-            QuizError(question: "Incrocio numero: 3", correctAnswer: "wait", userAnswer: "Go"),
-            //poi mettiamo una variabile che si collega a QuizView
-            QuizError(question: "Incrocio numero X", correctAnswer: "Go", userAnswer: "wait"),
-            QuizError(question: "Incrocio numero: 3", correctAnswer: "wait", userAnswer: "Go"),
-            //poi mettiamo una variabile che si collega a QuizView
-            QuizError(question: "Incrocio numero X", correctAnswer: "Go", userAnswer: "wait")
+            QuizError(question: "Intersection number: 3", correctAnswer: "wait", userAnswer: "Go"),
+            QuizError(question: "Intersection number X", correctAnswer: "Go", userAnswer: "wait"),
+            QuizError(question: "Intersection number: 3", correctAnswer: "wait", userAnswer: "Go"),
+            QuizError(question: "Intersection number X", correctAnswer: "Go", userAnswer: "wait"),
+            QuizError(question: "Intersection number: 3", correctAnswer: "wait", userAnswer: "Go"),
+            QuizError(question: "Intersection number X", correctAnswer: "Go", userAnswer: "wait")
         ]
         
         return ErrorsView()

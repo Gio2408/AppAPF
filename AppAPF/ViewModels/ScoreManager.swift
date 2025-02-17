@@ -8,9 +8,12 @@ import SwiftUI
 
 class ScoreManager: ObservableObject {
     
-    @Published var currentQuestion: Int // Questa variabile serve per andare a definire la domanda attuale, in modo da confrontarla con il numero delle domande totali
-    @Published var mTotalScore: Int // variabile momentanea dello score del giocatore
-    @Published var score : QuizScore //variabile-struttura di tipo QuizScore che serve a prendere i punteggi da mettere nello score.                                                Variabili in QuizScore:                                                                                                                     - totalScore: numero di risposte corrette                                                                                                - totalAnswer: numero di risposte totali
+    @Published var currentQuestion: Int // This variable is used to define the current question, so it can be compared with the total number of questions
+    @Published var mTotalScore: Int // Temporary variable for the player's score
+    @Published var score : QuizScore // Variable-structure of type QuizScore used to get the scores to put in the score.
+                                    // Variables in QuizScore:
+                                    // - totalScore: number of correct answers
+                                    // - totalAnswers: number of total answers
     
     let scoreKey = "totalScore"
     let answersKey = "totalAnswers"
@@ -23,16 +26,16 @@ class ScoreManager: ObservableObject {
         loadAnswers()
     }
     
-    // FUNZIONI INCREMENT
-    func incrementQuestion(){ // aggiorna il contatore della domanda corrente
+    // INCREMENT FUNCTIONS
+    func incrementQuestion(){ // Updates the current question counter
         self.currentQuestion += 1
     }
     
-    func incrementScore(){ // contatore delle risposte corrette
+    func incrementScore(){ // Counter for correct answers
         mTotalScore += 1
     }
     
-    //FUNZIONI PER SCORE
+    // FUNCTIONS FOR SCORE
     func saveScore(){
         score.totalScore = mTotalScore
         UserDefaults.standard.set(score.totalScore, forKey: scoreKey)
@@ -43,7 +46,7 @@ class ScoreManager: ObservableObject {
         score.totalScore = savedScore
     }
     
-    // FUNZIONI RESET
+    // RESET FUNCTIONS
     
     func resetQuestion(){
         self.currentQuestion = 0
@@ -53,7 +56,7 @@ class ScoreManager: ObservableObject {
         self.mTotalScore = 0
     }
     
-    // FUNZIONI PER IL TOTALE
+    // FUNCTIONS FOR TOTAL ANSWERS
     func saveAnswers(){
         UserDefaults.standard.set(score.totalAnswers, forKey: answersKey)
         print("saveAnswers: TA = \(score.totalAnswers)")

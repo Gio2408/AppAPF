@@ -3,10 +3,9 @@ import SpriteKit
 import AVFoundation
 
 struct LevelSceneView: View {
-    @Binding var isInLevelScene: Bool  // Stato per tornare alla HomeView
-    @State private var showExitConfirmation = false  // Stato per mostrare il popup
-    @State private var audioPlayer: AVAudioPlayer?  // Per la gestione dell'audio
-    @Binding var isLevelComplete: Bool  // Stato per monitorare il completamento del livello
+    @Binding var isInLevelScene: Bool // State to return to HomeView
+    @State private var showExitConfirmation = false // State to show the popup
+    @State private var audioPlayer: AVAudioPlayer? // For audio management
     
     var scene: SKScene? {
         guard let scene = SKScene(fileNamed: "LevelScene") else {
@@ -39,7 +38,7 @@ struct LevelSceneView: View {
             VStack {
                 HStack {
                     Button(action: {
-                        showExitConfirmation = true  // Mostra il popup di conferma
+                        showExitConfirmation = true // Show the confirmation popup
                     }) {
                         Image(systemName: "arrow.left.circle.fill")
                             .resizable()
@@ -69,34 +68,33 @@ struct LevelSceneView: View {
         .alert("Are you sure you want to exit?", isPresented: $showExitConfirmation) {
             Button("Cancel", role: .cancel) { }
             Button("Exit", role: .destructive) {
-                stopSound()  // Ferma il suono quando esci dalla scena
-                isInLevelScene = false  // Torna alla HomeView
-                isLevelComplete = false
+                stopSound() // Stop the sound when exiting the scene
+                isInLevelScene = false // Return to HomeView
             }
         }
         .onAppear {
-            playSound()  // Avvia il suono quando entra in LevelScene
+            playSound() // Start the sound when entering LevelScene
         }
         .onDisappear {
-            stopSound()  // Ferma il suono quando esce dalla LevelScene
+            stopSound() // Stop the sound when exiting LevelScene
         }
     }
 
-    // Funzione per riprodurre il suono
+    // Function to play the sound
     func playSound() {
         guard let url = Bundle.main.url(forResource: "car-engine", withExtension: "mp3") else {
-            print("Errore: File audio non trovato")
+            print("Error: Audio file not found")
             return
         }
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: url)
             audioPlayer?.play()
         } catch {
-            print("Errore nella riproduzione del suono: \(error.localizedDescription)")
+            print("Error playing sound: \(error.localizedDescription)")
         }
     }
 
-    // Funzione per fermare il suono
+    // Function to stop the sound
     func stopSound() {
         audioPlayer?.stop()
         audioPlayer = nil

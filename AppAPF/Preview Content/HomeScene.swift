@@ -6,13 +6,13 @@ class HomeScene: SKScene {
     var carButton = SKSpriteNode()
     var quizButton = SKSpriteNode()
     
-    var onCarButtonTapped: (() -> Void)? // Closure per comunicare con SwiftUI
-    var onExitTapped: (() -> Void)? // Closure per fermare l'audio quando esci
+    var onCarButtonTapped: (() -> Void)?
+    var onExitTapped: (() -> Void)?
     
     override func didMove(to view: SKView) {
         road = childNode(withName: "road") as! SKSpriteNode
         carButton = road.childNode(withName: "carButton") as! SKSpriteNode
-        quizButton = road.childNode(withName: "quizButton1") as! SKSpriteNode
+        quizButton = road.childNode(withName: "quizButton") as! SKSpriteNode
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -39,7 +39,7 @@ class HomeScene: SKScene {
         
         if node == carButton {
             print("🚗 Car button tapped")
-            onCarButtonTapped?() // Passa alla LevelScene
+            onCarButtonTapped?()
         }
         
         if node == quizButton {

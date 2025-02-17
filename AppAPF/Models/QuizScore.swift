@@ -9,11 +9,11 @@
 import Foundation
 
 struct QuizScore: Observable {
-    var quiz: String        // Tipo del quiz (es. "Quiz Incroci")
-    var totalScore: Int     // Risposte giuste (es. 2)
-    var totalAnswers: Int   // Risposte totali (es. 10)
+    var quiz: String        
+    var totalScore: Int
+    var totalAnswers: Int
     
-    // Inizializzazione con il tipo di quiz e il punteggio
+  
     init(quiz: String, totalScore: Int = 0, totalAnswers: Int) {
         self.quiz = quiz
         self.totalScore = totalScore

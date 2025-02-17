@@ -5,7 +5,7 @@ struct QuizView: View {
     @Binding var isInQuizView: Bool
     @EnvironmentObject var errorManager: ErrorManager
     @EnvironmentObject var scoreManager: ScoreManager
-    @Environment(\.presentationMode) var presentationMode //per abiltare il dismiss della scene
+    @Environment(\.presentationMode) var presentationMode // To enable scene dismissal
     @State private var selectedAnswer: String?
     @State private var errorMessage: String?
     
@@ -29,10 +29,10 @@ struct QuizView: View {
         QuizTurn(question: "A red traffic light allows you to turn right with caution, giving way to pedestrians.", correctAnswer: "F", imageName: "quiz10")
     ]
     
-    func checkAnswer(turn: QuizTurn) { // turn: variabile che serve per la funzione, in modo che non dia errore (turn = quizTurns)
-        if scoreManager.currentQuestion == 0 { // If: re-inizializzare tutte le variabili per sicurezza
+    func checkAnswer(turn: QuizTurn) { // turn: variable used for the function, so it doesn't give an error (turn = quizTurns)
+        if scoreManager.currentQuestion == 0 { // If: re-initialize all variables for safety
             scoreManager.resetScore()
-            errorManager.errors.removeAll() // Rimuove tutti gli errori precedenti, così da far vedere solo quelli appena commessi
+            errorManager.errors.removeAll() // Removes all previous errors, so only the newly made ones are shown
         }
         if selectedAnswer != turn.correctAnswer {
             // Add the error if the answer is wrong
@@ -42,15 +42,15 @@ struct QuizView: View {
             
         } else {
             errorMessage = "Correct answer!"
-            scoreManager.incrementScore() // tiene il conteggio del numero delle risposte corrette
+            scoreManager.incrementScore() // Keeps count of the number of correct answers
         }
         
-        scoreManager.incrementQuestion() // tiene il conteggio della domanda corrente, per confrontarla dopo
+        scoreManager.incrementQuestion() // Keeps count of the current question, to compare later
         
-        if scoreManager.currentQuestion == quizTurns.count { // confronta la domanda corrente con il totale delle domande
-            scoreManager.score.totalAnswers = quizTurns.count // assegna il valore delle domande totali a totalAnswers, per riportarlo nella ScoreView
-            scoreManager.saveAnswers() // salva il numero totale delle domande
-            if scoreManager.mTotalScore > scoreManager.score.totalScore { //if necessario: aggiorna lo score delle risposte giuste solo se sono di più di quelle precedenti
+        if scoreManager.currentQuestion == quizTurns.count { // Compares the current question with the total number of questions
+            scoreManager.score.totalAnswers = quizTurns.count // Assigns the value of the total questions to totalAnswers, to display it in ScoreView
+            scoreManager.saveAnswers() // Saves the total number of questions
+            if scoreManager.mTotalScore > scoreManager.score.totalScore { // If necessary: updates the score of correct answers only if they are more than the previous ones
                 scoreManager.saveScore()
             }
         }
@@ -62,9 +62,9 @@ struct QuizView: View {
             VStack {
                 // Back button in the top-left corner using NavigationLink
                 HStack {
-                    Button(action: { //questo  bottone è diverso
+                    Button(action: { // This button is different
                         withAnimation(.easeInOut(duration: 0.5)) {
-                            isInQuizView = false  // Torna a ContentView con animazione fade
+                            isInQuizView = false // Return to ContentView with fade animation
                             print ("Back to HomeView")
                             presentationMode.wrappedValue.dismiss()
                         }
@@ -83,9 +83,9 @@ struct QuizView: View {
                 .padding(.leading, 10)
                 
 
-                if  scoreManager.currentQuestion < quizTurns.count {
+                if scoreManager.currentQuestion < quizTurns.count {
                     let turn = quizTurns[scoreManager.currentQuestion]
-                    Image(quizTurns[scoreManager.currentQuestion].imageName) // entra nell'array in posizione attuale rispetto la domanda e di questa posizione prende l'immagine
+                    Image(quizTurns[scoreManager.currentQuestion].imageName) // Enters the array at the current position relative to the question and takes the image from this position
                         .resizable()
                         .scaledToFit()
                         .frame(width: 250, height: 250)
@@ -155,7 +155,6 @@ struct QuizView: View {
             .cornerRadius(10)
             .shadow(radius: 10)
             
-        
         }
         
         

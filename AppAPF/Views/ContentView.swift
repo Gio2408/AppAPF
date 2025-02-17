@@ -11,12 +11,12 @@ struct ContentView: View {
     @State private var isShowingPreHomeScene = true
     @State private var isInErrorsView = false
     @State private var isInScoreView = false
-    @State private var dragOffset: CGFloat = 0  // Per gestire il gesto di swipe
+    @State private var dragOffset: CGFloat = 0  // To manage swipe gesture
     @State private var audioPlayer: AVAudioPlayer?
-    @State private var path = NavigationPath() // NavigationPath per la navigazione
+    @State private var path = NavigationPath() // NavigationPath for navigation
 
     var body: some View {
-        NavigationStack(path: $path) { // NavigationStack principale
+        NavigationStack(path: $path) { // Main NavigationStack
             ZStack {
                 // Display PreHomeScene if necessary
                 if isShowingPreHomeScene {
@@ -39,13 +39,12 @@ struct ContentView: View {
                             .transition(.opacity)
                     }
                 }
-                
-                
+
                 // Home Scene Buttons (Quiz, Errors, Score)
                 if !isShowingPreHomeScene {
                     VStack {
                         Spacer()
-                        VStack(spacing: 16) { // Mettiamo i pulsanti in colonna con spazio tra loro
+                        VStack(spacing: 16) { // Place buttons in a column with space between them
                             Button(action: {
                                 path.append("errors")
                             }) {
@@ -54,7 +53,7 @@ struct ContentView: View {
                                     .scaledToFit()
                                     .frame(width: 45, height: 45)
                                     .foregroundColor(.white)
-                                
+
                             }
                             Button(action: {
                                 path.append("score")
@@ -68,12 +67,12 @@ struct ContentView: View {
                         }
                         .padding()
                         .position(x: 40, y: UIScreen.main.bounds.height - 130)
-                        // Hide the buttons when in any other view
+                        // Hide buttons when in any other view
                         .opacity(isInScoreView || isInErrorsView || isInQuizView || isInLevelScene ? 0 : 1)
                     }
                 }
             }
-            .navigationDestination(for: String.self) { destination in // Gestione delle destinazioni
+            .navigationDestination(for: String.self) { destination in // Navigation destination management
                 switch destination {
                 case "errors":
                     ErrorsView()
@@ -82,11 +81,11 @@ struct ContentView: View {
                     ScoreView()
                         .environmentObject(scoreManager)
                 default:
-                    EmptyView() // Gestisci eventuali altre destinazioni
+                    EmptyView() // Handle other possible destinations
                 }
             }
             .onAppear {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // modifica tempo di permanenza della schermata
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) { // modify the duration of the screen display
                     withAnimation {
                         isShowingPreHomeScene = false
                     }
@@ -94,8 +93,7 @@ struct ContentView: View {
             }
         }
     }
-    
-    
+
     // Function to play sound when the PreHomeScene is shown
     func playPreHomeSound() {
         guard let url = Bundle.main.url(forResource: "preHome", withExtension: "mp3") else {
@@ -113,7 +111,6 @@ struct ContentView: View {
 }
 
 
-    
 #Preview {
     ContentView()
 }

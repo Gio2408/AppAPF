@@ -6,8 +6,8 @@ struct HomeSceneView: View {
     @State private var isVisible: Bool = false  // State to control fade-in animation
 
     var scene: HomeScene {
-        let scene = HomeScene(fileNamed: "HomeScene")!  // Load the HomeScene from the file
-        scene.scaleMode = .aspectFill  // Set the scale mode for the scene
+        let scene = HomeScene(fileNamed: "HomeScene")!
+        scene.scaleMode = .aspectFill
         scene.onCarButtonTapped = {
             withAnimation(.easeInOut(duration: 0.5)) {
                 isInLevelScene = true  // Change to LevelScene on button tap with animation
@@ -18,12 +18,12 @@ struct HomeSceneView: View {
 
     var body: some View {
         ZStack(alignment: .topLeading) {
-            SpriteView(scene: scene)  // Display the SpriteKit scene
-                .ignoresSafeArea()  // Ignore safe area to make the scene fill the screen
-                .opacity(isVisible ? 1 : 0)  // Initial opacity 0, will become 1 after fade-in
+            SpriteView(scene: scene)
+                .ignoresSafeArea()
+                .opacity(isVisible ? 1 : 0)
                 .onAppear {
                     withAnimation(.easeInOut(duration: 0.5)) {
-                        isVisible = true  // Trigger the fade-in animation when the view appears
+                        isVisible = true
                     }
                 }
             Text("Select Level")
