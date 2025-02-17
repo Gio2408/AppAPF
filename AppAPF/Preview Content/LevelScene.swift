@@ -1,8 +1,9 @@
 import SwiftUI
 import SpriteKit
+import AVFoundation
 
 class LevelScene: SKScene {
-    
+    @State private var audioPlayer: AVAudioPlayer?
     var incrocioCroce: SKSpriteNode?
     var bumblebee: SKSpriteNode?
     var car1: SKSpriteNode?
@@ -10,7 +11,6 @@ class LevelScene: SKScene {
     var car3: SKSpriteNode?
     var infoButton: SKSpriteNode?
     var info: SKSpriteNode!
-    var numberLevel: Int = 1 // Inizia dal livello 1
     var currentSequenceLevel: [String] = []
     var correctSequenceLevel1: [String] = ["bumblebee", "car3", "car2", "car1"]
     var correctSequenceLevel2: [String] = ["car1", "car2", "car3", "bumbleBee"]
@@ -19,6 +19,8 @@ class LevelScene: SKScene {
     var infoButtonIsTouched: Bool = false
     
     override func didMove(to view: SKView) {
+        try? AVAudioSession.sharedInstance().setCategory(.ambient, mode: .default, options: [])
+            try? AVAudioSession.sharedInstance().setActive(true)
         // Inizializza gli sprite con il nome definito nell'editor di SpriteKit
         incrocioCroce = childNode(withName: "incrocioCroce") as? SKSpriteNode
         infoButton = childNode(withName: "infoButton") as? SKSpriteNode
@@ -29,22 +31,10 @@ class LevelScene: SKScene {
         car2 = childNode(withName: "car2") as? SKSpriteNode
         car3 = childNode(withName: "car3") as? SKSpriteNode
         
-        setupLevel()
-    }
-    
-    
-    func setupLevel() {
-        // Inizializza la sequenza corretta per il livello attuale
-        updateSequence()
-        
-        // Ripristina le posizioni delle macchine
-        resetCarsPosition(){
+        startAnimation {
             self.indexCorrectSequence = 0
         }
-        
-        // Imposta le animazioni iniziali o altre logiche di setup per il livello
-        // Ad esempio, potresti voler animare l'incrocio o eseguire altre configurazioni visive
-        print("🔧 Level \(numberLevel) setup completed!")
+    
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -81,13 +71,9 @@ class LevelScene: SKScene {
             infoButton?.alpha = 0.5
         }
         
-        
-        switch numberLevel {
-        case 1:
             if indexCorrectSequence >= correctSequenceLevel1.count {
-                print("✅ Level \(numberLevel) completed!")
+                print("✅ Level 1 completed!")
                 
-                nextLevel()
                 return
             }
             
@@ -104,6 +90,7 @@ class LevelScene: SKScene {
                     
                 } else {
                     print("⛔ It's not Bumblebee's turn yet!")
+                    playClacson()
                 }
             }
             // Tocca Car1
@@ -113,11 +100,14 @@ class LevelScene: SKScene {
                     if isTouched[1] == 0 {
                         moveCar1 {
                             self.indexCorrectSequence += 1
+                            self.showLevelCompleteLabel() // Mostra il messaggio "Level Complete!"
+
                         }
                         self.isTouched[1] = 1
                     }
                 } else {
                     print("⛔ It's not Car1's turn yet!")
+                    playClacson()
                 }
             }
             
@@ -132,6 +122,7 @@ class LevelScene: SKScene {
                     }
                 } else {
                     print("⛔ It's not Car2's turn yet!")
+                    playClacson()
                 }
             }
             
@@ -144,51 +135,17 @@ class LevelScene: SKScene {
                         }
                         self.isTouched[3] = 1
                     }
+                    
                 } else {
                     print("⛔ It's not Car3's turn yet!")
+                    playClacson()
                 }
-            }
-            
-        case 2:
-            print("Nothing")
-        default:
-            print("Nothing")
         }
-        
-    }
-    
-    // Passa al livello successivo
-    func nextLevel() {
-        numberLevel += 1
-        self.isTouched[0] = 0
-        self.isTouched[1] = 0
-        self.isTouched[2] = 0
-        self.isTouched[3] = 0
-        resetCarsPosition(){
-            self.indexCorrectSequence = 0
-        }
-        // Cambia l'immagine di sfondo
-        changeBackground()
-        
-        // Ripristina le posizioni delle macchine
-       
-        
-        // Aggiorna la sequenza corretta in base al livello
-        updateSequence()
-    }
-    
-    // Cambia l'immagine di sfondo in base al livello
-    func changeBackground() {
-        guard let incrocioCroce = incrocioCroce else { return }
-        let textureName = "incrocioCroce_\(numberLevel)" // Usa immagini diverse per i livelli
-        let newTexture = SKTexture(imageNamed: textureName)
-        incrocioCroce.texture = newTexture
     }
     
     // Ripristina la posizione delle macchine
-    func resetCarsPosition(completion: @escaping () -> Void) {
-        switch numberLevel {
-        case 1:
+    func startAnimation(completion: @escaping () -> Void) {
+        
             bumblebee?.position = CGPoint(x: 81, y: -1500) //y:-440 Posizione iniziale di Bumblebee
             car1?.position = CGPoint(x: 800, y: 80) //x:320 Posizione iniziale di Car1
             car2?.position = CGPoint(x: -80, y: 1500)//y:391
@@ -213,40 +170,19 @@ class LevelScene: SKScene {
             let moveActionCar3 = SKAction.moveBy(x: 535, y: 0, duration: 2.0)
             moveActionCar3.timingMode = .easeInEaseOut
             car3.run(moveActionCar3)
-        default:
-            bumblebee?.position = CGPoint(x: 0, y: 0)
-            car1?.position = CGPoint(x: 0, y: 0)
-        }
-        
-    }
-    
-    // Aggiorna la sequenza corretta di "go" e "wait" per ogni livello
-    func updateSequence() {
-        switch numberLevel {
-        case 1:
-            currentSequenceLevel = correctSequenceLevel1
-        default:
-            currentSequenceLevel = correctSequenceLevel1
-        }
     }
     
     // Muove Car1 orizzontalmente
     func moveCar1(completion: @escaping () -> Void) {
-        switch numberLevel {
-        case 1:
+        
             guard let car1 = car1 else { return }
             let moveAction = SKAction.moveBy(x: -1200, y: 0, duration: 2.0)
             moveAction.timingMode = .easeInEaseOut
             car1.run(moveAction, completion: completion)
-        default:
-            break
-        }
-        
     }
     
     func moveCar2(completion: @escaping () -> Void) {
-        switch numberLevel {
-        case 1:
+    
             guard let car2 = car2 else { return }
             
             let moveForward = SKAction.moveBy(x: 0, y: -2500, duration: 1.5)
@@ -255,15 +191,11 @@ class LevelScene: SKScene {
             
             let sequence = SKAction.sequence([moveForward])
             car2.run(sequence, completion: completion)
-            
-        default:
-            break
-        }
+        
     }
     
     func moveCar3(completion: @escaping () -> Void) {
-        switch numberLevel {
-        case 1:
+        
             guard let car3 = car3 else { return }
             
             let moveForward = SKAction.moveBy(x: 200, y: 0, duration: 1.5)
@@ -275,16 +207,12 @@ class LevelScene: SKScene {
             
             let sequence = SKAction.sequence([moveForward, rotateRight, moveRight])
             car3.run(sequence, completion: completion)
-        default:
-            break
-        }
+        
     }
     
     // Muove Bumblebee con una curva a destra
     func moveBumblebee(completion: @escaping () -> Void) {
         
-        switch numberLevel {
-        case 1:
             guard let bumblebee = bumblebee else { return }
             
             let moveForward = SKAction.moveBy(x: 0, y: 350, duration: 1.5)
@@ -296,8 +224,62 @@ class LevelScene: SKScene {
             
             let sequence = SKAction.sequence([moveForward, rotateRight, moveRight])
             bumblebee.run(sequence, completion: completion)
-        default:
-            break
-        }
+    }
+    
+    func showLevelCompleteLabel() {
+        playLevelComplete()
+        // Crea il messaggio di completamento
+        let label = SKLabelNode(text: "LEVEL COMPLETE!")
+        label.fontName = "AvenirNext-Bold"
+        label.fontSize = 80
+        label.fontColor = .yellow
+        label.position = CGPoint(x: 0, y: 0)
+        label.zPosition = 150
+        label.alpha = 0  // Inizialmente invisibile
+        
+        // Aggiunge un bordo nero per migliorare la leggibilità
+        let shadowLabel = SKLabelNode(text: "LEVEL COMPLETE!")
+        shadowLabel.fontName = "AvenirNext-Bold"
+        shadowLabel.fontSize = 80
+        shadowLabel.fontColor = .black
+        shadowLabel.position = CGPoint(x: 3, y: -3)  // Leggero offset per effetto ombra
+        shadowLabel.zPosition = label.zPosition - 1
+        label.addChild(shadowLabel)
+        
+        // Crea uno sfondo trasparente dietro il testo
+        let background = SKSpriteNode(color: UIColor.black.withAlphaComponent(0.7), size: CGSize(width: size.width * 0.8, height: 150))
+        background.position = CGPoint(x: size.width / 2, y: size.height / 2)
+        background.zPosition = label.zPosition - 1
+        background.alpha = 0  // Inizialmente invisibile
+        
+        addChild(background)
+        addChild(label)
+        
+        // Animazioni
+        let fadeIn = SKAction.fadeIn(withDuration: 0.5)
+        let scaleUp = SKAction.scale(to: 1.2, duration: 0.3)
+        let scaleDown = SKAction.scale(to: 1.0, duration: 0.2)
+        let wait = SKAction.wait(forDuration: 2.0)
+        let fadeOut = SKAction.fadeOut(withDuration: 0.5)
+        let remove = SKAction.removeFromParent()
+        
+        // Sequenza di animazioni per il testo
+        let textAnimation = SKAction.sequence([fadeIn, scaleUp, scaleDown, wait, fadeOut, remove])
+        
+        // Sequenza di animazioni per lo sfondo
+        let backgroundAnimation = SKAction.sequence([fadeIn, wait, fadeOut, remove])
+        
+        label.run(textAnimation)
+        background.run(backgroundAnimation)
+    }
+    
+    func playLevelComplete() {
+        let soundAction = SKAction.playSoundFileNamed("levelComplete.mp3", waitForCompletion: false)
+        self.run(soundAction)
+    }
+
+    func playClacson() {
+        let soundAction = SKAction.playSoundFileNamed("clacson.mp3", waitForCompletion: false)
+        self.run(soundAction)
     }
 }
