@@ -1,3 +1,9 @@
+/**
+ cose da fare:
+     - aggiustare il salvataggio errori
+     - aggiungere il numerino che indica la pagina attuale del quiz (esempio: domanda 2/10)
+ */
+
 import SwiftUI
 
 struct QuizView: View {
@@ -17,19 +23,15 @@ struct QuizView: View {
     
     // Quiz questions and answers
     let quizTurns = [
-        QuizTurn(question: "If your car battery dies, you can jump-start the engine using cables connected to another car’s battery.", correctAnswer: "T", imageName: "image1"),
-        QuizTurn(question: "You should only change the engine oil when the warning light on the dashboard turns on.", correctAnswer: "F", imageName: "image2"),
-        QuizTurn(question: "Braking distance increases when driving on wet roads compared to dry conditions.", correctAnswer: "T", imageName: "image3"),
-        QuizTurn(question: "Braking distance increases when driving on wet roads compared to dry conditions.", correctAnswer: "T", imageName: "image3"),
-        QuizTurn(question: "Braking distance increases when driving on wet roads compared to dry conditions.", correctAnswer: "T", imageName: "image3")
+        QuizTurn(question: "DOMANDA A", correctAnswer: "T", imageName: "image1"),
+        QuizTurn(question: "DOMANDA B", correctAnswer: "F", imageName: "image2"),
+        QuizTurn(question: "DOMANDA C", correctAnswer: "T", imageName: "image3"),
+        QuizTurn(question: "DOMANDA D", correctAnswer: "F", imageName: "image3"),
+        QuizTurn(question: "DOMANDA E", correctAnswer: "T", imageName: "image3")
         
     ]
     
     func checkAnswer(turn: QuizTurn) { // turn: variabile che serve per la funzione, in modo che non dia errore (turn = quizTurns)
-        if scoreManager.currentQuestion == 0 { // If: re-inizializzare tutte le variabili per sicurezza
-            scoreManager.resetScore()
-            errorManager.errors.removeAll() // Rimuove tutti gli errori precedenti, così da far vedere solo quelli appena commessi
-        }
         if selectedAnswer != turn.correctAnswer {
             // Add the error if the answer is wrong
             let error = QuizError(question: turn.question, correctAnswer: turn.correctAnswer, userAnswer: selectedAnswer ?? "N/A")

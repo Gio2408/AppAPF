@@ -19,7 +19,7 @@ struct ScoreView: View {
                 ScrollView {
                     VStack{
                         Spacer()
-                            .frame(height: 90)
+                            .frame(height: 110)
                         /// QUIZ UNO - DA AGGIORNARE
                         VStack(alignment: .leading, spacing: 5) {
                             Text("Quiz uno: \(scoreManager.score.quiz)")
@@ -44,15 +44,20 @@ struct ScoreView: View {
                             } .padding(.bottom, 20)
                             
                             // Barra di progresso QUIZ UNO
-                            ProgressView(value: Double(scoreManager.score.totalScore), total: Double(scoreManager.score.totalAnswers))
-                                .progressViewStyle(LinearProgressViewStyle())
-                                .padding(.bottom, 20)
+                                ProgressView(value: Double(scoreManager.score.totalScore), total: Double(scoreManager.score.totalAnswers))
+                                    .progressViewStyle(LinearProgressViewStyle())
+                                    .padding(.bottom, 20)
+                                Text("\(scoreManager.score.totalScore*2)/\(scoreManager.score.totalAnswers*2) XP")
+                                    .foregroundColor(.blue)
+                                    .font(.title3)
+                                    .fontWeight(.black)
+                                    .frame(maxWidth: .infinity)
                         }
                         .padding()
                         .background(Color.white.opacity(0.9))
-                        .cornerRadius(10)
+                        .cornerRadius(15)
                         .shadow(color: .black, radius: 3)
-                        .padding()
+                        .padding(.horizontal)
                         
                         
                         /// QUIZ DUE - DA AGGIORNARE
@@ -81,10 +86,15 @@ struct ScoreView: View {
                             ProgressView(value: Double(scoreManager.score.totalScore), total: Double(scoreManager.score.totalAnswers))
                                 .progressViewStyle(LinearProgressViewStyle())
                                 .padding(.bottom, 20)
+                            Text("\(scoreManager.score.totalScore*2)/\(scoreManager.score.totalAnswers*2) XP")
+                                .foregroundColor(.blue)
+                                .font(.title3)
+                                .fontWeight(.black)
+                                .frame(maxWidth: .infinity)
                         }
                         .padding()
                         .background(Color.white.opacity(0.9))
-                        .cornerRadius(10)
+                        .cornerRadius(15)
                         .shadow(color: .black, radius: 3)
                         .padding()
                         
@@ -115,12 +125,19 @@ struct ScoreView: View {
                             ProgressView(value: Double(scoreManager.score.totalScore), total: Double(scoreManager.score.totalAnswers))
                                 .progressViewStyle(LinearProgressViewStyle())
                                 .padding(.bottom, 20)
+                            Text("\(scoreManager.score.totalScore*2)/\(scoreManager.score.totalAnswers*2) XP")
+                                .foregroundColor(.blue)
+                                .font(.title3)
+                                .fontWeight(.black)
+                                .frame(maxWidth: .infinity)
                         }
                         .padding()
                         .background(Color.white.opacity(0.9))
-                        .cornerRadius(10)
+                        .cornerRadius(15)
                         .shadow(color: .black, radius: 3)
-                        .padding()
+                        .padding(.horizontal)
+                        
+                        
                     }
                     .onAppear {
                         scoreManager.loadScore()
@@ -129,17 +146,8 @@ struct ScoreView: View {
                     
                 }
                 .navigationTitle("Score")
-                /*.toolbar {
-                            ToolbarItem(placement: .principal) {
-                                
-                                            Text("Score")
-                                                .font(.largeTitle)
-                                                .fontWeight(.semibold)
-                                
-                                        }
-                                    }*/
-                //.navigationBarTitleDisplayMode(.inline)
             }
+                
             .background(Color.clear)
         }
     }
@@ -151,67 +159,3 @@ struct ScoreView_Previews: PreviewProvider {
             .environmentObject(ScoreManager()) // Fornisci l'environment object!
     }
 }
-
-
-/* COPIA BODY
- var body: some View {
-     NavigationView {
-         ScrollView {
-             VStack {
-                 // Titolo della schermata
-                 Text("Punteggi dei Quiz")
-                     .font(.largeTitle)
-                     .fontWeight(.bold)
-                     .padding()
-
-                 // Mostra il punteggio attuale
-                 VStack(alignment: .leading, spacing: 10) {
-                     Text("Quiz attuale: \(scoreManager.score.quiz)")
-                         .font(.title2)
-                         .fontWeight(.semibold)
-                     
-                     Text("Punteggio: \(scoreManager.score.totalScore)/\(scoreManager.score.totalAnswers)")
-                         .font(.headline)
-                         .foregroundColor(.green)
-                         .padding(.bottom, 20)
-                     
-                     // Barra di progresso
-                     ProgressView(value: Double(scoreManager.score.totalScore), total: Double(scoreManager.score.totalAnswers))
-                         .progressViewStyle(LinearProgressViewStyle())
-                         .padding(.bottom, 20)
-                 }
-                 .padding(.horizontal)
-                 
-                 // Lista dei punteggi passati
-                 VStack {
-                     Text("Punteggi precedenti")
-                         .font(.title2)
-                         .fontWeight(.semibold)
-                         .padding(.top)
-
-                     // Visualizza la lista dei quiz completati
-                     List(scoreManager.completedQuizzes, id: \.quiz) { completedQuiz in
-                         HStack {
-                             VStack(alignment: .leading) {
-                                 Text(String(completedQuiz.quiz)) // Forza la conversione a String
-                                     .font(.headline)
-                                 Text("Punteggio: \(completedQuiz.totalScore)/\(completedQuiz.totalAnswers)")
-                                     .font(.subheadline)
-                                     .foregroundColor(.gray)
-                             }
-                             Spacer()
-                             Text("\(completedQuiz.totalScore)")
-                                 .font(.headline)
-                                 .foregroundColor(.green)
-                         }
-                         .padding(.vertical, 5)
-                     }
-
-                 }
-                 .padding(.horizontal)
-             }
-         }
-         .navigationTitle("Score")
-     }
- }
- */

@@ -21,20 +21,17 @@ class ErrorManager: ObservableObject {
     }
 
     // Saves the current list of errors to UserDefaults.
-    private func saveErrors() {
+    func saveErrors() {
         if let encoded = try? JSONEncoder().encode(errors) {
             UserDefaults.standard.set(encoded, forKey: key)
         }
     }
 
     // Loads previously saved errors from UserDefaults.
-    private func loadErrors() {
+    func loadErrors() {
         if let savedData = UserDefaults.standard.data(forKey: key),
            let decoded = try? JSONDecoder().decode([QuizError].self, from: savedData) {
             errors = decoded
         }
-        
-
-        
     }
 }

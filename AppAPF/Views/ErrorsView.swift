@@ -7,43 +7,70 @@ import SwiftUI
 
 struct ErrorsView: View {
     @EnvironmentObject var errorManager: ErrorManager // Access to the errorManager object
-    //@Binding var isInErrorsView: Bool // Binding to control the state of this view
 
     var body: some View {
         NavigationView {
             ZStack (alignment: .bottomTrailing){
-                VStack {
-                    List {
-                        ForEach(errorManager.errors) { error in
-                            VStack(alignment: .leading) {
-                                Text(error.question)
-                                    .font(.headline)
-                                Text("Risposta corretta: \(error.correctAnswer)")
-                                    .foregroundColor(.green)
-                                Text("Tua risposta: \(error.userAnswer)")
-                                    .foregroundColor(.red)
+                Image("road2") // Immagine di sfondo
+                    .resizable() // Rendi l'immagine ridimensionabile
+                    .scaledToFill() // Scala l'immagine per riempire lo spazio
+                    .blur(radius: 5)
+                    .ignoresSafeArea() // Assicura che lo sfondo si estenda sotto la safe area
+                ScrollView{
+                    VStack (alignment: .leading){
+                        Spacer()
+                            .frame(height: 110)
+                            ForEach(errorManager.errors) { error in
+                                VStack(alignment: .leading) {
+                                    Text(error.question)
+                                        .font(.headline)
+                                    Spacer()
+                                    Text("Risposta corretta: \(error.correctAnswer)")
+                                        .foregroundColor(.green)
+                                    Spacer()
+                                    Text("Tua risposta: \(error.userAnswer)")
+                                        .foregroundColor(.red)
+                                    Spacer()
+                                }
+                                .padding() //spazia dentro il quadrato
                             }
-                            .padding()
+                        
+                            .padding() //spazia dentro il quadrato ancora di più
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .background(Color.white.opacity(0.9))
+                            .cornerRadius(15)
+                            .shadow(color: .black, radius: 3)
                             
-                        }
+                            .padding(.horizontal, 23) //spazia dopo il quadrato
+                            .padding(.vertical, 1)
+                        
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    .onAppear {
+                        errorManager.loadErrors()
                     }
                 }
-                .navigationTitle("Saved Errors") // Title for the navigation bar
                 Button(action: { errorManager.errors.removeAll()
+                    errorManager.saveErrors()
                 }) {
                     Image(systemName: "trash")
                         .font(.largeTitle)
                         .foregroundColor(.black)
                         .frame(width: 50, height: 50)
                 }
-
+                
                 .background(Color.white.opacity(0.9))
                 .cornerRadius(22)
                 .shadow(color: .black, radius: 3)
+                .padding(EdgeInsets(top: 0, leading: 0, bottom: 90, trailing: 5))
                 .padding()
                 
+                
             }
+            .navigationTitle("Saved Errors")
         }
+        
     }
 }
 
@@ -55,15 +82,6 @@ struct ErrorsView_Previews: PreviewProvider {
         // Creo degli errori inventati
         let errorManager = ErrorManager()
         errorManager.errors = [
-            QuizError(question: "Incrocio numero: 3", correctAnswer: "wait", userAnswer: "Go"),
-            //poi mettiamo una variabile che si collega a QuizView
-            QuizError(question: "Incrocio numero X", correctAnswer: "Go", userAnswer: "wait"),
-            QuizError(question: "Incrocio numero: 3", correctAnswer: "wait", userAnswer: "Go"),
-            //poi mettiamo una variabile che si collega a QuizView
-            QuizError(question: "Incrocio numero X", correctAnswer: "Go", userAnswer: "wait"),
-            QuizError(question: "Incrocio numero: 3", correctAnswer: "wait", userAnswer: "Go"),
-            //poi mettiamo una variabile che si collega a QuizView
-            QuizError(question: "Incrocio numero X", correctAnswer: "Go", userAnswer: "wait")
         ]
         
         return ErrorsView()
