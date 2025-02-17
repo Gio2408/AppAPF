@@ -1,28 +1,28 @@
 import SwiftUI
 import SpriteKit
+import AVFoundation
 
 struct LevelSceneView: View {
-    @Binding var isInLevelScene: Bool  // State for returning to ContentView
-
+    @Binding var isInLevelScene: Bool  // Stato per tornare alla HomeView
+    @State private var showExitConfirmation = false  // Stato per mostrare il popup
+    @State private var audioPlayer: AVAudioPlayer?  // Per la gestione dell'audio
+    
     var scene: SKScene? {
-        // Attempt to load the LevelScene from a file
         guard let scene = SKScene(fileNamed: "LevelScene") else {
-            print("⚠️ Error: Unable to load LevelScene.sks")  // Error message if loading fails
+            print("⚠️ Error: Unable to load LevelScene.sks")
             return nil
         }
-        scene.size = CGSize(width: 1170, height: 2532)  // Set the size of the scene
-        scene.scaleMode = .aspectFill  // Set the scale mode for the scene
+        scene.size = CGSize(width: 1170, height: 2532)
+        scene.scaleMode = .aspectFill
         return scene
     }
 
     var body: some View {
         ZStack {
-            // If the scene is successfully loaded, display it
             if let scene = scene {
-                SpriteView(scene: scene)  // Display the SpriteKit scene
-                    .ignoresSafeArea()  // Make the scene fill the entire screen
+                SpriteView(scene: scene)
+                    .ignoresSafeArea()
             } else {
-                // Display an error message if the scene could not be loaded
                 Text("Error loading the scene")
                     .foregroundColor(.red)
             }
@@ -30,24 +30,54 @@ struct LevelSceneView: View {
             VStack {
                 HStack {
                     Button(action: {
-                        withAnimation(.easeInOut(duration: 0.5)) {
-                            isInLevelScene = false  // Transition back to ContentView with fade animation
-                        }
+                        showExitConfirmation = true  // Mostra il popup di conferma
                     }) {
-                        Image(systemName: "arrow.left.circle.fill")  // Left arrow button for navigation
+                        Image(systemName: "arrow.left.circle.fill")
                             .resizable()
                             .frame(width: 50, height: 50)
                             .foregroundColor(.white)
-                            .background(Circle().fill(Color.black.opacity(0.5)))  // Dark background for the button
+                            .background(Circle().fill(Color.black.opacity(0.5)))
                     }
                     .padding(.leading, 20)
-
-                    Spacer()  // Space between the button and the rest of the screen
+                    Spacer()
                 }
-                Spacer()  // Add some space at the bottom of the screen
+                Spacer()
             }
         }
-        .transition(.opacity)  // Apply fade-in and fade-out transition
+        .transition(.opacity)
+        .alert("Are you sure you want to exit?", isPresented: $showExitConfirmation) {
+            Button("Cancel", role: .cancel) { }
+            Button("Exit", role: .destructive) {
+                stopSound()  // Ferma il suono quando esci dalla scena
+                isInLevelScene = false  // Torna alla HomeView
+            }
+        }
+        .onAppear {
+            playSound()  // Avvia il suono quando entra in LevelScene
+        }
+        .onDisappear {
+            stopSound()  // Ferma il suono quando esce dalla LevelScene
+        }
+    }
+
+    // Funzione per riprodurre il suono
+    func playSound() {
+        guard let url = Bundle.main.url(forResource: "car-engine", withExtension: "mp3") else {
+            print("Errore: File audio non trovato")
+            return
+        }
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: url)
+            audioPlayer?.play()
+        } catch {
+            print("Errore nella riproduzione del suono: \(error.localizedDescription)")
+        }
+    }
+
+    // Funzione per fermare il suono
+    func stopSound() {
+        audioPlayer?.stop()
+        audioPlayer = nil
     }
 }
 

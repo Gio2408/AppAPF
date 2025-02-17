@@ -2,120 +2,216 @@ import SwiftUI
 
 struct ScoreView: View {
     @EnvironmentObject var scoreManager: ScoreManager
-    @Binding var isInScoreView: Bool // Binding to navigate back to the previous screen
-    @Environment(\.presentationMode) var presentationMode // Used to dismiss the view
+    @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
-        VStack {
-            HStack {
-                Button(action: {
-                    withAnimation {
-                        isInScoreView = false // Navigate back to the previous screen with animation
-                    }
-                }) {
-                    Image(systemName: "arrow.backward") // Back button
-                        .font(.title)
-                        .foregroundColor(.blue)
-                }
-                Spacer()
-            }
-            .padding()
-
-            Text("Punteggi dei Quiz") // Title
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .padding()
-
-            // Show current quiz score
-            VStack(alignment: .leading, spacing: 10) {
-                Text("Quiz attuale: \(scoreManager.score.quiz)") // Current quiz title
-                    .font(.title2)
-                    .fontWeight(.semibold)
-
-                Text("Punteggio: \(scoreManager.score.totalScore)/\(scoreManager.score.totalAnswers)") // Current score
-                    .font(.headline)
-                    .foregroundColor(.green)
-                    .padding(.bottom, 20)
-
-                // Progress bar showing the score as a fraction of total answers
-                ProgressView(value: Double(scoreManager.score.totalScore), total: Double(scoreManager.score.totalAnswers))
-                    .progressViewStyle(LinearProgressViewStyle())
-                    .padding(.bottom, 20)
-            }
-            .padding(.horizontal)
-
-            // Show previous quiz scores
-            VStack {
-                Text("Punteggi precedenti") // Previous scores section title
-                    .font(.title2)
-                    .fontWeight(.semibold)
-                    .padding(.top)
-
-                List(scoreManager.completedQuizzes, id: \.quiz) { completedQuiz in
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text(completedQuiz.quiz) // Quiz name
-                                .font(.headline)
-                            Text("Punteggio: \(completedQuiz.totalScore)/\(completedQuiz.totalAnswers)") // Previous quiz score
-                                .font(.subheadline)
-                                .foregroundColor(.gray)
-                        }
+        
+            
+            NavigationView {
+                ZStack { // Inizia ZStack per lo sfondo
+                    Image("road2") // Immagine di sfondo
+                        .resizable() // Rendi l'immagine ridimensionabile
+                        .scaledToFill() // Scala l'immagine per riempire lo spazio
+                        //.opacity(0.75) // Opacità dello sfondo (opzionale, se vuoi renderlo semi-trasparente)
+                        .blur(radius: 5)
+                        .ignoresSafeArea() // Assicura che lo sfondo si estenda sotto la safe area
+                        
+                ScrollView {
+                    VStack{
                         Spacer()
-                        Text("\(completedQuiz.totalScore)") // Displaying the score in green
-                            .font(.headline)
-                            .foregroundColor(.green)
+                            .frame(height: 90)
+                        /// QUIZ UNO - DA AGGIORNARE
+                        VStack(alignment: .leading, spacing: 5) {
+                            Text("Quiz uno: \(scoreManager.score.quiz)")
+                                .font(.title2)
+                                .fontWeight(.semibold)
+                            
+                            //HStack per allineare il punteggio al tasto elimina
+                            HStack {
+                                Text("Punteggio: \(scoreManager.score.totalScore)/\(scoreManager.score.totalAnswers)")
+                                    .font(.headline)
+                                    .foregroundColor(.green)
+                                Spacer()
+                                
+                                Button(action: {scoreManager.score.totalScore = 0
+                                    scoreManager.saveScore()
+                                }) {
+                                    Image(systemName: "trash")
+                                        .padding(.horizontal)
+                                        .foregroundColor(.black)
+                                    
+                                }
+                            } .padding(.bottom, 20)
+                            
+                            // Barra di progresso QUIZ UNO
+                            ProgressView(value: Double(scoreManager.score.totalScore), total: Double(scoreManager.score.totalAnswers))
+                                .progressViewStyle(LinearProgressViewStyle())
+                                .padding(.bottom, 20)
+                        }
+                        .padding()
+                        .background(Color.white.opacity(0.9))
+                        .cornerRadius(10)
+                        .shadow(color: .black, radius: 3)
+                        .padding()
+                        
+                        
+                        /// QUIZ DUE - DA AGGIORNARE
+                        VStack(alignment: .leading, spacing: 5) {
+                            Text("Quiz due: \(scoreManager.score.quiz)")
+                                .font(.title2)
+                                .fontWeight(.semibold)
+                            
+                            //HStack per allineare il punteggio al tasto elimina
+                            HStack {
+                                Text("Punteggio: \(scoreManager.score.totalScore)/\(scoreManager.score.totalAnswers)")
+                                    .font(.headline)
+                                    .foregroundColor(.green)
+                                Spacer()
+                                
+                                Button(action: {scoreManager.score.totalScore = 0
+                                    scoreManager.saveScore()
+                                }) {
+                                    Image(systemName: "trash")
+                                        .padding(.horizontal)
+                                        .foregroundColor(.black)
+                                }
+                            } .padding(.bottom, 20)
+                            
+                            // Barra di progresso quiz DUE
+                            ProgressView(value: Double(scoreManager.score.totalScore), total: Double(scoreManager.score.totalAnswers))
+                                .progressViewStyle(LinearProgressViewStyle())
+                                .padding(.bottom, 20)
+                        }
+                        .padding()
+                        .background(Color.white.opacity(0.9))
+                        .cornerRadius(10)
+                        .shadow(color: .black, radius: 3)
+                        .padding()
+                        
+                        
+                        /// QUIZ TRE - DA AGGIORNARE
+                        VStack(alignment: .leading, spacing: 5) {
+                            Text("Quiz tre: \(scoreManager.score.quiz)")
+                                .font(.title2)
+                                .fontWeight(.semibold)
+                            
+                            //HStack per allineare il punteggio al tasto elimina
+                            HStack {
+                                Text("Punteggio: \(scoreManager.score.totalScore)/\(scoreManager.score.totalAnswers)")
+                                    .font(.headline)
+                                    .foregroundColor(.green)
+                                Spacer()
+                                
+                                Button(action: {scoreManager.score.totalScore = 0
+                                    scoreManager.saveScore()
+                                }) {
+                                    Image(systemName: "trash")
+                                        .padding(.horizontal)
+                                        .foregroundColor(.black)
+                                }
+                            } .padding(.bottom, 20)
+                            
+                            // Barra di progresso QUIZ TRE
+                            ProgressView(value: Double(scoreManager.score.totalScore), total: Double(scoreManager.score.totalAnswers))
+                                .progressViewStyle(LinearProgressViewStyle())
+                                .padding(.bottom, 20)
+                        }
+                        .padding()
+                        .background(Color.white.opacity(0.9))
+                        .cornerRadius(10)
+                        .shadow(color: .black, radius: 3)
+                        .padding()
                     }
-                    .padding(.vertical, 5)
+                    .onAppear {
+                        scoreManager.loadScore()
+                        scoreManager.loadAnswers()
+                    }
+                    
                 }
+                .navigationTitle("Score")
+                /*.toolbar {
+                            ToolbarItem(placement: .principal) {
+                                
+                                            Text("Score")
+                                                .font(.largeTitle)
+                                                .fontWeight(.semibold)
+                                
+                                        }
+                                    }*/
+                //.navigationBarTitleDisplayMode(.inline)
             }
-            .padding(.horizontal)
-
-            // Button to go back to the main content view
-            Button(action: {
-                withAnimation(.easeInOut(duration: 0.5)) {
-                    presentationMode.wrappedValue.dismiss() // Dismiss the current view with animation
-                }
-            }) {
-                Text("Go Back")
-                    .font(.title2)
-                    .foregroundColor(.blue)
-            }
-            .padding(.top, 20)
+            .background(Color.clear)
         }
-        .navigationTitle("Score") // Title for the navigation bar
-        .gesture(
-            DragGesture().onEnded { gesture in
-                if gesture.translation.width > 100 {
-                    // If user swipes right, dismiss the view with animation
-                    withAnimation(.easeInOut(duration: 0.5)) {
-                        presentationMode.wrappedValue.dismiss()
-                    }
-                }
-            }
-        )
     }
 }
 
-#Preview {
-    struct PreviewWrapper: View {
-        @State private var isInScoreView = true
-        let quizManager = QuizManager()
-        let score = QuizScore(quiz: "Quiz Incroci", totalScore: 8, totalAnswers: 10)
-        let scoreManager: ScoreManager
-
-        init() {
-            scoreManager = ScoreManager(score: score, currentScore: 8, quizManager: quizManager)
-            scoreManager.completedQuizzes = [
-                QuizScore(quiz: "Quiz Patente", totalScore: 8, totalAnswers: 10),
-                QuizScore(quiz: "Quiz Sicurezza", totalScore: 7, totalAnswers: 10)
-            ]
-        }
-
-        var body: some View {
-            ScoreView(isInScoreView: $isInScoreView)
-                .environmentObject(scoreManager)
-        }
+struct ScoreView_Previews: PreviewProvider {
+    static var previews: some View {
+        ScoreView()
+            .environmentObject(ScoreManager()) // Fornisci l'environment object!
     }
-
-    return PreviewWrapper()
 }
+
+
+/* COPIA BODY
+ var body: some View {
+     NavigationView {
+         ScrollView {
+             VStack {
+                 // Titolo della schermata
+                 Text("Punteggi dei Quiz")
+                     .font(.largeTitle)
+                     .fontWeight(.bold)
+                     .padding()
+
+                 // Mostra il punteggio attuale
+                 VStack(alignment: .leading, spacing: 10) {
+                     Text("Quiz attuale: \(scoreManager.score.quiz)")
+                         .font(.title2)
+                         .fontWeight(.semibold)
+                     
+                     Text("Punteggio: \(scoreManager.score.totalScore)/\(scoreManager.score.totalAnswers)")
+                         .font(.headline)
+                         .foregroundColor(.green)
+                         .padding(.bottom, 20)
+                     
+                     // Barra di progresso
+                     ProgressView(value: Double(scoreManager.score.totalScore), total: Double(scoreManager.score.totalAnswers))
+                         .progressViewStyle(LinearProgressViewStyle())
+                         .padding(.bottom, 20)
+                 }
+                 .padding(.horizontal)
+                 
+                 // Lista dei punteggi passati
+                 VStack {
+                     Text("Punteggi precedenti")
+                         .font(.title2)
+                         .fontWeight(.semibold)
+                         .padding(.top)
+
+                     // Visualizza la lista dei quiz completati
+                     List(scoreManager.completedQuizzes, id: \.quiz) { completedQuiz in
+                         HStack {
+                             VStack(alignment: .leading) {
+                                 Text(String(completedQuiz.quiz)) // Forza la conversione a String
+                                     .font(.headline)
+                                 Text("Punteggio: \(completedQuiz.totalScore)/\(completedQuiz.totalAnswers)")
+                                     .font(.subheadline)
+                                     .foregroundColor(.gray)
+                             }
+                             Spacer()
+                             Text("\(completedQuiz.totalScore)")
+                                 .font(.headline)
+                                 .foregroundColor(.green)
+                         }
+                         .padding(.vertical, 5)
+                     }
+
+                 }
+                 .padding(.horizontal)
+             }
+         }
+         .navigationTitle("Score")
+     }
+ }
+ */

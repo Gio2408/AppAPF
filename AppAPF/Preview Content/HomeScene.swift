@@ -1,28 +1,67 @@
 import SpriteKit
+import SwiftUI
 
 class HomeScene: SKScene {
+    var road = SKSpriteNode()
+    var carButton = SKSpriteNode()
+    var quizButton = SKSpriteNode()
     
-    var carButton: SKSpriteNode!
-    var onCarButtonTapped: (() -> Void)?
+    var onCarButtonTapped: (() -> Void)? // Closure per comunicare con SwiftUI
+    var onExitTapped: (() -> Void)? // Closure per fermare l'audio quando esci
     
     override func didMove(to view: SKView) {
-        // Initialize and configure the car button
-        carButton = SKSpriteNode(imageNamed: "carButton")
-        carButton.name = "carButton"
-        carButton.position = CGPoint(x: size.width / 2, y: size.height / 2)
-        carButton.setScale(0.5)
-        addChild(carButton)
+        road = childNode(withName: "road") as! SKSpriteNode
+        carButton = road.childNode(withName: "carButton") as! SKSpriteNode
+        quizButton = road.childNode(withName: "quizButton") as! SKSpriteNode
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touch = touches.first else { return }
+        let location = touch.location(in: self)
+        let node = atPoint(location)
+        
+        if node == carButton {
+            carButton.alpha = 0.5
+        }
+        
+        if node == quizButton {
+            quizButton.alpha = 0.5
+        }
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else { return }
         let location = touch.location(in: self)
         let node = atPoint(location)
-
-        // Check if the car button was tapped
-        if node.name == "carButton" {
+        
+        carButton.alpha = 1.0
+        quizButton.alpha = 1.0
+        
+        if node == carButton {
             print("🚗 Car button tapped")
-            onCarButtonTapped?() // Trigger closure to transition to LevelScene
+            onCarButtonTapped?() // Passa alla LevelScene
+        }
+        
+        if node == quizButton {
+            print("\nquizButton tapped\n")
+            openSwiftUIView()
+        }
+    }
+
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        carButton.alpha = 1.0
+        quizButton.alpha = 1.0
+    }
+    
+    func openSwiftUIView() {
+        if let sceneView = self.view {
+            let swiftUIView = QuizView(isInQuizView: .constant(true))
+                .environmentObject(ScoreManager())
+                .environmentObject(ErrorManager())
+            
+            let hostingController = UIHostingController(rootView: swiftUIView)
+            hostingController.modalPresentationStyle = .fullScreen
+            sceneView.window?.rootViewController?.present(hostingController, animated: true)
         }
     }
 }

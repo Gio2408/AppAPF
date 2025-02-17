@@ -17,13 +17,27 @@ struct HomeSceneView: View {
     }
 
     var body: some View {
-        SpriteView(scene: scene)  // Display the SpriteKit scene
-            .ignoresSafeArea()  // Ignore safe area to make the scene fill the screen
-            .opacity(isVisible ? 1 : 0)  // Initial opacity 0, will become 1 after fade-in
-            .onAppear {
-                withAnimation(.easeInOut(duration: 0.5)) {
-                    isVisible = true  // Trigger the fade-in animation when the view appears
+        ZStack(alignment: .topLeading) {
+            SpriteView(scene: scene)  // Display the SpriteKit scene
+                .ignoresSafeArea()  // Ignore safe area to make the scene fill the screen
+                .opacity(isVisible ? 1 : 0)  // Initial opacity 0, will become 1 after fade-in
+                .onAppear {
+                    withAnimation(.easeInOut(duration: 0.5)) {
+                        isVisible = true  // Trigger the fade-in animation when the view appears
+                    }
                 }
-            }
+            Text("Select Level")
+                .font(.largeTitle)
+                .fontWeight(.bold)
+                .foregroundColor(.white)
+                .padding([.top], 5)
+                .padding([.leading, .trailing], 16)
+        }
+    }
+}
+
+struct HomeSceneView_Previews: PreviewProvider {
+    static var previews: some View {
+        HomeSceneView(isInLevelScene: .constant(false))
     }
 }
