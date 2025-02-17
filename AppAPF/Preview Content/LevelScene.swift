@@ -267,8 +267,11 @@ class LevelScene: SKScene {
             // Animation sequence for the background
             let backgroundAnimation = SKAction.sequence([fadeIn, wait, fadeOut, remove])
             
+            levelCompleteCallback?()
+
             label.run(textAnimation)
             background.run(backgroundAnimation)
+
         }
         
         func playLevelComplete() {

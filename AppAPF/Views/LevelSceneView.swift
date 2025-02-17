@@ -4,6 +4,7 @@ import AVFoundation
 
 struct LevelSceneView: View {
     @Binding var isInLevelScene: Bool // State to return to HomeView
+    @Binding var isLevelComplete: Bool  // State to monitor level completion
     @State private var showExitConfirmation = false // State to show the popup
     @State private var audioPlayer: AVAudioPlayer? // For audio management
     
@@ -70,6 +71,7 @@ struct LevelSceneView: View {
             Button("Exit", role: .destructive) {
                 stopSound() // Stop the sound when exiting the scene
                 isInLevelScene = false // Return to HomeView
+                isLevelComplete = false
             }
         }
         .onAppear {
