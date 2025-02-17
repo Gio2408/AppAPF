@@ -6,6 +6,7 @@ struct LevelSceneView: View {
     @Binding var isInLevelScene: Bool  // Stato per tornare alla HomeView
     @State private var showExitConfirmation = false  // Stato per mostrare il popup
     @State private var audioPlayer: AVAudioPlayer?  // Per la gestione dell'audio
+    @Binding var isLevelComplete: Bool  // Stato per monitorare il completamento del livello
     
     var scene: SKScene? {
         guard let scene = SKScene(fileNamed: "LevelScene") else {
@@ -14,6 +15,14 @@ struct LevelSceneView: View {
         }
         scene.size = CGSize(width: 1170, height: 2532)
         scene.scaleMode = .aspectFill
+        
+        // Assicurati di passare il callback per notificare il completamento del livello
+        if let levelScene = scene as? LevelScene {
+            levelScene.levelCompleteCallback = {
+                self.isLevelComplete = true
+            }
+        }
+        
         return scene
     }
 
@@ -42,6 +51,18 @@ struct LevelSceneView: View {
                     Spacer()
                 }
                 Spacer()
+
+                // Mostra il pulsante "Continue" se il livello è completato
+                if isLevelComplete {
+                    Button("Continue") {
+                        isInLevelScene = false  // Torna alla ContentView
+                        isLevelComplete = false
+                    }
+                    .font(.title)
+                    .foregroundColor(.green)
+                    .padding()
+                    .background(Capsule().fill(Color.white).shadow(radius: 10))
+                }
             }
         }
         .transition(.opacity)
@@ -50,6 +71,7 @@ struct LevelSceneView: View {
             Button("Exit", role: .destructive) {
                 stopSound()  // Ferma il suono quando esci dalla scena
                 isInLevelScene = false  // Torna alla HomeView
+                isLevelComplete = false
             }
         }
         .onAppear {
@@ -83,6 +105,6 @@ struct LevelSceneView: View {
 
 struct LevelSceneView_Previews: PreviewProvider {
     static var previews: some View {
-        LevelSceneView(isInLevelScene: .constant(true))
+        LevelSceneView(isInLevelScene: .constant(true), isLevelComplete: .constant(false))
     }
 }

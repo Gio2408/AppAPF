@@ -4,6 +4,8 @@ import AVFoundation
 struct ContentView: View {
     @StateObject var scoreManager = ScoreManager()
     @StateObject var errorManager = ErrorManager()
+    
+    @State private var isLevelComplete: Bool = false
     @State private var isInLevelScene = false
     @State private var isInQuizView = false
     @State private var isShowingPreHomeScene = true
@@ -25,7 +27,7 @@ struct ContentView: View {
                         }
                 } else {
                     if isInLevelScene {
-                        LevelSceneView(isInLevelScene: $isInLevelScene)
+                        LevelSceneView(isInLevelScene: $isInLevelScene, isLevelComplete: $isLevelComplete)
                             .transition(.opacity)
                     } else if isInQuizView {
                         QuizView(isInQuizView: $isInQuizView)

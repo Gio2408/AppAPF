@@ -3,6 +3,7 @@ import SpriteKit
 import AVFoundation
 
 class LevelScene: SKScene {
+    var levelCompleteCallback: (() -> Void)?
     @State private var audioPlayer: AVAudioPlayer?
     var incrocioCroce: SKSpriteNode?
     var bumblebee: SKSpriteNode?
@@ -268,7 +269,8 @@ class LevelScene: SKScene {
         
         // Sequenza di animazioni per lo sfondo
         let backgroundAnimation = SKAction.sequence([fadeIn, wait, fadeOut, remove])
-        
+        levelCompleteCallback?()
+
         label.run(textAnimation)
         background.run(backgroundAnimation)
     }
