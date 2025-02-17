@@ -53,7 +53,7 @@ struct LevelSceneView: View {
                 Spacer()
 
                 // Mostra il pulsante "Continue" se il livello è completato
-                if !isLevelComplete {
+                if isLevelComplete {
                     Button(action: {
                         isInLevelScene = false  // Torna alla ContentView
                         isLevelComplete = false
