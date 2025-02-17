@@ -12,7 +12,7 @@ class HomeScene: SKScene {
     override func didMove(to view: SKView) {
         road = childNode(withName: "road") as! SKSpriteNode
         carButton = road.childNode(withName: "carButton") as! SKSpriteNode
-        quizButton = road.childNode(withName: "quizButton") as! SKSpriteNode
+        quizButton = road.childNode(withName: "quizButton1") as! SKSpriteNode
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
