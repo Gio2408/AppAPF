@@ -157,5 +157,10 @@ struct QuizView: View {
         
     }
 }
-/*#Preview {
-}*/
+struct QuizView_Previews: PreviewProvider {
+    static var previews: some View {
+        QuizView(isInQuizView: .constant(true))
+            .environmentObject(ErrorManager())
+            .environmentObject(ScoreManager())
+    }
+}
