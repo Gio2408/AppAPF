@@ -5,79 +5,142 @@ struct ScoreView: View {
     @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
-        NavigationView {
+        
+            
+            NavigationView {
+                ZStack { // Inizia ZStack per lo sfondo
+                    Image("road2") // Immagine di sfondo
+                        .resizable() // Rendi l'immagine ridimensionabile
+                        .scaledToFill() // Scala l'immagine per riempire lo spazio
+                        //.opacity(0.75) // Opacità dello sfondo (opzionale, se vuoi renderlo semi-trasparente)
+                        .blur(radius: 5)
+                        .ignoresSafeArea() // Assicura che lo sfondo si estenda sotto la safe area
+                        
                 ScrollView {
-                    VStack {
-                        Button(action: { // reinizializza a 0 lo score
-                            scoreManager.score.totalScore = 0
-                            scoreManager.saveScore()
-                            scoreManager.score.totalAnswers = 0
-                            scoreManager.saveAnswers()
-                            
-                        }) {
-                            Text("Elimina")
-                        }
-                        // Mostra il punteggio del primo quiz
-                        VStack(alignment: .leading, spacing: 10) {
+                    VStack{
+                        Spacer()
+                            .frame(height: 90)
+                        /// QUIZ UNO - DA AGGIORNARE
+                        VStack(alignment: .leading, spacing: 5) {
                             Text("Quiz uno: \(scoreManager.score.quiz)")
                                 .font(.title2)
                                 .fontWeight(.semibold)
                             
-                            Text("Punteggio: \(scoreManager.score.totalScore)/\(scoreManager.score.totalAnswers)")
-                                .font(.headline)
-                                .foregroundColor(.green)
-                                .padding(.bottom, 20)
+                            //HStack per allineare il punteggio al tasto elimina
+                            HStack {
+                                Text("Punteggio: \(scoreManager.score.totalScore)/\(scoreManager.score.totalAnswers)")
+                                    .font(.headline)
+                                    .foregroundColor(.green)
+                                Spacer()
+                                
+                                Button(action: {scoreManager.score.totalScore = 0
+                                    scoreManager.saveScore()
+                                }) {
+                                    Image(systemName: "trash")
+                                        .padding(.horizontal)
+                                        .foregroundColor(.black)
+                                    
+                                }
+                            } .padding(.bottom, 20)
                             
-                            // Barra di progresso
+                            // Barra di progresso QUIZ UNO
                             ProgressView(value: Double(scoreManager.score.totalScore), total: Double(scoreManager.score.totalAnswers))
                                 .progressViewStyle(LinearProgressViewStyle())
-                                .padding(.bottom, 40)
+                                .padding(.bottom, 20)
                         }
-                        .padding(.horizontal)
+                        .padding()
+                        .background(Color.white.opacity(0.9))
+                        .cornerRadius(10)
+                        .shadow(color: .black, radius: 3)
+                        .padding()
                         
-                        // Punteggio del secondo quiz DA AGGIORNARE
-                        VStack(alignment: .leading, spacing: 10) {
+                        
+                        /// QUIZ DUE - DA AGGIORNARE
+                        VStack(alignment: .leading, spacing: 5) {
                             Text("Quiz due: \(scoreManager.score.quiz)")
                                 .font(.title2)
                                 .fontWeight(.semibold)
                             
-                            Text("Punteggio: \(scoreManager.score.totalScore)/\(scoreManager.score.totalAnswers)")
-                                .font(.headline)
-                                .foregroundColor(.green)
-                                .padding(.bottom, 20)
+                            //HStack per allineare il punteggio al tasto elimina
+                            HStack {
+                                Text("Punteggio: \(scoreManager.score.totalScore)/\(scoreManager.score.totalAnswers)")
+                                    .font(.headline)
+                                    .foregroundColor(.green)
+                                Spacer()
+                                
+                                Button(action: {scoreManager.score.totalScore = 0
+                                    scoreManager.saveScore()
+                                }) {
+                                    Image(systemName: "trash")
+                                        .padding(.horizontal)
+                                        .foregroundColor(.black)
+                                }
+                            } .padding(.bottom, 20)
                             
-                            // Barra di progresso
+                            // Barra di progresso quiz DUE
                             ProgressView(value: Double(scoreManager.score.totalScore), total: Double(scoreManager.score.totalAnswers))
                                 .progressViewStyle(LinearProgressViewStyle())
-                                .padding(.bottom, 40)
+                                .padding(.bottom, 20)
                         }
-                        .padding(.horizontal)
+                        .padding()
+                        .background(Color.white.opacity(0.9))
+                        .cornerRadius(10)
+                        .shadow(color: .black, radius: 3)
+                        .padding()
                         
-                        // Punteggio del terzo quiz DA AGGIORNARE
-                        VStack(alignment: .leading, spacing: 10) {
-                            Text("Quiz due: \(scoreManager.score.quiz)")
+                        
+                        /// QUIZ TRE - DA AGGIORNARE
+                        VStack(alignment: .leading, spacing: 5) {
+                            Text("Quiz tre: \(scoreManager.score.quiz)")
                                 .font(.title2)
                                 .fontWeight(.semibold)
                             
-                            Text("Punteggio: \(scoreManager.score.totalScore)/\(scoreManager.score.totalAnswers)")
-                                .font(.headline)
-                                .foregroundColor(.green)
-                                .padding(.bottom, 20)
+                            //HStack per allineare il punteggio al tasto elimina
+                            HStack {
+                                Text("Punteggio: \(scoreManager.score.totalScore)/\(scoreManager.score.totalAnswers)")
+                                    .font(.headline)
+                                    .foregroundColor(.green)
+                                Spacer()
+                                
+                                Button(action: {scoreManager.score.totalScore = 0
+                                    scoreManager.saveScore()
+                                }) {
+                                    Image(systemName: "trash")
+                                        .padding(.horizontal)
+                                        .foregroundColor(.black)
+                                }
+                            } .padding(.bottom, 20)
                             
-                            // Barra di progresso
+                            // Barra di progresso QUIZ TRE
                             ProgressView(value: Double(scoreManager.score.totalScore), total: Double(scoreManager.score.totalAnswers))
                                 .progressViewStyle(LinearProgressViewStyle())
                                 .padding(.bottom, 20)
                         }
-                        .padding(.horizontal)
+                        .padding()
+                        .background(Color.white.opacity(0.9))
+                        .cornerRadius(10)
+                        .shadow(color: .black, radius: 3)
+                        .padding()
                     }
-                            .onAppear {
-                                scoreManager.loadScore() // **AGGIUNGI QUI: Carica il punteggio quando la vista appare**
-                                scoreManager.loadAnswers()
-                            }
-                            .padding(.horizontal)
+                    .onAppear {
+                        scoreManager.loadScore()
+                        scoreManager.loadAnswers()
                     }
-                    .navigationTitle("Score")
+                    
+                }
+                .navigationTitle("Score")
+                /*.toolbar {
+                            ToolbarItem(placement: .principal) {
+                                
+                                            Text("Score")
+                                                .font(.largeTitle)
+                                                .fontWeight(.semibold)
+                                
+                                        }
+                                    }*/
+                //.navigationBarTitleDisplayMode(.inline)
+            }
+            .background(Color.clear)
         }
     }
 }
