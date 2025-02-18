@@ -239,6 +239,7 @@ struct CarLightsView: View {
             }
             .padding()
             .background(LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(0.3), Color.purple.opacity(0.3)]), startPoint: .top, endPoint: .bottom))
+            
             .cornerRadius(20)
             .shadow(radius: 15)
         }

@@ -34,4 +34,9 @@ class ErrorManager: ObservableObject {
             errors = decoded
         }
     }
+    
+    func deleteErrors() {
+        errors.removeAll()
+        saveErrors()
+    }
 }
