@@ -63,7 +63,7 @@ struct ErrorsView: View {
                 .background(Color.white.opacity(0.9))
                 .cornerRadius(22)
                 .shadow(color: .black, radius: 3)
-                .padding(EdgeInsets(top: 0, leading: 0, bottom: 90, trailing: 5))
+                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 5))
                 .padding()
                 
                 
@@ -71,25 +71,5 @@ struct ErrorsView: View {
             .navigationTitle("Mistakes")
         }
         
-    }
-}
-
-
-// Example preview of the ErrorsView
-
-struct ErrorsView_Previews: PreviewProvider {
-    static var previews: some View {
-        let errorManager = ErrorManager() // Crea un'istanza di ErrorManager
-
-        // Aggiungi 3 errori di esempio
-        errorManager.errors = [
-            QuizError(question: "Qual è la capitale d'Italia?", correctAnswer: "Roma", userAnswer: "Milano"),
-            QuizError(question: "Chi ha dipinto la Gioconda?", correctAnswer: "Leonardo da Vinci", userAnswer: "Michelangelo"),
-            QuizError(question: "In che anno è caduto il Muro di Berlino?", correctAnswer: "1989", userAnswer: "1991")
-        ]
-
-        errorManager.saveErrors()
-        return ErrorsView()
-            .environmentObject(errorManager) // Inietta errorManager nell'ambiente
     }
 }
