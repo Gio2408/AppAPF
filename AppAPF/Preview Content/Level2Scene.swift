@@ -13,8 +13,7 @@ class Level2Scene: SKScene {
     var infoButton: SKSpriteNode?
     var info: SKSpriteNode!
     var currentSequenceLevel: [String] = []
-    var correctSequenceLevel1: [String] = ["bumblebee", "car3", "car2", "car1"]
-    var correctSequenceLevel2: [String] = ["car1", "car2", "car3", "bumbleBee"]
+    var correctSequenceLevel1: [String] = ["bumblebee", "car1", "car2", "car3"]
     var indexCorrectSequence: Int = 0
     var isTouched: [Int] = [0, 0, 0, 0]
     var infoButtonIsTouched: Bool = false
@@ -32,9 +31,9 @@ class Level2Scene: SKScene {
         car2 = childNode(withName: "car2") as? SKSpriteNode
         car3 = childNode(withName: "car3") as? SKSpriteNode
         
-        startAnimation {
+        /*startAnimation {
             self.indexCorrectSequence = 0
-        }
+        }*/
     
     }
     
@@ -100,7 +99,6 @@ class Level2Scene: SKScene {
                 if isTouched[1] == 0 {
                     moveCar1 {
                         self.indexCorrectSequence += 1
-                        self.showLevelCompleteLabel() // Show the "Level Complete!" message
                     }
                     self.isTouched[1] = 1
                 }
@@ -133,6 +131,7 @@ class Level2Scene: SKScene {
                         self.indexCorrectSequence += 1
                     }
                     self.isTouched[3] = 1
+                    self.showLevelCompleteLabel() // Show the "Level Complete!" message
                 }
                 
             } else {
@@ -143,7 +142,7 @@ class Level2Scene: SKScene {
     }
     
     // Reset the position of the cars
-    func startAnimation(completion: @escaping () -> Void) {
+   /* func startAnimation(completion: @escaping () -> Void) {
         
         bumblebee?.position = CGPoint(x: 81, y: -1500) //y:-440 Initial position of Bumblebee
         car1?.position = CGPoint(x: 800, y: 80) //x:320 Initial position of Car1
@@ -169,7 +168,7 @@ class Level2Scene: SKScene {
         let moveActionCar3 = SKAction.moveBy(x: 535, y: 0, duration: 2.0)
         moveActionCar3.timingMode = .easeInEaseOut
         car3.run(moveActionCar3)
-    }
+    }*/
     
     // Move Car1 horizontally
     func moveCar1(completion: @escaping () -> Void) {
@@ -213,9 +212,9 @@ class Level2Scene: SKScene {
             
             guard let bumblebee = bumblebee else { return }
             
-            let moveForward = SKAction.moveBy(x: 0, y: 350, duration: 1.5)
-            let rotateRight = SKAction.rotate(toAngle: -.pi / 2, duration: 0.3, shortestUnitArc: true)
-            let moveRight = SKAction.moveBy(x: 750, y: 0, duration: 1.5)
+            let moveForward = SKAction.moveBy(x: -200, y: 200, duration: 1.5)
+            let rotateRight = SKAction.rotate(toAngle: -.pi / 4, duration: 0.3, shortestUnitArc: true)
+            let moveRight = SKAction.moveBy(x: 600, y: 600, duration: 1.5)
             
             moveForward.timingMode = .easeInEaseOut
             moveRight.timingMode = .easeInEaseOut
