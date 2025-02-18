@@ -6,7 +6,7 @@ struct ErrorsView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                // Sfondo verde chiaro per un look più giocoso
+                // Light green background for a more playful look
                 Color(red: 0.4, green: 0.6, blue: 0.2)
                     .edgesIgnoringSafeArea(.all)
                 
@@ -24,11 +24,11 @@ struct ErrorsView: View {
                                         .font(.system(size: 20, weight: .bold, design: .rounded))
                                         .foregroundColor(.white)
                                     
-                                    Text("✅ Risposta corretta: \(error.correctAnswer)")
+                                    Text("✅ Correct answer: \(error.correctAnswer)")
                                         .foregroundColor(.green)
                                         .font(.system(size: 18, design: .rounded))
                                     
-                                    Text("❌ Tua risposta: \(error.userAnswer)")
+                                    Text("❌ Your answer: \(error.userAnswer)")
                                         .foregroundColor(.red)
                                         .font(.system(size: 18, design: .rounded))
                                 }
@@ -43,11 +43,11 @@ struct ErrorsView: View {
                             errorManager.saveErrors()
                         }
                     }
-                    .listStyle(PlainListStyle()) // Per mantenere l'aspetto senza bordi
+                    .listStyle(PlainListStyle()) // Keeps the appearance without borders
                     .padding(.horizontal, 16)
                 }
             }
-            .navigationTitle("Errori")
+            .navigationTitle("Errors")
             .onAppear {
                 errorManager.loadErrors()
             }
