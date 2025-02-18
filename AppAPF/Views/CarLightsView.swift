@@ -1,4 +1,3 @@
-
 import SwiftUI
 
 struct CarLightsView: View {
@@ -10,38 +9,145 @@ struct CarLightsView: View {
     @State private var selectedAnswer: String?
     @State private var errorMessage: String?
     
-    struct Date {
+    struct QuizTurn {
         let question: String
         let correctAnswer: String
         let imageName: String
+        let answers: [String: String]
     }
     
-    let dates = [
-        Date(question: "If you see a red warning light, what should you do first?", correctAnswer: "C", imageName: "image1"),
-        Date(question: " Which of these warning lights indicates a problem that could cause immediate damage to the engine?", correctAnswer: "A", imageName: "image2"),
-        Date(question: " Which color of warning lights generally indicates an urgent problem that requires immediate attention?", correctAnswer: "D", imageName: "image3"),
-        Date(question: "If the engine temperature light turns red, what should you NOT do?", correctAnswer: "A", imageName: "image3"),
+    let quizTurns = [
+        QuizTurn(
+            question: "If you see a red warning light, what should you do first?",
+            correctAnswer: "C",
+            imageName: "image1",
+            answers: [
+                "A": "Ignore it and hope it goes out by itself",
+                "B": "Check the car manual",
+                "C": "Stop in a safe place and check the problem",
+                "D": "Turn on the radio to avoid hearing about it"
+            ]
+        ),
+        QuizTurn(
+            question: "Which of these warning lights indicates a problem that could cause immediate damage to the engine?",
+            correctAnswer: "A",
+            imageName: "image2",
+            answers: [
+                "A": "Engine oil pressure",
+                "B": "Fuel reserve",
+                "C": "ABS",
+                "D": "High beam headlights on"
+            ]
+        ),
+        QuizTurn(
+            question: "Which color of warning lights generally indicates an urgent problem that requires immediate attention?",
+            correctAnswer: "D",
+            imageName: "image3",
+            answers: [
+                "A": "Green",
+                "B": "Blue",
+                "C": "Yellow",
+                "D": "Red"
+            ]
+        ),
+        QuizTurn(
+            question: "If the engine temperature light turns red, what should you NOT do?",
+            correctAnswer: "A",
+            imageName: "image3",
+            answers: [
+                "A": "Continue driving as if nothing is wrong",
+                "B": "Stop in a safe place and let the engine cool down",
+                "C": "Check the coolant level",
+                "D": "Call a mechanic if the problem persists"
+            ]
+        ),
+        QuizTurn(
+            question: "If the low beam headlights light is on, what color is it?",
+            correctAnswer: "B",
+            imageName: "image1",
+            answers: [
+                "A": "Blue",
+                "B": "Green",
+                "C": "Yellow",
+                "D": "Red"
+            ]
+        ),
+        QuizTurn(
+            question: "Which of these warning lights indicates a malfunction with the brake lights?",
+            correctAnswer: "B",
+            imageName: "image2",
+            answers: [
+                "A": "A red light with an exclamation point inside a circle",
+                "B": "A yellow light with a light bulb and an exclamation point",
+                "C": "A blue light with a light bulb",
+                "D": "None, the car does not warn about this issue"
+            ]
+        ),
+        QuizTurn(
+            question: "If the handbrake is engaged and you start driving, which warning light stays on?",
+            correctAnswer: "A",
+            imageName: "image3",
+            answers: [
+                "A": "A red light with a 'P' inside a circle",
+                "B": "A yellow light with an exclamation point",
+                "C": "A green light with a brake symbol",
+                "D": "No light, the handbrake automatically disengages"
+            ]
+        ),
+        QuizTurn(
+            question: "If a red light with a circle and an exclamation point appears, what does it indicate?",
+            correctAnswer: "A",
+            imageName: "image3",
+            answers: [
+                "A": "A problem with the brakes or brake fluid",
+                "B": "The fuel tank is almost empty",
+                "C": "The ABS is deactivated",
+                "D": "The windshield wipers are malfunctioning"
+            ]
+        ),
+        QuizTurn(
+            question: "If the seatbelt light is on, what does it mean?",
+            correctAnswer: "B",
+            imageName: "image1",
+            answers: [
+                "A": "The car won’t start until the seatbelt is fastened",
+                "B": "Someone in the car hasn’t fastened their seatbelt",
+                "C": "The safety system is deactivated",
+                "D": "The driver's door is open"
+            ]
+        ),
+        QuizTurn(
+            question: "What color is this light generally? (BATTERY)",
+            correctAnswer: "D",
+            imageName: "image2",
+            answers: [
+                "A": "Yellow",
+                "B": "Blue",
+                "C": "Green",
+                "D": "Red"
+            ]
+        )
     ]
-    
-    func checkAnswer(turn: Date) { // turn: variabile che serve per la funzione, in modo che non dia errore (turn = quizTurns)
+
+    func checkAnswer(turn: QuizTurn) {
         if selectedAnswer != turn.correctAnswer {
             // Add the error if the answer is wrong
             let error = QuizError(question: turn.question, correctAnswer: turn.correctAnswer, userAnswer: selectedAnswer ?? "N/A")
             errorManager.addError(error)
             errorMessage = "Wrong answer!"
-            
         } else {
             errorMessage = "Correct answer!"
-            scoreManager.incrementScore() // tiene il conteggio del numero delle risposte corrette
+            scoreManager.incrementScore() // Keep track of the correct answers
         }
         
-        scoreManager.incrementQuestion() // tiene il conteggio della domanda corrente, per confrontarla dopo
+        scoreManager.incrementQuestion() // Increment the current question count
         
-        if scoreManager.currentQuestion == dates.count { // confronta la domanda corrente con il totale delle domande
-            scoreManager.score.totalAnswers = dates.count // assegna il valore delle domande totali a totalAnswers, per riportarlo nella ScoreView
-            scoreManager.saveAnswers() // salva il numero totale delle domande
-            if scoreManager.mTotalScore > scoreManager.score.totalScore { //if necessario: aggiorna lo score delle risposte giuste solo se sono di più di quelle precedenti
-                scoreManager.saveScore()
+        if scoreManager.currentQuestion == quizTurns.count {
+            // Update totalAnswers if all questions are answered
+            scoreManager.score.totalAnswers = quizTurns.count
+            scoreManager.saveAnswers() // Save the number of total answers
+            if scoreManager.mTotalScore > scoreManager.score.totalScore {
+                scoreManager.saveScore() // Save the score only if the current score is higher
             }
         }
     }
@@ -69,8 +175,8 @@ struct CarLightsView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.top, 10)
                 
-                if scoreManager.currentQuestion < dates.count {
-                    let turn = dates[scoreManager.currentQuestion]
+                if scoreManager.currentQuestion < quizTurns.count {
+                    let turn = quizTurns[scoreManager.currentQuestion]
                     
                     // Display image
                     Image(turn.imageName)
@@ -94,7 +200,7 @@ struct CarLightsView: View {
                     
                     // Display answer buttons
                     VStack(spacing: 20) {
-                        ForEach(["A", "B", "C", "D"], id: \ .self) { answer in
+                        ForEach(turn.answers.keys.sorted(), id: \.self) { answer in
                             Button(action: {
                                 selectedAnswer = answer
                                 checkAnswer(turn: turn)
@@ -103,19 +209,17 @@ struct CarLightsView: View {
                                     Text("\(answer):")
                                         .font(.headline)
                                         .frame(width: 40)
-                                    Text("Answer \(answer) description") // Placeholder for answer descriptions
+                                    Text(turn.answers[answer] ?? "")
                                         .font(.body)
                                 }
-                                .foregroundColor(.white)
                                 .padding()
                                 .frame(maxWidth: .infinity)
-                                .background(answer == "A" || answer == "C" ? Color.green : Color.red)
-                                .cornerRadius(15)
+                                .background(Color.blue.opacity(0.2))
+                                .cornerRadius(10)
                                 .shadow(radius: 5)
                             }
                         }
                     }
-                    .padding(.horizontal, 20)
                     
                     // Show feedback
                     if let errorMessage = errorMessage {
@@ -126,7 +230,7 @@ struct CarLightsView: View {
                     }
                     
                 } else {
-                    Text("You completed the quiz! Score: \(scoreManager.mTotalScore)/\(dates.count)")
+                    Text("You completed the quiz! Score: \(scoreManager.mTotalScore)/\(quizTurns.count)")
                         .font(.largeTitle)
                         .fontWeight(.bold)
                         .foregroundColor(.green)
@@ -139,11 +243,12 @@ struct CarLightsView: View {
             .shadow(radius: 15)
         }
     }
-    struct CarLightsView_Previews: PreviewProvider {
-        static var previews: some View {
-            CarLightsView(isInCarLightsView: .constant(true))
-                .environmentObject(ErrorManager())
-                .environmentObject(ScoreManager())
-        }
+}
+
+struct CarLightsView_Previews: PreviewProvider {
+    static var previews: some View {
+        CarLightsView(isInCarLightsView: .constant(true))
+            .environmentObject(ErrorManager())
+            .environmentObject(ScoreManager())
     }
 }

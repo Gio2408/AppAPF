@@ -23,6 +23,7 @@ struct ScoreView: View {
                             Text("Quiz uno: \(scoreManager.score.quiz)")
                                 .font(.title2)
                                 .fontWeight(.semibold)
+                                .foregroundColor(.black)
                             
                             //HStack per allineare il punteggio al tasto elimina
                             HStack {
@@ -63,6 +64,7 @@ struct ScoreView: View {
                             Text("Quiz due: \(scoreManager.score.quiz)")
                                 .font(.title2)
                                 .fontWeight(.semibold)
+                                .foregroundColor(.black)
                             
                             //HStack per allineare il punteggio al tasto elimina
                             HStack {
@@ -102,6 +104,7 @@ struct ScoreView: View {
                             Text("Quiz tre: \(scoreManager.score.quiz)")
                                 .font(.title2)
                                 .fontWeight(.semibold)
+                                .foregroundColor(.black)
                             
                             //HStack per allineare il punteggio al tasto elimina
                             HStack {

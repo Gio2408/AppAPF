@@ -23,6 +23,7 @@ struct ErrorsView: View {
                                 VStack(alignment: .leading) {
                                     Text(error.question)
                                         .font(.headline)
+                                        .foregroundColor(.black)
                                     Spacer()
                                     Text("Risposta corretta: \(error.correctAnswer)")
                                         .foregroundColor(.green)
