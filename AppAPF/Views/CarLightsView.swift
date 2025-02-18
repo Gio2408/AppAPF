@@ -20,7 +20,7 @@ struct CarLightsView: View {
         QuizTurn(
             question: "If you see a red warning light, what should you do first?",
             correctAnswer: "C",
-            imageName: "image1",
+            imageName: "carLights1",
             answers: [
                 "A": "Ignore it and hope it goes out by itself",
                 "B": "Check the car manual",
@@ -31,7 +31,7 @@ struct CarLightsView: View {
         QuizTurn(
             question: "Which of these warning lights indicates a problem that could cause immediate damage to the engine?",
             correctAnswer: "A",
-            imageName: "image2",
+            imageName: "carLights2",
             answers: [
                 "A": "Engine oil pressure",
                 "B": "Fuel reserve",
@@ -42,7 +42,7 @@ struct CarLightsView: View {
         QuizTurn(
             question: "Which color of warning lights generally indicates an urgent problem that requires immediate attention?",
             correctAnswer: "D",
-            imageName: "image3",
+            imageName: "carLights3",
             answers: [
                 "A": "Green",
                 "B": "Blue",
@@ -53,7 +53,7 @@ struct CarLightsView: View {
         QuizTurn(
             question: "If the engine temperature light turns red, what should you NOT do?",
             correctAnswer: "A",
-            imageName: "image3",
+            imageName: "carLights4",
             answers: [
                 "A": "Continue driving as if nothing is wrong",
                 "B": "Stop in a safe place and let the engine cool down",
@@ -64,7 +64,7 @@ struct CarLightsView: View {
         QuizTurn(
             question: "If the low beam headlights light is on, what color is it?",
             correctAnswer: "B",
-            imageName: "image1",
+            imageName: "carLights5",
             answers: [
                 "A": "Blue",
                 "B": "Green",
@@ -75,7 +75,7 @@ struct CarLightsView: View {
         QuizTurn(
             question: "Which of these warning lights indicates a malfunction with the brake lights?",
             correctAnswer: "B",
-            imageName: "image2",
+            imageName: "carLights6",
             answers: [
                 "A": "A red light with an exclamation point inside a circle",
                 "B": "A yellow light with a light bulb and an exclamation point",
@@ -86,7 +86,7 @@ struct CarLightsView: View {
         QuizTurn(
             question: "If the handbrake is engaged and you start driving, which warning light stays on?",
             correctAnswer: "A",
-            imageName: "image3",
+            imageName: "carLights7",
             answers: [
                 "A": "A red light with a 'P' inside a circle",
                 "B": "A yellow light with an exclamation point",
@@ -97,7 +97,7 @@ struct CarLightsView: View {
         QuizTurn(
             question: "If a red light with a circle and an exclamation point appears, what does it indicate?",
             correctAnswer: "A",
-            imageName: "image3",
+            imageName: "carLights8",
             answers: [
                 "A": "A problem with the brakes or brake fluid",
                 "B": "The fuel tank is almost empty",
@@ -108,7 +108,7 @@ struct CarLightsView: View {
         QuizTurn(
             question: "If the seatbelt light is on, what does it mean?",
             correctAnswer: "B",
-            imageName: "image1",
+            imageName: "carLights9",
             answers: [
                 "A": "The car won’t start until the seatbelt is fastened",
                 "B": "Someone in the car hasn’t fastened their seatbelt",
@@ -119,7 +119,7 @@ struct CarLightsView: View {
         QuizTurn(
             question: "What color is this light generally? (BATTERY)",
             correctAnswer: "D",
-            imageName: "image2",
+            imageName: "carLights10",
             answers: [
                 "A": "Yellow",
                 "B": "Blue",
