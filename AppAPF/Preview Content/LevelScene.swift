@@ -14,7 +14,6 @@ class LevelScene: SKScene {
     var info: SKSpriteNode!
     var currentSequenceLevel: [String] = []
     var correctSequenceLevel1: [String] = ["bumblebee", "car3", "car2", "car1"]
-    var correctSequenceLevel2: [String] = ["car1", "car2", "car3", "bumbleBee"]
     var indexCorrectSequence: Int = 0
     var isTouched: [Int] = [0, 0, 0, 0]
     var infoButtonIsTouched: Bool = false
@@ -183,7 +182,7 @@ class LevelScene: SKScene {
     func moveCar2(completion: @escaping () -> Void) {
         guard let car2 = car2 else { return }
         
-        let moveForward = SKAction.moveBy(x: 0, y: -2500, duration: 1.5)
+        let moveForward = SKAction.moveBy(x: 0, y: -1850, duration: 1.5)
         
         moveForward.timingMode = .easeInEaseOut
         
@@ -196,15 +195,11 @@ class LevelScene: SKScene {
             
             guard let car3 = car3 else { return }
             
-            let moveForward = SKAction.moveBy(x: 200, y: 0, duration: 1.5)
-            let rotateRight = SKAction.rotate(toAngle: -180.0 * CGFloat.pi / 180.0, duration: 0.3, shortestUnitArc: true)
-            let moveRight = SKAction.moveBy(x: 0, y: -2500, duration: 1.5)
+            let moveForward = SKAction.moveBy(x: 1200, y: 0, duration: 1.5)
             
             moveForward.timingMode = .easeInEaseOut
-            moveRight.timingMode = .easeInEaseOut
             
-            let sequence = SKAction.sequence([moveForward, rotateRight, moveRight])
-            car3.run(sequence, completion: completion)
+        car3.run(moveForward, completion: completion)
         
         }
         
