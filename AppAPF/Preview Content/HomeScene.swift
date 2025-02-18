@@ -56,7 +56,7 @@ class HomeScene: SKScene {
         
         if node == carLights {
             print("\ncarLights tapped\n")
-            //openSwiftUIView2()
+            openSwiftUIView2()
         }
     }
 
@@ -77,9 +77,9 @@ class HomeScene: SKScene {
         }
     }
     
-    /*func openSwiftUIView2() {
+    func openSwiftUIView2() {
         if let sceneView = self.view {
-            let swiftUIView = QuizView(isInQuizView: .constant(true))
+            let swiftUIView = CarLightsView(isInCarLightsView: .constant(true))
                 .environmentObject(ScoreManager())
                 .environmentObject(ErrorManager())
             
@@ -87,5 +87,5 @@ class HomeScene: SKScene {
             hostingController.modalPresentationStyle = .fullScreen
             sceneView.window?.rootViewController?.present(hostingController, animated: true)
         }
-    }*/
+    }
 }
