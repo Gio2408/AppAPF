@@ -1,8 +1,3 @@
-//  ErrorsView.swift
-//  AppAPF
-//  Created by Michele Vassallo Todaro on 10/02/25.
-
-
 import SwiftUI
 
 struct ErrorsView: View {
@@ -10,66 +5,58 @@ struct ErrorsView: View {
 
     var body: some View {
         NavigationView {
-            ZStack (alignment: .bottomTrailing){
+            ZStack(alignment: .bottomTrailing) {
                 Image("backv")
                     .resizable()
                     .scaledToFill()
                     .ignoresSafeArea()
-                ScrollView{
-                    VStack (alignment: .leading){
-                        Spacer()
-                            .frame(height: 40)
-                            ForEach(errorManager.errors) { error in
-                                VStack(alignment: .leading) {
-                                    Text(error.question)
-                                        .font(.headline)
-                                        .foregroundColor(.black)
-                                    Spacer()
-                                    Text("Risposta corretta: \(error.correctAnswer)")
-                                        .foregroundColor(.green)
-                                    Spacer()
-                                    Text("Tua risposta: \(error.userAnswer)")
-                                        .foregroundColor(.red)
-                                    Spacer()
-                                }
-                                .padding() //spazia dentro il quadrato
-                            }
+                
+                ScrollView {
+                    VStack(alignment: .leading) {
+                        Spacer().frame(height: 40)
                         
-                            .padding() //spazia dentro il quadrato ancora di più
+                        ForEach(errorManager.errors) { error in
+                            VStack(alignment: .leading) {
+                                Text(error.question)
+                                    .font(.headline)
+                                    .foregroundColor(.black)
+                                Spacer()
+                                Text("Risposta corretta: \(error.correctAnswer)")
+                                    .foregroundColor(.green)
+                                Spacer()
+                                Text("Tua risposta: \(error.userAnswer)")
+                                    .foregroundColor(.red)
+                                Spacer()
+                            }
+                            .padding()
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .background(Color.white.opacity(0.9))
                             .cornerRadius(15)
                             .shadow(color: .black, radius: 3)
-                            
-                            .padding(.horizontal, 23) //spazia dopo il quadrato
+                            .padding(.horizontal, 23)
                             .padding(.vertical, 1)
-                        
+                        }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    
                     .onAppear {
                         errorManager.loadErrors()
                     }
                 }
-                Button(action: { errorManager.errors.removeAll()
-                    errorManager.saveErrors()
-                }) {
-                    Image(systemName: "trash")
-                        .font(.largeTitle)
-                        .foregroundColor(.black)
-                        .frame(width: 50, height: 50)
-                }
-                
-                .background(Color.white.opacity(0.9))
-                .cornerRadius(22)
-                .shadow(color: .black, radius: 3)
-                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 5))
-                .padding()
-                
-                
             }
             .navigationTitle("Mistakes")
+            .toolbar {
+                ToolbarItemGroup(placement: .navigationBarTrailing) { // Posiziona gli elementi nella parte sinistra della barra di navigazione
+                    Button(action: {
+                        errorManager.errors.removeAll()
+                        errorManager.saveErrors()
+                    }) {
+                        Text("delete all")
+                            .foregroundColor(.red)
+                            .font(.system(.body, design: .default))
+                            .baselineOffset(90)
+                    }
+                }
+            }
         }
-        
     }
 }
