@@ -29,14 +29,14 @@ struct CarLightsView: View {
             ]
         ),
         QuizTurn(
-            question: "Which of these warning lights indicates a problem that could cause immediate damage to the engine?",
-            correctAnswer: "A",
+            question: "If the ABS (Anti-lock Braking System) warning light comes on, what should the driver do?",
+            correctAnswer: "C",
             imageName: "carLights2",
             answers: [
-                "A": "Engine oil pressure",
-                "B": "Fuel reserve",
-                "C": "ABS",
-                "D": "High beam headlights on"
+                "A": "Continue driving without worry",
+                "B": "Stop immediately and call a tow truck",
+                "C": "Check if the braking system is working correctly, but there might be a malfunction",
+                "D": "Change the brake pads"
             ]
         ),
         QuizTurn(
@@ -117,7 +117,7 @@ struct CarLightsView: View {
             ]
         ),
         QuizTurn(
-            question: "What color is this light generally? (BATTERY)",
+            question: "What color is this light generally?",
             correctAnswer: "D",
             imageName: "carLights10",
             answers: [
