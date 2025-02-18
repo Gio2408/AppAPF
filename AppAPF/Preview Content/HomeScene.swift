@@ -5,6 +5,7 @@ class HomeScene: SKScene {
     var road = SKSpriteNode()
     var carButton = SKSpriteNode()
     var quizButton = SKSpriteNode()
+    var carLights = SKSpriteNode()
     
     var onCarButtonTapped: (() -> Void)?
     var onExitTapped: (() -> Void)?
@@ -13,6 +14,7 @@ class HomeScene: SKScene {
         road = childNode(withName: "road") as! SKSpriteNode
         carButton = road.childNode(withName: "carButton") as! SKSpriteNode
         quizButton = road.childNode(withName: "quizButton") as! SKSpriteNode
+        carLights = road.childNode(withName: "carLights") as! SKSpriteNode
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -27,6 +29,10 @@ class HomeScene: SKScene {
         if node == quizButton {
             quizButton.alpha = 0.5
         }
+        
+        if node == carLights {
+            carLights.alpha = 0.5
+        }
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -36,6 +42,7 @@ class HomeScene: SKScene {
         
         carButton.alpha = 1.0
         quizButton.alpha = 1.0
+        carLights.alpha = 1.0
         
         if node == carButton {
             print("🚗 Car button tapped")
@@ -45,6 +52,11 @@ class HomeScene: SKScene {
         if node == quizButton {
             print("\nquizButton tapped\n")
             openSwiftUIView()
+        }
+        
+        if node == carLights {
+            print("\ncarLights tapped\n")
+            //openSwiftUIView2()
         }
     }
 
@@ -64,4 +76,16 @@ class HomeScene: SKScene {
             sceneView.window?.rootViewController?.present(hostingController, animated: true)
         }
     }
+    
+    /*func openSwiftUIView2() {
+        if let sceneView = self.view {
+            let swiftUIView = QuizView(isInQuizView: .constant(true))
+                .environmentObject(ScoreManager())
+                .environmentObject(ErrorManager())
+            
+            let hostingController = UIHostingController(rootView: swiftUIView)
+            hostingController.modalPresentationStyle = .fullScreen
+            sceneView.window?.rootViewController?.present(hostingController, animated: true)
+        }
+    }*/
 }

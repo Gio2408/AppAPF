@@ -2,14 +2,14 @@ import SwiftUI
 import SpriteKit
 import AVFoundation
 
-struct LevelSceneView: View {
+struct Level2SceneView: View {
     @Binding var levelScene: Int // State to return to HomeView
     @Binding var isLevelComplete: Bool  // State to monitor level completion
     @State private var showExitConfirmation = false // State to show the popup
     @State private var audioPlayer: AVAudioPlayer? // For audio management
     
     var scene: SKScene? {
-        guard let scene = SKScene(fileNamed: "LevelScene") else {
+        guard let scene = SKScene(fileNamed: "Level2Scene") else {
             print("⚠️ Error: Unable to load LevelScene.sks")
             return nil
         }
@@ -55,7 +55,7 @@ struct LevelSceneView: View {
                 // Mostra il pulsante "Continue" se il livello è completato
                 if isLevelComplete {
                     Button(action: {
-                        levelScene = 2  // Passa al livello successivo
+                        levelScene = 0  // Torna alla ContentView
                         isLevelComplete = false
                     }) {
                         Text("Continue")
@@ -120,8 +120,8 @@ struct LevelSceneView: View {
     }
 }
 
-struct LevelSceneView_Previews: PreviewProvider {
+struct Level2SceneView_Previews: PreviewProvider {
     static var previews: some View {
-        LevelSceneView(levelScene: .constant(1), isLevelComplete: .constant(false))
+        Level2SceneView(levelScene: .constant(1), isLevelComplete: .constant(false))
     }
 }

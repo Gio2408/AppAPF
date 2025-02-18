@@ -6,7 +6,7 @@ struct ContentView: View {
     @StateObject var errorManager = ErrorManager()
     
     @State private var isLevelComplete: Bool = false
-    @State private var isInLevelScene = false
+    @State private var levelScene = 0
     @State private var isInQuizView = false
     @State private var isShowingPreHomeScene = true
     @State private var isInErrorsView = false
@@ -26,8 +26,11 @@ struct ContentView: View {
                             playPreHomeSound() // Start the sound when PreHomeScene appears
                         }
                 } else {
-                    if isInLevelScene {
-                        LevelSceneView(isInLevelScene: $isInLevelScene, isLevelComplete: $isLevelComplete)
+                    if levelScene == 1{
+                        LevelSceneView(levelScene: $levelScene, isLevelComplete: $isLevelComplete)
+                            .transition(.opacity)
+                    } else if levelScene == 2{
+                        Level2SceneView(levelScene: $levelScene, isLevelComplete: $isLevelComplete)
                             .transition(.opacity)
                     } else if isInQuizView {
                         QuizView(isInQuizView: $isInQuizView)
@@ -35,7 +38,7 @@ struct ContentView: View {
                             .environmentObject(errorManager)
                             .transition(.opacity)
                     } else {
-                        HomeSceneView(isInLevelScene: $isInLevelScene)
+                        HomeSceneView(levelScene: $levelScene)
                             .transition(.opacity)
                     }
                 }
@@ -68,7 +71,7 @@ struct ContentView: View {
                         .padding()
                         .position(x: 40, y: UIScreen.main.bounds.height - 130)
                         // Hide buttons when in any other view
-                        .opacity(isInScoreView || isInErrorsView || isInQuizView || isInLevelScene ? 0 : 1)
+                        .opacity(isInScoreView || isInErrorsView || isInQuizView || levelScene > 0 ? 0 : 1)
                     }
                 }
             }

@@ -1,9 +1,3 @@
-/**
- cose da fare:
-     - aggiustare il salvataggio errori
-     - aggiungere il numerino che indica la pagina attuale del quiz (esempio: domanda 2/10)
- */
-
 import SwiftUI
 
 struct QuizView: View {
@@ -23,15 +17,23 @@ struct QuizView: View {
     
     // Quiz questions and answers
     let quizTurns = [
-        QuizTurn(question: "DOMANDA A", correctAnswer: "T", imageName: "image1"),
-        QuizTurn(question: "DOMANDA B", correctAnswer: "F", imageName: "image2"),
-        QuizTurn(question: "DOMANDA C", correctAnswer: "T", imageName: "image3"),
-        QuizTurn(question: "DOMANDA D", correctAnswer: "F", imageName: "image3"),
-        QuizTurn(question: "DOMANDA E", correctAnswer: "T", imageName: "image3")
-        
+        QuizTurn(question: "At unsigned intersections, the driver on the right always has the right of way.", correctAnswer: "T", imageName: "quiz1"),
+        QuizTurn(question: "Passing a vehicle stopped at a pedestrian crossing is always allowed.", correctAnswer: "F", imageName: "quiz2"),
+        QuizTurn(question: "The driver can be fined if a passenger isn’t wearing a seatbelt.", correctAnswer: "T", imageName: "quiz3"),
+        QuizTurn(question: "Braking distance decreases when it rains.", correctAnswer: "F", imageName: "quiz4"),
+        QuizTurn(question: "After an accident, a motorcyclist's helmet should always be removed immediately.", correctAnswer: "F", imageName: "quiz5"),
+        QuizTurn(question: "112 is the emergency number in Europe.", correctAnswer: "T", imageName: "quiz6"),
+        QuizTurn(question: "Fog can make vehicles ahead look farther away. ", correctAnswer: "F", imageName: "quiz7"),
+        QuizTurn(question: "Smooth driving helps reduce fuel consumption.", correctAnswer: "T", imageName: "quiz8"),
+        QuizTurn(question: "After an accident, if a fire starts and there’s no extinguisher, you can use a wet blanket to put out the flames.", correctAnswer: "T", imageName: "quiz9"),
+        QuizTurn(question: "A red traffic light allows you to turn right with caution, giving way to pedestrians.", correctAnswer: "F", imageName: "quiz10")
     ]
     
     func checkAnswer(turn: QuizTurn) { // turn: variabile che serve per la funzione, in modo che non dia errore (turn = quizTurns)
+        if scoreManager.currentQuestion == 0 { // If: re-inizializzare tutte le variabili per sicurezza
+            scoreManager.resetScore()
+            errorManager.errors.removeAll() // Rimuove tutti gli errori precedenti, così da far vedere solo quelli appena commessi
+        }
         if selectedAnswer != turn.correctAnswer {
             // Add the error if the answer is wrong
             let error = QuizError(question: turn.question, correctAnswer: turn.correctAnswer, userAnswer: selectedAnswer ?? "N/A")
@@ -159,5 +161,10 @@ struct QuizView: View {
         
     }
 }
-/*#Preview {
-}*/
+struct QuizView_Previews: PreviewProvider {
+    static var previews: some View {
+        QuizView(isInQuizView: .constant(true))
+            .environmentObject(ErrorManager())
+            .environmentObject(ScoreManager())
+    }
+}

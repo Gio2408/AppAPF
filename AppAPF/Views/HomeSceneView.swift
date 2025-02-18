@@ -2,7 +2,7 @@ import SwiftUI
 import SpriteKit
 
 struct HomeSceneView: View {
-    @Binding var isInLevelScene: Bool  // Control for switching to the LevelScene
+    @Binding var levelScene: Int  // Control for switching to the LevelScene
     @State private var isVisible: Bool = false  // State to control fade-in animation
 
     var scene: HomeScene {
@@ -10,7 +10,7 @@ struct HomeSceneView: View {
         scene.scaleMode = .aspectFill
         scene.onCarButtonTapped = {
             withAnimation(.easeInOut(duration: 0.5)) {
-                isInLevelScene = true  // Change to LevelScene on button tap with animation
+                levelScene = 1  // Change to LevelScene on button tap with animation
             }
         }
         return scene
@@ -38,6 +38,6 @@ struct HomeSceneView: View {
 
 struct HomeSceneView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeSceneView(isInLevelScene: .constant(false))
+        HomeSceneView(levelScene: .constant(0))
     }
 }
