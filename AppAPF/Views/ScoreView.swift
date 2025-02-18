@@ -9,17 +9,15 @@ struct ScoreView: View {
             
             NavigationView {
                 ZStack { // Inizia ZStack per lo sfondo
-                    Image("road2") // Immagine di sfondo
-                        .resizable() // Rendi l'immagine ridimensionabile
-                        .scaledToFill() // Scala l'immagine per riempire lo spazio
-                        //.opacity(0.75) // Opacità dello sfondo (opzionale, se vuoi renderlo semi-trasparente)
-                        .blur(radius: 5)
-                        .ignoresSafeArea() // Assicura che lo sfondo si estenda sotto la safe area
+                    Image("backv")
+                        .resizable()
+                        .scaledToFill()
+                        .ignoresSafeArea()
                         
                 ScrollView {
                     VStack{
                         Spacer()
-                            .frame(height: 110)
+                            .frame(height: 40)
                         /// QUIZ UNO - DA AGGIORNARE
                         VStack(alignment: .leading, spacing: 5) {
                             Text("Quiz uno: \(scoreManager.score.quiz)")

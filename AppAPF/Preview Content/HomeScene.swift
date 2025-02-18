@@ -73,6 +73,7 @@ class HomeScene: SKScene {
             
             let hostingController = UIHostingController(rootView: swiftUIView)
             hostingController.modalPresentationStyle = .fullScreen
+            hostingController.modalTransitionStyle = .crossDissolve
             sceneView.window?.rootViewController?.present(hostingController, animated: true)
         }
     }
@@ -85,6 +86,7 @@ class HomeScene: SKScene {
             
             let hostingController = UIHostingController(rootView: swiftUIView)
             hostingController.modalPresentationStyle = .fullScreen
+            hostingController.modalTransitionStyle = .crossDissolve
             sceneView.window?.rootViewController?.present(hostingController, animated: true)
         }
     }

@@ -11,15 +11,14 @@ struct ErrorsView: View {
     var body: some View {
         NavigationView {
             ZStack (alignment: .bottomTrailing){
-                Image("road2") // Immagine di sfondo
-                    .resizable() // Rendi l'immagine ridimensionabile
-                    .scaledToFill() // Scala l'immagine per riempire lo spazio
-                    .blur(radius: 5)
-                    .ignoresSafeArea() // Assicura che lo sfondo si estenda sotto la safe area
+                Image("backv")
+                    .resizable()
+                    .scaledToFill()
+                    .ignoresSafeArea()
                 ScrollView{
                     VStack (alignment: .leading){
                         Spacer()
-                            .frame(height: 110)
+                            .frame(height: 40)
                             ForEach(errorManager.errors) { error in
                                 VStack(alignment: .leading) {
                                     Text(error.question)
