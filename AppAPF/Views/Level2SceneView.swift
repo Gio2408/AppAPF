@@ -4,7 +4,7 @@ import AVFoundation
 
 struct Level2SceneView: View {
     @Binding var levelScene: Int // State to return to HomeView
-    @Binding var isLevelComplete: Bool  // State to monitor level completion
+    @Binding var isLevel2Complete: Bool  // State to monitor level completion
     @State private var showExitConfirmation = false // State to show the popup
     @State private var audioPlayer: AVAudioPlayer? // For audio management
     
@@ -17,9 +17,10 @@ struct Level2SceneView: View {
         scene.scaleMode = .aspectFill
         
         // Assicurati di passare il callback per notificare il completamento del livello
-        if let levelScene = scene as? LevelScene {
-            levelScene.levelCompleteCallback = {
-                self.isLevelComplete = true
+        if let level2Scene = scene as? Level2Scene {
+            level2Scene.level2CompleteCallback = {
+                self.isLevel2Complete = true
+
             }
         }
         
@@ -53,12 +54,12 @@ struct Level2SceneView: View {
                 Spacer()
 
                 // Mostra il pulsante "Continue" se il livello è completato
-                if isLevelComplete {
+                if isLevel2Complete {
                     Button(action: {
                         levelScene = 0  // Torna alla ContentView
-                        isLevelComplete = false
+                        isLevel2Complete = false
                     }) {
-                        Text("Continue")
+                        Text("Well done!")
                             .font(.title)
                             .foregroundColor(.white)
                             .padding(.horizontal, 40)
@@ -88,7 +89,7 @@ struct Level2SceneView: View {
             Button("Exit", role: .destructive) {
                 stopSound() // Stop the sound when exiting the scene
                 levelScene = 0 // Return to HomeView
-                isLevelComplete = false
+                isLevel2Complete = false
             }
         }
         .onAppear {
@@ -122,6 +123,6 @@ struct Level2SceneView: View {
 
 struct Level2SceneView_Previews: PreviewProvider {
     static var previews: some View {
-        Level2SceneView(levelScene: .constant(1), isLevelComplete: .constant(false))
+        Level2SceneView(levelScene: .constant(1), isLevel2Complete: .constant(true))
     }
 }

@@ -6,6 +6,7 @@ struct ContentView: View {
     @StateObject var errorManager = ErrorManager()
     
     @State private var isLevelComplete: Bool = false
+    @State private var isLevel2Complete: Bool = false
     @State private var levelScene = 0
     @State private var isInQuizView = false
     @State private var isShowingPreHomeScene = true
@@ -30,7 +31,7 @@ struct ContentView: View {
                         LevelSceneView(levelScene: $levelScene, isLevelComplete: $isLevelComplete)
                             .transition(.opacity)
                     } else if levelScene == 2{
-                        Level2SceneView(levelScene: $levelScene, isLevelComplete: $isLevelComplete)
+                        Level2SceneView(levelScene: $levelScene, isLevel2Complete: $isLevel2Complete)
                             .transition(.opacity)
                     } else if isInQuizView {
                         QuizView(isInQuizView: $isInQuizView)
