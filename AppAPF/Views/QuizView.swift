@@ -58,31 +58,13 @@ struct QuizView: View {
 
 
     var body: some View {
-        NavigationStack {
+        ZStack (alignment: .topLeading) {
+            Image("road2")
+                .resizable()
+                .scaledToFit()
+                .edgesIgnoringSafeArea(.all)
+                .blur(radius: 7)
             VStack {
-                // Back button in the top-left corner using NavigationLink
-                HStack {
-                    Button(action: { //questo  bottone è diverso
-                        withAnimation(.easeInOut(duration: 0.5)) {
-                            isInQuizView = false  // Torna a ContentView con animazione fade
-                            print ("Back to HomeView")
-                            presentationMode.wrappedValue.dismiss()
-                        }
-                    }) {
-                        Image(systemName: "arrow.left.circle.fill")
-                            .resizable()
-                            .frame(width: 50, height: 50)
-                            .foregroundColor(.white)
-                            .background(Circle().fill(Color.black.opacity(0.5)))
-                    }
-                    .padding(.leading, 20)
-                    Spacer()
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.top, 10)
-                .padding(.leading, 10)
-                
-
                 if  scoreManager.currentQuestion < quizTurns.count {
                     let turn = quizTurns[scoreManager.currentQuestion]
                     Image(quizTurns[scoreManager.currentQuestion].imageName) // entra nell'array in posizione attuale rispetto la domanda e di questa posizione prende l'immagine
@@ -149,12 +131,29 @@ struct QuizView: View {
                         .padding(.top, 30)
                     
                 }
-            }
+            }//VStack end
             .padding()
             .background(Color.white)
             .cornerRadius(10)
             .shadow(radius: 10)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
             
+            // Back button in the top-left corner using NavigationLink
+                Button(action: { //questo  bottone è diverso
+                    withAnimation(.easeInOut(duration: 0.5)) {
+                        isInQuizView = false  // Torna a ContentView con animazione fade
+                        print ("Back to HomeView")
+                        presentationMode.wrappedValue.dismiss()
+                    }
+                }) {
+                    Image(systemName: "arrow.left.circle.fill")
+                        .resizable()
+                        .frame(width: 50, height: 50)
+                        .foregroundColor(.white)
+                        .background(Circle().fill(Color.black.opacity(0.5)))
+                }
+                .padding(.leading, 20)
+                Spacer()
         
         }
         
