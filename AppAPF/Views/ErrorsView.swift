@@ -6,7 +6,7 @@ struct ErrorsView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                // Sfondo verde chiaro per un look più giocoso
+                // This is the background
                 ZStack(alignment: .leading){
                     Image("backv")
                         .resizable()
@@ -14,7 +14,7 @@ struct ErrorsView: View {
                         .ignoresSafeArea()
                     
                     ScrollView{
-                        VStack { ///VStack che controlla gli errori di un solo quiz
+                        VStack { /// This VStack is used to create the section with the name of the quiz and its errors
                             Spacer()
                                 .frame(height: 40)
                             VStack{
@@ -51,42 +51,73 @@ struct ErrorsView: View {
                             .padding(.vertical, 1)
                             
                             ForEach(errorManager.errors) { error in
-                                HStack{
                                     VStack(alignment: .leading, spacing: 8) {
                                         Text(error.question)
                                             .font(.system(size: 20, weight: .bold, design: .rounded))
                                             .foregroundColor(.black)
-                                        HStack {
-                                            Text("✅ Risposta corretta: \(error.correctAnswer)")
-                                                .foregroundColor(.green)
-                                                .font(.system(size: 18, design: .rounded))
-                                            
-                                            Text("❌ Tua risposta: \(error.userAnswer)")
-                                                .foregroundColor(.red)
-                                                .font(.system(size: 18, design: .rounded))
+
+                                        HStack(spacing: 20){
+                                            if error.userAnswer == "T" {
+                                                Image(systemName: "person.fill")
+                                                    .padding(.leading, 31)
+                                                
+                                                Text("T")
+                                                    .font(.title3)
+                                                    .foregroundColor(.white)
+                                                    .frame(width: 50, height: 50)
+                                                    .background(Color.red)
+                                                    .cornerRadius(10)
+
+                                                Text("F")
+                                                    .font(.title3)
+                                                    .foregroundColor(.white)
+                                                    .frame(width: 50, height: 50)
+                                                    .background(Color.green)
+                                                    .cornerRadius(10)
+                                            } else {
+                                                
+                                                Text("T")
+                                                    .font(.title3)
+                                                    .foregroundColor(.white)
+                                                    .frame(width: 50, height: 50)
+                                                    .background(Color.green)
+                                                    .cornerRadius(10)
+                                                    .padding(.leading, 69)
+                                                
+                                                Text("F")
+                                                    .font(.title3)
+                                                    .foregroundColor(.white)
+                                                    .frame(width: 50, height: 50)
+                                                    .background(Color.red)
+                                                    .cornerRadius(10)
+                                                    
+                                                
+                                                Image(systemName: "person.fill")
+                                                
+                                                
+                                            }
                                         }
-                                    }
+                                        
                                 }
+                                
                                 .padding()
                                 .background(Color.white.opacity(0.9))
                                 .cornerRadius(20)
+                                .frame(maxWidth: .infinity, alignment: .leading)
                                 .shadow(color: .gray.opacity(0.3), radius: 4, x: 0, y: 2)
                                 .padding(.leading, 40)
                                 .padding(.trailing, 10)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                
-                                
                                 
                             }
                             .onDelete { indices in
                                 errorManager.errors.remove(atOffsets: indices)
                                 errorManager.saveErrors()
                             }
-                            .listStyle(PlainListStyle()) // Per mantenere l'aspetto senza bordi
+                            .listStyle(PlainListStyle())
                             .padding(.horizontal, 16)
                         }
                         
-                        VStack { ///VStack che controlla gli errori di un solo quiz
+                        VStack { /// This VStack is used to create the section with the name of the quiz and its errors
                             Spacer()
                                 .frame(height: 40)
                             VStack{
@@ -123,38 +154,69 @@ struct ErrorsView: View {
                             .padding(.vertical, 1)
                             
                             ForEach(errorManager.errors) { error in
-                                HStack{
                                     VStack(alignment: .leading, spacing: 8) {
                                         Text(error.question)
                                             .font(.system(size: 20, weight: .bold, design: .rounded))
                                             .foregroundColor(.black)
-                                        HStack {
-                                            Text("✅ Risposta corretta: \(error.correctAnswer)")
-                                                .foregroundColor(.green)
-                                                .font(.system(size: 18, design: .rounded))
-                                            
-                                            Text("❌ Tua risposta: \(error.userAnswer)")
-                                                .foregroundColor(.red)
-                                                .font(.system(size: 18, design: .rounded))
+
+                                        HStack(spacing: 20){
+                                            if error.userAnswer == "T" {
+                                                Image(systemName: "person.fill")
+                                                    .padding(.leading, 31)
+                                                
+                                                Text("T")
+                                                    .font(.title3)
+                                                    .foregroundColor(.white)
+                                                    .frame(width: 50, height: 50)
+                                                    .background(Color.red)
+                                                    .cornerRadius(10)
+
+                                                Text("F")
+                                                    .font(.title3)
+                                                    .foregroundColor(.white)
+                                                    .frame(width: 50, height: 50)
+                                                    .background(Color.green)
+                                                    .cornerRadius(10)
+                                            } else {
+                                                
+                                                Text("T")
+                                                    .font(.title3)
+                                                    .foregroundColor(.white)
+                                                    .frame(width: 50, height: 50)
+                                                    .background(Color.green)
+                                                    .cornerRadius(10)
+                                                    .padding(.leading, 69)
+                                                
+                                                Text("F")
+                                                    .font(.title3)
+                                                    .foregroundColor(.white)
+                                                    .frame(width: 50, height: 50)
+                                                    .background(Color.red)
+                                                    .cornerRadius(10)
+                                                    
+                                                
+                                                Image(systemName: "person.fill")
+                                                
+                                                
+                                            }
                                         }
-                                    }
+                                        
                                 }
+                                
                                 .padding()
                                 .background(Color.white.opacity(0.9))
                                 .cornerRadius(20)
+                                .frame(maxWidth: .infinity, alignment: .leading)
                                 .shadow(color: .gray.opacity(0.3), radius: 4, x: 0, y: 2)
                                 .padding(.leading, 40)
                                 .padding(.trailing, 10)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                
-                                
                                 
                             }
                             .onDelete { indices in
                                 errorManager.errors.remove(atOffsets: indices)
                                 errorManager.saveErrors()
                             }
-                            .listStyle(PlainListStyle()) // Per mantenere l'aspetto senza bordi
+                            .listStyle(PlainListStyle())
                             .padding(.horizontal, 16)
                         }
                         
