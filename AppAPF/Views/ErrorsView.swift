@@ -1,61 +1,55 @@
 import SwiftUI
 
 struct ErrorsView: View {
-    @EnvironmentObject var errorManager: ErrorManager // Access to the errorManager object
-
+    @EnvironmentObject var errorManager: ErrorManager
+    
     var body: some View {
         NavigationView {
-            ZStack(alignment: .bottomTrailing) {
-                Image("backv")
-                    .resizable()
-                    .scaledToFill()
-                    .ignoresSafeArea()
+            ZStack {
+                // Sfondo verde chiaro per un look più giocoso
+                Color(red: 0.4, green: 0.6, blue: 0.2)
+                    .edgesIgnoringSafeArea(.all)
                 
-                ScrollView {
-                    VStack(alignment: .leading) {
-                        Spacer().frame(height: 40)
-                        
+                VStack {
+                    
+                    List {
                         ForEach(errorManager.errors) { error in
-                            VStack(alignment: .leading) {
-                                Text(error.question)
-                                    .font(.headline)
-                                    .foregroundColor(.black)
-                                Spacer()
-                                Text("Risposta corretta: \(error.correctAnswer)")
-                                    .foregroundColor(.green)
-                                Spacer()
-                                Text("Tua risposta: \(error.userAnswer)")
-                                    .foregroundColor(.red)
-                                Spacer()
+                            HStack(spacing: 12) {
+                                Image(systemName: "exclamationmark.triangle.fill")
+                                    .foregroundColor(.yellow)
+                                    .font(.title)
+                                
+                                VStack(alignment: .leading, spacing: 8) {
+                                    Text(error.question)
+                                        .font(.system(size: 20, weight: .bold, design: .rounded))
+                                        .foregroundColor(.white)
+                                    
+                                    Text("✅ Risposta corretta: \(error.correctAnswer)")
+                                        .foregroundColor(.green)
+                                        .font(.system(size: 18, design: .rounded))
+                                    
+                                    Text("❌ Tua risposta: \(error.userAnswer)")
+                                        .foregroundColor(.red)
+                                        .font(.system(size: 18, design: .rounded))
+                                }
                             }
                             .padding()
-                            .frame(maxWidth: .infinity, alignment: .leading)
                             .background(Color.white.opacity(0.9))
-                            .cornerRadius(15)
-                            .shadow(color: .black, radius: 3)
-                            .padding(.horizontal, 23)
-                            .padding(.vertical, 1)
+                            .cornerRadius(20)
+                            .shadow(color: .gray.opacity(0.3), radius: 4, x: 0, y: 2)
+                        }
+                        .onDelete { indices in
+                            errorManager.errors.remove(atOffsets: indices)
+                            errorManager.saveErrors()
                         }
                     }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .onAppear {
-                        errorManager.loadErrors()
-                    }
+                    .listStyle(PlainListStyle()) // Per mantenere l'aspetto senza bordi
+                    .padding(.horizontal, 16)
                 }
             }
-            .navigationTitle("Mistakes")
-            .toolbar {
-                ToolbarItemGroup(placement: .navigationBarTrailing) { // Posiziona gli elementi nella parte sinistra della barra di navigazione
-                    Button(action: {
-                        errorManager.errors.removeAll()
-                        errorManager.saveErrors()
-                    }) {
-                        Text("delete all")
-                            .foregroundColor(.red)
-                            .font(.system(.body, design: .default))
-                            .baselineOffset(90)
-                    }
-                }
+            .navigationTitle("Errori")
+            .onAppear {
+                errorManager.loadErrors()
             }
         }
     }
