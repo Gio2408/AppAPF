@@ -174,7 +174,7 @@ class Level2Scene: SKScene {
     func moveCar1(completion: @escaping () -> Void) {
         
         guard let car1 = car1 else { return }
-        let moveAction = SKAction.moveBy(x: -1200, y: 0, duration: 2.0)
+        let moveAction = SKAction.moveBy(x: 900, y: 900, duration: 2.0)
         moveAction.timingMode = .easeInEaseOut
         car1.run(moveAction, completion: completion)
     }
@@ -182,7 +182,7 @@ class Level2Scene: SKScene {
     func moveCar2(completion: @escaping () -> Void) {
         guard let car2 = car2 else { return }
         
-        let moveForward = SKAction.moveBy(x: 0, y: -2500, duration: 1.5)
+        let moveForward = SKAction.moveBy(x: 1050, y: -1050, duration: 1.5)
         
         moveForward.timingMode = .easeInEaseOut
         
@@ -195,9 +195,9 @@ class Level2Scene: SKScene {
             
             guard let car3 = car3 else { return }
             
-            let moveForward = SKAction.moveBy(x: 200, y: 0, duration: 1.5)
-            let rotateRight = SKAction.rotate(toAngle: -180.0 * CGFloat.pi / 180.0, duration: 0.3, shortestUnitArc: true)
-            let moveRight = SKAction.moveBy(x: 0, y: -2500, duration: 1.5)
+            let moveForward = SKAction.moveBy(x: -270, y: -270, duration: 1.5)
+        let rotateRight = SKAction.rotate(toAngle: -180.0 * CGFloat.pi / 250.00, duration: 0.3, shortestUnitArc: true)
+            let moveRight = SKAction.moveBy(x: 1000, y: -1000, duration: 1.5)
             
             moveForward.timingMode = .easeInEaseOut
             moveRight.timingMode = .easeInEaseOut
