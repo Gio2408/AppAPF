@@ -151,7 +151,7 @@ class LevelScene: SKScene {
         car3?.position = CGPoint(x: -800, y: -69)//x:265
         
         guard let bumblebee = bumblebee else { return }
-        let moveAction = SKAction.moveBy(x: 0, y: 1060, duration: 2.0)
+        let moveAction = SKAction.moveBy(x: 0, y: 1150, duration: 2.0)
         moveAction.timingMode = .easeInEaseOut
         bumblebee.run(moveAction, completion: completion)
         
@@ -166,7 +166,7 @@ class LevelScene: SKScene {
         car2.run(moveActionCar2)
         
         guard let car3 = car3 else { return }
-        let moveActionCar3 = SKAction.moveBy(x: 535, y: 0, duration: 2.0)
+        let moveActionCar3 = SKAction.moveBy(x: 525, y: -10, duration: 2.0)
         moveActionCar3.timingMode = .easeInEaseOut
         car3.run(moveActionCar3)
     }
@@ -213,7 +213,7 @@ class LevelScene: SKScene {
             
             guard let bumblebee = bumblebee else { return }
             
-            let moveForward = SKAction.moveBy(x: 0, y: 350, duration: 1.5)
+            let moveForward = SKAction.moveBy(x: 0, y:265, duration: 1.5)
             let rotateRight = SKAction.rotate(toAngle: -.pi / 2, duration: 0.3, shortestUnitArc: true)
             let moveRight = SKAction.moveBy(x: 750, y: 0, duration: 1.5)
             

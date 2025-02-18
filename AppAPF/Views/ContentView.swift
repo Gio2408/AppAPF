@@ -88,7 +88,7 @@ struct ContentView: View {
                 }
             }
             .onAppear {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) { // modify the duration of the screen display
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { // modify the duration of the screen display
                     withAnimation {
                         isShowingPreHomeScene = false
                     }

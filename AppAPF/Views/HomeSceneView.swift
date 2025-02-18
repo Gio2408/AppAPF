@@ -9,7 +9,7 @@ struct HomeSceneView: View {
         let scene = HomeScene(fileNamed: "HomeScene")!
         scene.scaleMode = .aspectFill
         scene.onCarButtonTapped = {
-            withAnimation(.easeInOut(duration: 0.5)) {
+            withAnimation(.easeInOut(duration: 0.3)) {
                 levelScene = 1  // Change to LevelScene on button tap with animation
             }
         }
