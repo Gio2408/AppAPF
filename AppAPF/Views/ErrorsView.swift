@@ -24,6 +24,7 @@ struct ErrorsView: View {
                                 errorManager.errors.remove(atOffsets: indices)
                                 errorManager.saveErrors()
                             }
+                            .listRowBackground(Color.clear)
                         }
                         .listStyle(PlainListStyle())
                         .frame(height: CGFloat(errorManager.errors.count) * 120) // Adatta l'altezza alla lista
@@ -41,6 +42,7 @@ struct ErrorsView: View {
                                 errorManager.errors.remove(atOffsets: indices)
                                 errorManager.saveErrors()
                             }
+                            .listRowBackground(Color.clear)
                         }
                         .listStyle(PlainListStyle())
                         .frame(height: CGFloat(errorManager.errors.count) * 120) // Adatta l'altezza alla lista
