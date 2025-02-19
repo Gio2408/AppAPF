@@ -5,12 +5,13 @@ struct QuizScore: Observable {
     var quiz: String        
     var totalScore: Int
     var totalAnswers: Int
-    
+    var levelC: Int
   
-    init(quiz: String, totalScore: Int = 0, totalAnswers: Int) {
+    init(quiz: String, totalScore: Int = 0, totalAnswers: Int, levelC: Int = 0) {
         self.quiz = quiz
         self.totalScore = totalScore
         self.totalAnswers = totalAnswers
+        self.levelC = levelC
     }
 }
 

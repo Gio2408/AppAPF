@@ -24,7 +24,7 @@ struct CarLightsView: View {
             imageName: "carLights1",
             answers: [
                 "A": "Ignore it and hope it goes out by itself",
-                "B": "Check the car manual",
+                "Check the car manual": "Check the car manual",
                 "C": "Stop in a safe place and check the problem",
                 "D": "Turn on the radio to avoid hearing about it"
             ]
@@ -36,7 +36,7 @@ struct CarLightsView: View {
             answers: [
                 "A": "Continue driving without worry",
                 "B": "Stop immediately and call a tow truck",
-                "C": "Check if the braking system is working correctly, but there might be a malfunction",
+                "Check if the braking system is working correctly, but there might be a malfunction": "Check if the braking system is working correctly, but there might be a malfunction",
                 "D": "Change the brake pads"
             ]
         ),
@@ -48,16 +48,16 @@ struct CarLightsView: View {
                 "A": "Green",
                 "B": "Blue",
                 "C": "Yellow",
-                "D": "Red"
+                "Red": "Red"
             ]
         ),
         Data(
             question: "If the engine temperature light turns red, what should you NOT do?",
-            correctAnswer: "Continue driving as if nothing is wrong",
+            correctAnswer: "Stop in a safe place and let the engine cool down",
             imageName: "carLights4",
             answers: [
                 "A": "Continue driving as if nothing is wrong",
-                "B": "Stop in a safe place and let the engine cool down",
+                "Stop in a safe place and let the engine cool down": "Stop in a safe place and let the engine cool down",
                 "C": "Check the coolant level",
                 "D": "Call a mechanic if the problem persists"
             ]
@@ -68,7 +68,7 @@ struct CarLightsView: View {
             imageName: "carLights5",
             answers: [
                 "A": "Blue",
-                "B": "Green",
+                "Green": "Green",
                 "C": "Yellow",
                 "D": "Red"
             ]
@@ -79,7 +79,7 @@ struct CarLightsView: View {
             imageName: "carLights6",
             answers: [
                 "A": "A red light with an exclamation point inside a circle",
-                "B": "A yellow light with a light bulb and an exclamation point",
+                "A yellow light with a light bulb and an exclamation poin": "A yellow light with a light bulb and an exclamation point",
                 "C": "A blue light with a light bulb",
                 "D": "None, the car does not warn about this issue"
             ]
@@ -89,7 +89,7 @@ struct CarLightsView: View {
             correctAnswer: "A red light with a 'P' inside a circle",
             imageName: "carLights7",
             answers: [
-                "A": "A red light with a 'P' inside a circle",
+                "A red light with a 'P' inside a circle": "A red light with a 'P' inside a circle",
                 "B": "A yellow light with an exclamation point",
                 "C": "A green light with a brake symbol",
                 "D": "No light, the handbrake automatically disengages"
@@ -100,7 +100,7 @@ struct CarLightsView: View {
             correctAnswer: "A problem with the brakes or brake fluid",
             imageName: "carLights8",
             answers: [
-                "A": "A problem with the brakes or brake fluid",
+                "A problem with the brakes or brake fluid": "A problem with the brakes or brake fluid",
                 "B": "The fuel tank is almost empty",
                 "C": "The ABS is deactivated",
                 "D": "The windshield wipers are malfunctioning"
@@ -112,7 +112,7 @@ struct CarLightsView: View {
             imageName: "carLights9",
             answers: [
                 "A": "The car won’t start until the seatbelt is fastened",
-                "B": "Someone in the car hasn’t fastened their seatbelt",
+                "Someone in the car hasn’t fastened their seatbelt": "Someone in the car hasn’t fastened their seatbelt",
                 "C": "The safety system is deactivated",
                 "D": "The driver's door is open"
             ]
@@ -125,7 +125,7 @@ struct CarLightsView: View {
                 "A": "Yellow",
                 "B": "Blue",
                 "C": "Green",
-                "D": "Red"
+                "Red": "Red"
             ]
         )
     ]
@@ -143,11 +143,11 @@ struct CarLightsView: View {
         
         scoreManager.incrementQuestion() // Increment the current question count
         
-        if scoreManager.currentQuestion == dates.count {
+        if scoreManager.currentQuestion2 == dates.count {
             // Update totalAnswers if all questions are answered
-            scoreManager.score.totalAnswers = dates.count
+            scoreManager.score2.totalAnswers = dates.count
             scoreManager.saveAnswers() // Save the number of total answers
-            if scoreManager.mTotalScore > scoreManager.score.totalScore {
+            if scoreManager.mTotalScore2 > scoreManager.score2.totalScore {
                 scoreManager.saveScore() // Save the score only if the current score is higher
             }
         }
@@ -174,8 +174,8 @@ struct CarLightsView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.top, 10)
                 
-                if scoreManager.currentQuestion < dates.count {
-                    let turn = dates[scoreManager.currentQuestion]
+                if scoreManager.currentQuestion2 < dates.count {
+                    let turn = dates[scoreManager.currentQuestion2]
                     
                     // Display image
                     Image(turn.imageName)
@@ -234,7 +234,7 @@ struct CarLightsView: View {
                     }
                     
                 } else {
-                    Text("You completed the quiz! Score: \(scoreManager.mTotalScore)/\(dates.count)")
+                    Text("You completed the quiz! Score: \(scoreManager.mTotalScore2)/\(dates.count)")
                         .font(.largeTitle)
                         .fontWeight(.bold)
                         .foregroundColor(.green)

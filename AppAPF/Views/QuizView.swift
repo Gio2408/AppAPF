@@ -15,24 +15,25 @@ struct QuizView: View {
         let question: String
         let correctAnswer: String
         let imageName: String
+        let levelC: Int
     }
     
     // Quiz questions and answers
     let quizTurns = [
-        QuizTurn(question: "At unsigned intersections, the driver on the right always has the right of way.", correctAnswer: "T", imageName: "quiz1"),
-        QuizTurn(question: "Passing a vehicle stopped at a pedestrian crossing is always allowed.", correctAnswer: "F", imageName: "quiz2"),
-        QuizTurn(question: "The driver can be fined if a passenger isn’t wearing a seatbelt.", correctAnswer: "T", imageName: "quiz3"),
-        QuizTurn(question: "Braking distance decreases when it rains.", correctAnswer: "F", imageName: "quiz4"),
-        QuizTurn(question: "After an accident, a motorcyclist's helmet should always be removed immediately.", correctAnswer: "F", imageName: "quiz5"),
-        QuizTurn(question: "112 is the emergency number in Europe.", correctAnswer: "T", imageName: "quiz6"),
-        QuizTurn(question: "Fog can make vehicles ahead look farther away. ", correctAnswer: "F", imageName: "quiz7"),
-        QuizTurn(question: "Smooth driving helps reduce fuel consumption.", correctAnswer: "T", imageName: "quiz8"),
-        QuizTurn(question: "After an accident, if a fire starts and there’s no extinguisher, you can use a wet blanket to put out the flames.", correctAnswer: "T", imageName: "quiz9"),
-        QuizTurn(question: "A red traffic light allows you to turn right with caution, giving way to pedestrians.", correctAnswer: "F", imageName: "quiz10")
+        QuizTurn(question: "At unsigned intersections, the driver on the right always has the right of way.", correctAnswer: "T", imageName: "quiz1", levelC: 1),
+        QuizTurn(question: "Passing a vehicle stopped at a pedestrian crossing is always allowed.", correctAnswer: "F", imageName: "quiz2", levelC: 1),
+        QuizTurn(question: "The driver can be fined if a passenger isn’t wearing a seatbelt.", correctAnswer: "T", imageName: "quiz3", levelC: 1),
+        QuizTurn(question: "Braking distance decreases when it rains.", correctAnswer: "F", imageName: "quiz4", levelC: 1),
+        QuizTurn(question: "After an accident, a motorcyclist's helmet should always be removed immediately.", correctAnswer: "F", imageName: "quiz5", levelC: 1),
+        QuizTurn(question: "112 is the emergency number in Europe.", correctAnswer: "T", imageName: "quiz6", levelC: 1),
+        QuizTurn(question: "Fog can make vehicles ahead look farther away. ", correctAnswer: "F", imageName: "quiz7", levelC: 1),
+        QuizTurn(question: "Smooth driving helps reduce fuel consumption.", correctAnswer: "T", imageName: "quiz8", levelC: 1),
+        QuizTurn(question: "After an accident, if a fire starts and there’s no extinguisher, you can use a wet blanket to put out the flames.", correctAnswer: "T", imageName: "quiz9", levelC: 1),
+        QuizTurn(question: "A red traffic light allows you to turn right with caution, giving way to pedestrians.", correctAnswer: "F", imageName: "quiz10", levelC: 1)
     ]
     
     func checkAnswer(turn: QuizTurn) { // turn: a variable needed for the function, so it doesn’t give an error (turn = quizTurns)
-        if scoreManager.currentQuestion == 0 { // If: reinitialize all variables for safety
+        if scoreManager.currentQuestion1 == 0 { // If: reinitialize all variables for safety
             scoreManager.resetScore()
             errorManager.deleteErrors() // Removes all previous errors, so only the recently made ones will be shown
         }
@@ -49,10 +50,10 @@ struct QuizView: View {
         
         scoreManager.incrementQuestion() // Tracks the current question count for comparison later
         
-        if scoreManager.currentQuestion == quizTurns.count { // compares the current question with the total number of questions
-            scoreManager.score.totalAnswers = quizTurns.count // assigns the total number of questions to totalAnswers, to display in ScoreView
+        if scoreManager.currentQuestion1 == quizTurns.count { // compares the current question with the total number of questions
+            scoreManager.score1.totalAnswers = quizTurns.count // assigns the total number of questions to totalAnswers, to display in ScoreView
             scoreManager.saveAnswers() // saves the total number of questions
-            if scoreManager.mTotalScore > scoreManager.score.totalScore { // if necessary: update the score of correct answers only if they are more than the previous ones
+            if scoreManager.mTotalScore1 > scoreManager.score1.totalScore { // if necessary: update the score of correct answers only if they are more than the previous ones
                 scoreManager.saveScore()
             }
         }
@@ -66,15 +67,15 @@ struct QuizView: View {
                 .edgesIgnoringSafeArea(.all)
                 .blur(radius: 8)
             VStack {
-                if  scoreManager.currentQuestion < quizTurns.count {
-                    let turn = quizTurns[scoreManager.currentQuestion]
-                    Image(quizTurns[scoreManager.currentQuestion].imageName) // accesses the current position in the array and takes the image for that position
+                if  scoreManager.currentQuestion1 < quizTurns.count {
+                    let turn = quizTurns[scoreManager.currentQuestion1]
+                    Image(quizTurns[scoreManager.currentQuestion1].imageName) // accesses the current position in the array and takes the image for that position
                         .resizable()
                         .scaledToFit()
                         .frame(width: 250, height: 250)
                         .padding(.top, 30)
 
-                    Text(quizTurns[scoreManager.currentQuestion].question)
+                    Text(quizTurns[scoreManager.currentQuestion1].question)
                         .font(.title)
                         .fontWeight(.medium)
                         .multilineTextAlignment(.center)
@@ -129,7 +130,7 @@ struct QuizView: View {
                             
                     }
                 } else {
-                    Text("You completed the quiz! Score: \(scoreManager.mTotalScore)/\(quizTurns.count)")
+                    Text("You completed the quiz! Score: \(scoreManager.mTotalScore1)/\(quizTurns.count)")
                         .font(.title)
                         .fontWeight(.bold)
                         .foregroundColor(.black)
