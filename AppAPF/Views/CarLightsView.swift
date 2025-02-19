@@ -169,7 +169,7 @@ struct CarLightsView: View {
                             .foregroundColor(.white)
                             .background(Circle().fill(Color.blue.opacity(0.7)))
                     }
-                    .padding(.leading, 20)
+                    .padding(.leading, 0)
                     Spacer()
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
