@@ -1,11 +1,4 @@
-//
-//  RoadJunctionError.swift
-//  AppAPF
-//
-//  Created by Michele Vassallo Todaro on 10/02/25.
-//
 // Represents an error made during a quiz session.
-
 import Foundation
 
 struct QuizError: Codable, Identifiable {

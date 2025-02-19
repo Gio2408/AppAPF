@@ -1,10 +1,3 @@
-//
-//  AppAPFTests.swift
-//  AppAPFTests
-//
-//  Created by Gioacchino Augello on 07/02/25.
-//
-
 import Testing
 @testable import AppAPF
 

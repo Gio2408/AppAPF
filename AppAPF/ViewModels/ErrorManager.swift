@@ -1,8 +1,3 @@
-//  ErrorManager.swift
-//  AppAPF
-//  Created by Michele Vassallo Todaro on 10/02/25.
-// Manages quiz errors persistently to retain data across app restarts.
-
 import Foundation
 
 class ErrorManager: ObservableObject {

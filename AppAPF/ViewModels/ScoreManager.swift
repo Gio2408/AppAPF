@@ -1,8 +1,3 @@
-//  ScoreManager.swift
-//  AppAPF
-//  Created by Michele Vassallo Todaro on 12/02/25.
-// Manages quiz scores and tracks completed quizzes.
-
 import Foundation
 import SwiftUI
 

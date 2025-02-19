@@ -1,10 +1,3 @@
-//
-//  AppAPFUITests.swift
-//  AppAPFUITests
-//
-//  Created by Gioacchino Augello on 07/02/25.
-//
-
 import XCTest
 
 final class AppAPFUITests: XCTestCase {

@@ -1,10 +1,3 @@
-//
-//  AppAPFApp.swift
-//  AppAPF
-//
-//  Created by Gioacchino Augello on 07/02/25.
-//
-
 import SwiftUI
 
 @main

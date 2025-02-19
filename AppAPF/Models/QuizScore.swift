@@ -1,11 +1,4 @@
-//
-//  RoadJunctionError.swift
-//  AppAPF
-//
-//  Created by Michele Vassallo Todaro on 10/02/25.
-//
 // Represents the score of a quiz, including total points and the number of answers.
-
 import Foundation
 
 struct QuizScore: Observable {
