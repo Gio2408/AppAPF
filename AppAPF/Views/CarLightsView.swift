@@ -166,7 +166,7 @@ struct CarLightsView: View {
                             .resizable()
                             .frame(width: 50, height: 50)
                             .foregroundColor(.white)
-                            .background(Circle().fill(Color.blue.opacity(0.7)))
+                            .background(Circle().fill(Color.black.opacity(0.5)))
                     }
                     .padding(.leading, 0)
                     Spacer()
@@ -191,7 +191,7 @@ struct CarLightsView: View {
                         .font(.title2)
                         .fontWeight(.regular)
                         .multilineTextAlignment(.center)
-                        .foregroundColor(.white)
+                        .foregroundColor(.black)
                         .padding()
                         .background(Color.green.opacity(0.5))
                         .cornerRadius(15)
@@ -209,11 +209,11 @@ struct CarLightsView: View {
                                     Text("\(answer):")
                                         .font(.headline)
                                         .frame(width: 40)
-                                        .foregroundColor(.white)
+                                        .foregroundColor(.black)
                                     
                                     Text(turn.answers[answer] ?? "")
                                         .font(.body)
-                                        .foregroundColor(.white)
+                                        .foregroundColor(.black)
                                         Spacer()
                                 }
                                 .padding()
@@ -244,7 +244,6 @@ struct CarLightsView: View {
             .padding()
             .padding(.horizontal, 20)
             .cornerRadius(20)
-            .shadow(radius: 15)
         }.transition(.opacity)
             .alert("Are you sure you want to exit?", isPresented: $showExitConfirmation) {
                     Button("Cancel", role: .cancel) { }

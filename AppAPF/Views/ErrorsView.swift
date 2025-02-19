@@ -6,7 +6,6 @@ struct ErrorsView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                // Sfondo verde chiaro per un look più giocoso
                 Color(red: 0.65, green: 0.80, blue: 0.45)
                     .edgesIgnoringSafeArea(.all)
 
@@ -14,30 +13,26 @@ struct ErrorsView: View {
                     List {
                         ForEach(errorManager.errors) { error in
                             HStack(spacing: 20) {
-                                Image(systemName: "exclamationmark.triangle.fill")
-                                    .foregroundColor(.yellow)
-                                    .font(.title)
-
                                 VStack(alignment: .leading, spacing: 5) {
                                     Text(error.question)
                                         .font(.system(size: 20, weight: .bold, design: .rounded))
                                         .foregroundColor(.black)
-                                        .lineLimit(nil) // Permette il testo su più righe
-                                        .fixedSize(horizontal: false, vertical: true) // Espande solo verticalmente
-
-                                    Text("✅ Risposta corretta: \(error.correctAnswer)")
+                                        .lineLimit(nil)
+                                        .fixedSize(horizontal: false, vertical: true)
+                                    Spacer()
+                                    Text("Correct Answer: \(error.correctAnswer)")
                                         .foregroundColor(.green)
+                                        .fontWeight(.semibold)
                                         .font(.system(size: 18, design: .rounded))
-
-                                    Text("❌ Tua risposta: \(error.userAnswer)")
+                                    Text("Your Answer: \(error.userAnswer)")
                                         .foregroundColor(.red)
+                                        .fontWeight(.semibold)
                                         .font(.system(size: 18, design: .rounded))
                                 }
                             }
                             .padding(24)
                             .background(Color.white)
                             .shadow(color: .gray.opacity(0.3), radius: 4, x: 0, y: 2)
-                             // Espande orizzontalmente
                             .cornerRadius(20)
                             .listRowBackground(Color.clear)
                         }
@@ -46,10 +41,10 @@ struct ErrorsView: View {
                             errorManager.saveErrors()
                         }
                     }
-                    .listStyle(PlainListStyle()) // Per mantenere l'aspetto senza bordi
+                    .listStyle(PlainListStyle())
                     .padding(.horizontal, 16)
-                    .background(Color.clear) // Rende la List trasparente
-                    .scrollContentBackground(.hidden) // Nasconde lo sfondo della lista su iOS 16+
+                    .background(Color.clear)
+                    .scrollContentBackground(.hidden)
                 }
                 .navigationTitle("Mistakes")
                 .onAppear {
