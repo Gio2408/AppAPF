@@ -53,7 +53,6 @@ struct ScoreView: View {
                         .padding()
                         .background(Color.white.opacity(0.9))
                         .cornerRadius(15)
-                        .shadow(color: .black, radius: 3)
                         .padding(.horizontal)
 
                         /// QUIZ TWO - TO UPDATE
@@ -94,7 +93,6 @@ struct ScoreView: View {
                         .padding()
                         .background(Color.white.opacity(0.9))
                         .cornerRadius(15)
-                        .shadow(color: .black, radius: 3)
                         .padding()
 
                         

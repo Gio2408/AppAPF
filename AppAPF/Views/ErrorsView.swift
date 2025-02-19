@@ -73,6 +73,7 @@ struct ErrorsView: View {
                 Text(title)
                     .font(.title)
                     .fontWeight(.bold)
+                    .foregroundColor(.black)
                     .frame(maxWidth: .infinity, alignment: .trailing)
             }
             .padding()

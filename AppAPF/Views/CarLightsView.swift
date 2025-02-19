@@ -226,7 +226,6 @@ struct CarLightsView: View {
                                 .frame(maxWidth: .infinity)
                                 .background(Color.gray.opacity(0.2))
                                 .cornerRadius(10)
-                                .shadow(radius: 5)
                             }
                         }
                     }
@@ -250,7 +249,6 @@ struct CarLightsView: View {
             .padding()
             .padding(.horizontal, 20)
             .cornerRadius(20)
-            .shadow(radius: 15)
         }
     }
 }
