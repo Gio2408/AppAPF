@@ -1,7 +1,7 @@
 // Represents the score of a quiz, including total points and the number of answers.
 import Foundation
 
-struct QuizScore: Observable {
+class QuizScore: Observable {
     var quiz: String        
     var totalScore: Int
     var totalAnswers: Int

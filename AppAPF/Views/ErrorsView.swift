@@ -18,16 +18,17 @@ struct ErrorsView: View {
                                         .font(.system(size: 20, weight: .bold, design: .rounded))
                                         .foregroundColor(.black)
                                         .lineLimit(nil)
-                                        .fixedSize(horizontal: false, vertical: true)
-                                    Spacer()
-                                    Text("Correct Answer: \(error.correctAnswer)")
-                                        .foregroundColor(.green)
-                                        .fontWeight(.semibold)
-                                        .font(.system(size: 18, design: .rounded))
-                                    Text("Your Answer: \(error.userAnswer)")
-                                        .foregroundColor(.red)
-                                        .fontWeight(.semibold)
-                                        .font(.system(size: 18, design: .rounded))
+                                         .fixedSize(horizontal: false, vertical: true)
+                                     Spacer()
+                                     Text("Correct Answer: \(error.correctAnswer)")
+                                         .foregroundColor(.green)
+                                         .fontWeight(.semibold)
+                                         .font(.system(size: 18, design: .rounded))
+                                     Text("Your Answer: \(error.userAnswer)")
+
+                                         .foregroundColor(.red)
+                                         .fontWeight(.semibold)
+                                         .font(.system(size: 18, design: .rounded))
                                 }
                             }
                             .padding(24)
@@ -42,9 +43,9 @@ struct ErrorsView: View {
                         }
                     }
                     .listStyle(PlainListStyle())
-                    .padding(.horizontal, 16)
-                    .background(Color.clear)
-                    .scrollContentBackground(.hidden)
+                              .padding(.horizontal, 16)
+                              .background(Color.clear)
+                              .scrollContentBackground(.hidden)
                 }
                 .navigationTitle("Mistakes")
                 .onAppear {

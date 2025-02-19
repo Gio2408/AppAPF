@@ -131,132 +131,134 @@ struct CarLightsView: View {
     ]
 
     func checkAnswer(turn: Data) {
-        if selectedAnswer != turn.correctAnswer {
-            // Add the error if the answer is wrong
-            let errorLights = QuizError(question: turn.question, correctAnswer: turn.correctAnswer, userAnswer: selectedAnswer ?? "N/A")
-            errorManager.addError(errorLights)
-            errorMessage = "Wrong answer!"
-        } else {
-            errorMessage = "Correct answer!"
-            scoreManager.incrementScore() // Keep track of the correct answers
-        }
-        
-        scoreManager.incrementQuestion() // Increment the current question count
-        
-        if scoreManager.currentQuestion2 == dates.count {
-            // Update totalAnswers if all questions are answered
-            scoreManager.score2.totalAnswers = dates.count
-            scoreManager.saveAnswers() // Save the number of total answers
-            if scoreManager.mTotalScore2 > scoreManager.score2.totalScore {
-                scoreManager.saveScore() // Save the score only if the current score is higher
+            if selectedAnswer != turn.correctAnswer {
+                // Add the error if the answer is wrong
+                let errorLights = QuizError(question: turn.question, correctAnswer: turn.correctAnswer, userAnswer: selectedAnswer ?? "N/A")
+                errorManager.addError(errorLights)
+                errorMessage = "Wrong answer!"
+            } else {
+                errorMessage = "Correct answer!"
+                scoreManager.incrementScore() // Keep track of the correct answers
+            }
+            
+            scoreManager.incrementQuestion() // Increment the current question count
+            
+            if scoreManager.currentQuestion == dates.count {
+                // Update totalAnswers if all questions are answered
+                scoreManager.score.totalAnswers = dates.count
+                scoreManager.saveAnswers() // Save the number of total answers
+                if scoreManager.mTotalScore > scoreManager.score.totalScore {
+                    scoreManager.saveScore() // Save the score only if the current score is higher
+                }
             }
         }
-    }
-    
-    var body: some View {
-        NavigationStack {
-            VStack {
-                // Back button
-                HStack {
-                    Button(action: {
-                            showExitConfirmation = true
-                            isInCarLightsView = false
-                    }) {
-                        Image(systemName: "arrow.left.circle.fill")
-                            .resizable()
-                            .frame(width: 50, height: 50)
-                            .foregroundColor(.white)
-                            .background(Circle().fill(Color.black.opacity(0.5)))
+        
+        var body: some View {
+            NavigationStack {
+                VStack {
+                    // Back button
+                    HStack {
+                        Button(action: {
+                                showExitConfirmation = true
+                                isInCarLightsView = false
+                        }) {
+                            Image(systemName: "arrow.left.circle.fill")
+                                .resizable()
+                                .frame(width: 50, height: 50)
+                                .foregroundColor(.white)
+                                .background(Circle().fill(Color.black.opacity(0.5)))
+
+                        }
+                        .padding(.leading, 0)
+                        Spacer()
                     }
-                    .padding(.leading, 0)
-                    Spacer()
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.top, 10)
-                
-                if scoreManager.currentQuestion2 < dates.count {
-                    let turn = dates[scoreManager.currentQuestion2]
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.top, 10)
                     
-                    // Display image
-                    Image(turn.imageName)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 300, height: 200)
-                        .clipShape(RoundedRectangle(cornerRadius: 20))
-                        .padding(.top, 30)
-                        .padding()
-                    
-                    // Display question
-                    Text(turn.question)
-                        .font(.title2)
-                        .fontWeight(.regular)
-                        .multilineTextAlignment(.center)
-                        .foregroundColor(.black)
-                        .padding()
-                        .background(Color.green.opacity(0.5))
-                        .cornerRadius(15)
-                        .padding()
-                        .padding(.horizontal, 20)
-                    
-                    // Display answer buttons
-                    VStack(spacing: 2) {
-                        ForEach(turn.answers.keys.sorted(), id: \.self) { answer in
-                            Button(action: {
-                                selectedAnswer = answer
-                                checkAnswer(turn: turn)
-                            }) {
-                                HStack {
-                                    Text("\(answer):")
-                                        .font(.headline)
-                                        .frame(width: 40)
-                                        .foregroundColor(.black)
-                                    
-                                    Text(turn.answers[answer] ?? "")
-                                        .font(.body)
-                                        .foregroundColor(.black)
-                                        Spacer()
+                    if scoreManager.currentQuestion < dates.count {
+                        let turn = dates[scoreManager.currentQuestion]
+                        
+                        // Display image
+                        Image(turn.imageName)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 300, height: 200)
+                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                            .padding(.top, 30)
+                            .padding()
+                        
+                        // Display question
+                        Text(turn.question)
+                            .font(.title2)
+                            .fontWeight(.regular)
+                            .multilineTextAlignment(.center)
+                            .foregroundColor(.black)
+                            .padding()
+                            .background(Color.green.opacity(0.5))
+                            .cornerRadius(15)
+                            .padding()
+                            .padding(.horizontal, 20)
+                        
+                        // Display answer buttons
+                        VStack(spacing: 2) {
+                            ForEach(turn.answers.keys.sorted(), id: \.self) { answer in
+                                Button(action: {
+                                    selectedAnswer = answer
+                                    checkAnswer(turn: turn)
+                                }) {
+                                    HStack {
+                                        Text("\(answer):")
+                                            .font(.headline)
+                                            .frame(width: 40)
+                                            .foregroundColor(.black)
+                                        
+                                        Text(turn.answers[answer] ?? "")
+                                            .font(.body)
+                                            .foregroundColor(.black)
+                                            Spacer()
+                                    }
+                                    .padding()
+                                    .frame(maxWidth: .infinity)
+                                    .background(Color.gray.opacity(0.2))
+                                    .cornerRadius(10)
+                                    .shadow(radius: 5)
                                 }
-                                .padding()
-                                .frame(maxWidth: .infinity)
-                                .background(Color.gray.opacity(0.2))
-                                .cornerRadius(10)
-                                .shadow(radius: 5)
                             }
                         }
+                        
+                        // Show feedback
+                        if let errorMessage = errorMessage {
+                            Text(errorMessage)
+                                .font(.subheadline)
+                                .foregroundColor(errorMessage == "Correct answer!" ? .green : .red)
+                                .padding(.top, 20)
+                        }
+                        
+                    } else {
+                        Text("You completed the quiz! Score: \(scoreManager.mTotalScore)/\(dates.count)")
+                            .font(.largeTitle)
+                            .fontWeight(.bold)
+                            .foregroundColor(.green)
+                            .padding(.top, 30)
                     }
-                    
-                    // Show feedback
-                    if let errorMessage = errorMessage {
-                        Text(errorMessage)
-                            .font(.subheadline)
-                            .foregroundColor(errorMessage == "Correct answer!" ? .green : .red)
-                            .padding(.top, 20)
+                }
+                .padding()
+                .padding(.horizontal, 20)
+                .cornerRadius(20)
+                .shadow(radius: 15)
+            }.transition(.opacity)
+                .alert("Are you sure you want to exit?", isPresented: $showExitConfirmation) {
+                        Button("Cancel", role: .cancel) { }
+                        Button("Exit", role: .destructive) { isInCarLightsView = false
+                            presentationMode.wrappedValue.dismiss()}
                     }
-                    
-                } else {
-                    Text("You completed the quiz! Score: \(scoreManager.mTotalScore2)/\(dates.count)")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                        .foregroundColor(.green)
-                        .padding(.top, 30)
-                }
-            }
-            .padding()
-            .padding(.horizontal, 20)
-            .cornerRadius(20)
-        }.transition(.opacity)
-            .alert("Are you sure you want to exit?", isPresented: $showExitConfirmation) {
-                    Button("Cancel", role: .cancel) { }
-                    Button("Exit", role: .destructive) { isInCarLightsView = false
-                        presentationMode.wrappedValue.dismiss()}
-                }
+        }
     }
-}
 
-struct CarLightsView_Previews: PreviewProvider {
-    static var previews: some View {
-        CarLightsView(isInCarLightsView: .constant(true))
-            .environmentObject(ErrorManager())
-            .environmentObject(ScoreManager())
+    struct CarLightsView_Previews: PreviewProvider {
+        static var previews: some View {
+            CarLightsView(isInCarLightsView: .constant(true))
+                .environmentObject(ErrorManager())
+                .environmentObject(ScoreManager())
+        }
     }
-}
