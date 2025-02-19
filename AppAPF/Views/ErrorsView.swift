@@ -15,15 +15,15 @@ struct ErrorsView: View {
                     
                     List {
                         ForEach(errorManager.errors) { error in
-                            HStack(spacing: 12) {
+                            HStack(spacing: 20) {
                                 Image(systemName: "exclamationmark.triangle.fill")
                                     .foregroundColor(.yellow)
                                     .font(.title)
                                 
-                                VStack(alignment: .leading, spacing: 8) {
+                                VStack(alignment: .leading, spacing: 5) {
                                     Text(error.question)
                                         .font(.system(size: 20, weight: .bold, design: .rounded))
-                                        .foregroundColor(.white)
+                                        .foregroundColor(.black)
                                     
                                     Text("✅ Risposta corretta: \(error.correctAnswer)")
                                         .foregroundColor(.green)

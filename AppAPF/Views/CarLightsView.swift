@@ -184,22 +184,23 @@ struct CarLightsView: View {
                         .scaledToFit()
                         .frame(width: 300, height: 200)
                         .clipShape(RoundedRectangle(cornerRadius: 20))
-                        .shadow(radius: 10)
                         .padding(.top, 30)
+                        .padding()
                     
                     // Display question
                     Text(turn.question)
                         .font(.title2)
-                        .fontWeight(.bold)
+                        .fontWeight(.regular)
                         .multilineTextAlignment(.center)
                         .foregroundColor(.white)
                         .padding()
-                        .background(Color.purple.opacity(0.7))
+                        .background(Color.green.opacity(0.5))
                         .cornerRadius(15)
+                        .padding()
                         .padding(.horizontal, 20)
                     
                     // Display answer buttons
-                    VStack(spacing: 20) {
+                    VStack(spacing: 2) {
                         ForEach(turn.answers.keys.sorted(), id: \.self) { answer in
                             Button(action: {
                                 selectedAnswer = answer
@@ -209,12 +210,16 @@ struct CarLightsView: View {
                                     Text("\(answer):")
                                         .font(.headline)
                                         .frame(width: 40)
+                                        .foregroundColor(.white)
+                                    
                                     Text(turn.answers[answer] ?? "")
                                         .font(.body)
+                                        .foregroundColor(.white)
+                                        Spacer()
                                 }
                                 .padding()
                                 .frame(maxWidth: .infinity)
-                                .background(Color.blue.opacity(0.2))
+                                .background(Color.gray.opacity(0.2))
                                 .cornerRadius(10)
                                 .shadow(radius: 5)
                             }
@@ -238,8 +243,7 @@ struct CarLightsView: View {
                 }
             }
             .padding()
-            .background(LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(0.3), Color.purple.opacity(0.3)]), startPoint: .top, endPoint: .bottom))
-            
+            .padding(.horizontal, 20)
             .cornerRadius(20)
             .shadow(radius: 15)
         }
