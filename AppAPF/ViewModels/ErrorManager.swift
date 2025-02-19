@@ -2,6 +2,7 @@ import Foundation
 
 class ErrorManager: ObservableObject {
     @Published var errors: [QuizError] = []
+    @Published var lightErrors: [QuizError] = []
     
     private let key = "savedErrors"
 

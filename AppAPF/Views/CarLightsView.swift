@@ -9,15 +9,15 @@ struct CarLightsView: View {
     @State private var selectedAnswer: String?
     @State private var errorMessage: String?
     
-    struct QuizTurn {
+    struct Data {
         let question: String
         let correctAnswer: String
         let imageName: String
         let answers: [String: String]
     }
     
-    let quizTurns = [
-        QuizTurn(
+    let dates = [
+        Data(
             question: "If you see a red warning light, what should you do first?",
             correctAnswer: "C",
             imageName: "carLights1",
@@ -28,7 +28,7 @@ struct CarLightsView: View {
                 "D": "Turn on the radio to avoid hearing about it"
             ]
         ),
-        QuizTurn(
+        Data(
             question: "If the ABS (Anti-lock Braking System) warning light comes on, what should the driver do?",
             correctAnswer: "C",
             imageName: "carLights2",
@@ -39,7 +39,7 @@ struct CarLightsView: View {
                 "D": "Change the brake pads"
             ]
         ),
-        QuizTurn(
+        Data(
             question: "Which color of warning lights generally indicates an urgent problem that requires immediate attention?",
             correctAnswer: "D",
             imageName: "carLights3",
@@ -50,7 +50,7 @@ struct CarLightsView: View {
                 "D": "Red"
             ]
         ),
-        QuizTurn(
+        Data(
             question: "If the engine temperature light turns red, what should you NOT do?",
             correctAnswer: "A",
             imageName: "carLights4",
@@ -61,7 +61,7 @@ struct CarLightsView: View {
                 "D": "Call a mechanic if the problem persists"
             ]
         ),
-        QuizTurn(
+        Data(
             question: "If the low beam headlights light is on, what color is it?",
             correctAnswer: "B",
             imageName: "carLights5",
@@ -72,7 +72,7 @@ struct CarLightsView: View {
                 "D": "Red"
             ]
         ),
-        QuizTurn(
+        Data(
             question: "Which of these warning lights indicates a malfunction with the brake lights?",
             correctAnswer: "B",
             imageName: "carLights6",
@@ -83,7 +83,7 @@ struct CarLightsView: View {
                 "D": "None, the car does not warn about this issue"
             ]
         ),
-        QuizTurn(
+        Data(
             question: "If the handbrake is engaged and you start driving, which warning light stays on?",
             correctAnswer: "A",
             imageName: "carLights7",
@@ -94,7 +94,7 @@ struct CarLightsView: View {
                 "D": "No light, the handbrake automatically disengages"
             ]
         ),
-        QuizTurn(
+        Data(
             question: "If a red light with a circle and an exclamation point appears, what does it indicate?",
             correctAnswer: "A",
             imageName: "carLights8",
@@ -105,7 +105,7 @@ struct CarLightsView: View {
                 "D": "The windshield wipers are malfunctioning"
             ]
         ),
-        QuizTurn(
+        Data(
             question: "If the seatbelt light is on, what does it mean?",
             correctAnswer: "B",
             imageName: "carLights9",
@@ -116,7 +116,7 @@ struct CarLightsView: View {
                 "D": "The driver's door is open"
             ]
         ),
-        QuizTurn(
+        Data(
             question: "What color is this light generally?",
             correctAnswer: "D",
             imageName: "carLights10",
@@ -129,11 +129,11 @@ struct CarLightsView: View {
         )
     ]
 
-    func checkAnswer(turn: QuizTurn) {
+    func checkAnswer(turn: Data) {
         if selectedAnswer != turn.correctAnswer {
             // Add the error if the answer is wrong
-            let error = QuizError(question: turn.question, correctAnswer: turn.correctAnswer, userAnswer: selectedAnswer ?? "N/A")
-            errorManager.addError(error)
+            let errorLights = QuizError(question: turn.question, correctAnswer: turn.correctAnswer, userAnswer: selectedAnswer ?? "N/A")
+            errorManager.addError(errorLights)
             errorMessage = "Wrong answer!"
         } else {
             errorMessage = "Correct answer!"
@@ -142,9 +142,9 @@ struct CarLightsView: View {
         
         scoreManager.incrementQuestion() // Increment the current question count
         
-        if scoreManager.currentQuestion == quizTurns.count {
+        if scoreManager.currentQuestion == dates.count {
             // Update totalAnswers if all questions are answered
-            scoreManager.score.totalAnswers = quizTurns.count
+            scoreManager.score.totalAnswers = dates.count
             scoreManager.saveAnswers() // Save the number of total answers
             if scoreManager.mTotalScore > scoreManager.score.totalScore {
                 scoreManager.saveScore() // Save the score only if the current score is higher
@@ -175,8 +175,8 @@ struct CarLightsView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.top, 10)
                 
-                if scoreManager.currentQuestion < quizTurns.count {
-                    let turn = quizTurns[scoreManager.currentQuestion]
+                if scoreManager.currentQuestion < dates.count {
+                    let turn = dates[scoreManager.currentQuestion]
                     
                     // Display image
                     Image(turn.imageName)
@@ -230,7 +230,7 @@ struct CarLightsView: View {
                     }
                     
                 } else {
-                    Text("You completed the quiz! Score: \(scoreManager.mTotalScore)/\(quizTurns.count)")
+                    Text("You completed the quiz! Score: \(scoreManager.mTotalScore)/\(dates.count)")
                         .font(.largeTitle)
                         .fontWeight(.bold)
                         .foregroundColor(.green)
