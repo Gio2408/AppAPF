@@ -26,12 +26,19 @@ struct HomeSceneView: View {
                         isVisible = true
                     }
                 }
-            Text("Select Level")
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .foregroundColor(.white)
-                .padding([.top], 5)
-                .padding([.leading, .trailing], 16)
+            Text("Choose Challenge")
+                .font(.title2)
+                .fontWeight(.heavy)
+                .foregroundColor(.black)
+                .padding([.top], 8)
+                .padding([.leading, .trailing], 17)
+            
+            Text("PALERMO")
+                .font(.caption)
+                .fontWeight(.heavy)
+                .foregroundColor(.black)
+                .padding([.top], 368)
+                .padding(.leading, 317)
         }
     }
 }

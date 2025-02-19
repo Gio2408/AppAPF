@@ -8,6 +8,7 @@ struct CarLightsView: View {
     @EnvironmentObject var scoreManager: ScoreManager
     @State private var selectedAnswer: String?
     @State private var errorMessage: String?
+    @State private var showExitConfirmation: Bool = false
     
     struct Data {
         let question: String
@@ -158,10 +159,8 @@ struct CarLightsView: View {
                 // Back button
                 HStack {
                     Button(action: {
-                        withAnimation(.easeInOut(duration: 0.5)) {
+                            showExitConfirmation = true
                             isInCarLightsView = false
-                            presentationMode.wrappedValue.dismiss()
-                        }
                     }) {
                         Image(systemName: "arrow.left.circle.fill")
                             .resizable()
@@ -246,7 +245,12 @@ struct CarLightsView: View {
             .padding(.horizontal, 20)
             .cornerRadius(20)
             .shadow(radius: 15)
-        }
+        }.transition(.opacity)
+            .alert("Are you sure you want to exit?", isPresented: $showExitConfirmation) {
+                    Button("Cancel", role: .cancel) { }
+                    Button("Exit", role: .destructive) { isInCarLightsView = false
+                        presentationMode.wrappedValue.dismiss()}
+                }
     }
 }
 

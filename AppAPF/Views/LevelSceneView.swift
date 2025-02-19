@@ -60,22 +60,13 @@ struct LevelSceneView: View {
                     }) {
                         Text("Continue")
                             .font(.title)
+                            .fontWeight(.heavy)
                             .foregroundColor(.white)
                             .padding(.horizontal, 40)
                             .padding(.vertical, 15)
-                            .background(
-                                LinearGradient(
-                                    gradient: Gradient(colors: [Color.green, Color.gray]),
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                )
-                            )
+                            .background(Color.green.opacity(0.7))
                             .clipShape(Capsule())
-                            .shadow(color: Color.black.opacity(0.3), radius: 10, x: 5, y: 5)
-                            .overlay(
-                                Capsule()
-                                    .stroke(Color.white, lineWidth: 2)
-                            )
+                            .shadow(color: Color.black.opacity(0.6), radius: 10)
                     }
                     .padding()
                 }

@@ -1,4 +1,5 @@
 import SwiftUI
+import AVFoundation
 
 struct QuizView: View {
     
@@ -8,6 +9,7 @@ struct QuizView: View {
     @Environment(\.presentationMode) var presentationMode // Enables dismissing the scene
     @State private var selectedAnswer: String?
     @State private var errorMessage: String?
+    @State private var showExitConfirmation = false // State to show the popup
     
     struct QuizTurn {
         let question: String
@@ -142,11 +144,8 @@ struct QuizView: View {
             
             // Back button in the top-left corner using NavigationLink
                 Button(action: { // this button is different
-                    withAnimation(.easeInOut(duration: 0.5)) {
-                        isInQuizView = false  // Return to ContentView with a fade animation
-                        print ("Back to HomeView")
-                        presentationMode.wrappedValue.dismiss()
-                    }
+                    showExitConfirmation = true
+                    
                 }) {
                     Image(systemName: "arrow.left.circle.fill")
                         .resizable()
@@ -157,7 +156,12 @@ struct QuizView: View {
                 .padding(.leading, 20)
                 Spacer()
         
-        }
+        }.transition(.opacity)
+        .alert("Are you sure you want to exit?", isPresented: $showExitConfirmation) {
+                Button("Cancel", role: .cancel) { }
+                Button("Exit", role: .destructive) { isInQuizView = false
+                    presentationMode.wrappedValue.dismiss()}
+            }
         
         
     }

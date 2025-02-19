@@ -28,12 +28,12 @@ struct ErrorsView: View {
                         }
                         .listStyle(PlainListStyle())
                         .frame(height: CGFloat(errorManager.errors.count) * 120) // Adatta l'altezza alla lista
-                        .scrollContentBackground(.hidden) // Nasconde lo sfondo della lista su iOS 16+
+                        .scrollContentBackground(.hidden)
                         
-                        // 🔹 Sezione Warning Lights
+                        // Sezione Warning Lights
                         sectionHeader(title: "Warning Lights", imageName: "carLights", count: errorManager.errors.count)
                         
-                        // 🔹 Lista Errori Warning Lights
+                        // Lista Errori Warning Lights
                         List {
                             ForEach(errorManager.errors) { error in
                                 errorRow(error: error)

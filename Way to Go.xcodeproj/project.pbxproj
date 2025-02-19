@@ -24,9 +24,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		A02104D52D565DBD0076E33A /* AppAPF.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppAPF.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		A02104E52D565DBE0076E33A /* AppAPFTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppAPFTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		A02104EF2D565DBE0076E33A /* AppAPFUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppAPFUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A02104D52D565DBD0076E33A /* Way to Go.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Way to Go.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A02104E52D565DBE0076E33A /* Way to GoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Way to GoTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A02104EF2D565DBE0076E33A /* Way to GoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Way to GoUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -85,9 +85,9 @@
 		A02104D62D565DBD0076E33A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A02104D52D565DBD0076E33A /* AppAPF.app */,
-				A02104E52D565DBE0076E33A /* AppAPFTests.xctest */,
-				A02104EF2D565DBE0076E33A /* AppAPFUITests.xctest */,
+				A02104D52D565DBD0076E33A /* Way to Go.app */,
+				A02104E52D565DBE0076E33A /* Way to GoTests.xctest */,
+				A02104EF2D565DBE0076E33A /* Way to GoUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -95,9 +95,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A02104D42D565DBD0076E33A /* AppAPF */ = {
+		A02104D42D565DBD0076E33A /* Way to Go */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A02104F92D565DBE0076E33A /* Build configuration list for PBXNativeTarget "AppAPF" */;
+			buildConfigurationList = A02104F92D565DBE0076E33A /* Build configuration list for PBXNativeTarget "Way to Go" */;
 			buildPhases = (
 				A02104D12D565DBD0076E33A /* Sources */,
 				A02104D22D565DBD0076E33A /* Frameworks */,
@@ -110,16 +110,16 @@
 			fileSystemSynchronizedGroups = (
 				A02104D72D565DBD0076E33A /* AppAPF */,
 			);
-			name = AppAPF;
+			name = "Way to Go";
 			packageProductDependencies = (
 			);
 			productName = AppAPF;
-			productReference = A02104D52D565DBD0076E33A /* AppAPF.app */;
+			productReference = A02104D52D565DBD0076E33A /* Way to Go.app */;
 			productType = "com.apple.product-type.application";
 		};
-		A02104E42D565DBE0076E33A /* AppAPFTests */ = {
+		A02104E42D565DBE0076E33A /* Way to GoTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A02104FC2D565DBE0076E33A /* Build configuration list for PBXNativeTarget "AppAPFTests" */;
+			buildConfigurationList = A02104FC2D565DBE0076E33A /* Build configuration list for PBXNativeTarget "Way to GoTests" */;
 			buildPhases = (
 				A02104E12D565DBE0076E33A /* Sources */,
 				A02104E22D565DBE0076E33A /* Frameworks */,
@@ -133,16 +133,16 @@
 			fileSystemSynchronizedGroups = (
 				A02104E82D565DBE0076E33A /* AppAPFTests */,
 			);
-			name = AppAPFTests;
+			name = "Way to GoTests";
 			packageProductDependencies = (
 			);
 			productName = AppAPFTests;
-			productReference = A02104E52D565DBE0076E33A /* AppAPFTests.xctest */;
+			productReference = A02104E52D565DBE0076E33A /* Way to GoTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		A02104EE2D565DBE0076E33A /* AppAPFUITests */ = {
+		A02104EE2D565DBE0076E33A /* Way to GoUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A02104FF2D565DBE0076E33A /* Build configuration list for PBXNativeTarget "AppAPFUITests" */;
+			buildConfigurationList = A02104FF2D565DBE0076E33A /* Build configuration list for PBXNativeTarget "Way to GoUITests" */;
 			buildPhases = (
 				A02104EB2D565DBE0076E33A /* Sources */,
 				A02104EC2D565DBE0076E33A /* Frameworks */,
@@ -156,11 +156,11 @@
 			fileSystemSynchronizedGroups = (
 				A02104F22D565DBE0076E33A /* AppAPFUITests */,
 			);
-			name = AppAPFUITests;
+			name = "Way to GoUITests";
 			packageProductDependencies = (
 			);
 			productName = AppAPFUITests;
-			productReference = A02104EF2D565DBE0076E33A /* AppAPFUITests.xctest */;
+			productReference = A02104EF2D565DBE0076E33A /* Way to GoUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -186,7 +186,7 @@
 					};
 				};
 			};
-			buildConfigurationList = A02104D02D565DBD0076E33A /* Build configuration list for PBXProject "AppAPF" */;
+			buildConfigurationList = A02104D02D565DBD0076E33A /* Build configuration list for PBXProject "Way to Go" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -200,9 +200,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A02104D42D565DBD0076E33A /* AppAPF */,
-				A02104E42D565DBE0076E33A /* AppAPFTests */,
-				A02104EE2D565DBE0076E33A /* AppAPFUITests */,
+				A02104D42D565DBD0076E33A /* Way to Go */,
+				A02104E42D565DBE0076E33A /* Way to GoTests */,
+				A02104EE2D565DBE0076E33A /* Way to GoUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -258,12 +258,12 @@
 /* Begin PBXTargetDependency section */
 		A02104E72D565DBE0076E33A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A02104D42D565DBD0076E33A /* AppAPF */;
+			target = A02104D42D565DBD0076E33A /* Way to Go */;
 			targetProxy = A02104E62D565DBE0076E33A /* PBXContainerItemProxy */;
 		};
 		A02104F12D565DBE0076E33A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A02104D42D565DBD0076E33A /* AppAPF */;
+			target = A02104D42D565DBD0076E33A /* Way to Go */;
 			targetProxy = A02104F02D565DBE0076E33A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -396,7 +396,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"AppAPF/Preview Content\"";
-				DEVELOPMENT_TEAM = 7M2MQ4788Y;
+				DEVELOPMENT_TEAM = B2J9H55TT3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -408,7 +408,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = APF3.myFirst;
+				PRODUCT_BUNDLE_IDENTIFIER = APF3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -424,7 +424,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"AppAPF/Preview Content\"";
-				DEVELOPMENT_TEAM = 7M2MQ4788Y;
+				DEVELOPMENT_TEAM = B2J9H55TT3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -436,7 +436,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = APF3.myFirst;
+				PRODUCT_BUNDLE_IDENTIFIER = APF3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -459,7 +459,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AppAPF.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/AppAPF";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Way to Go.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Way to Go";
 			};
 			name = Debug;
 		};
@@ -478,7 +478,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AppAPF.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/AppAPF";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Way to Go.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Way to Go";
 			};
 			name = Release;
 		};
@@ -519,7 +519,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A02104D02D565DBD0076E33A /* Build configuration list for PBXProject "AppAPF" */ = {
+		A02104D02D565DBD0076E33A /* Build configuration list for PBXProject "Way to Go" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A02104F72D565DBE0076E33A /* Debug */,
@@ -528,7 +528,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A02104F92D565DBE0076E33A /* Build configuration list for PBXNativeTarget "AppAPF" */ = {
+		A02104F92D565DBE0076E33A /* Build configuration list for PBXNativeTarget "Way to Go" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A02104FA2D565DBE0076E33A /* Debug */,
@@ -537,7 +537,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A02104FC2D565DBE0076E33A /* Build configuration list for PBXNativeTarget "AppAPFTests" */ = {
+		A02104FC2D565DBE0076E33A /* Build configuration list for PBXNativeTarget "Way to GoTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A02104FD2D565DBE0076E33A /* Debug */,
@@ -546,7 +546,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A02104FF2D565DBE0076E33A /* Build configuration list for PBXNativeTarget "AppAPFUITests" */ = {
+		A02104FF2D565DBE0076E33A /* Build configuration list for PBXNativeTarget "Way to GoUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A02105002D565DBE0076E33A /* Debug */,

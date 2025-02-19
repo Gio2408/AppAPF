@@ -7,7 +7,7 @@ struct ContentView: View {
     @State private var isLevelComplete: Bool = false
     @State private var isLevel2Complete: Bool = false
     @State private var levelScene = 0
-    @State private var isInQuizView = false
+    @State private var isInQuizView: Bool = false
     @State private var isShowingPreHomeScene = true
     @State private var isInErrorsView = false
     @State private var isInScoreView = false
@@ -55,8 +55,7 @@ struct ContentView: View {
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 45, height: 45)
-                                    .foregroundColor(.white)
-
+                                    .foregroundColor(.black)
                             }
                             Button(action: {
                                 path.append("score")
@@ -65,7 +64,7 @@ struct ContentView: View {
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 45, height: 45)
-                                    .foregroundColor(.white)
+                                    .foregroundColor(.black)
                             }
                         }
                         .padding()

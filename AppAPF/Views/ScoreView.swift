@@ -15,7 +15,7 @@ struct ScoreView: View {
                         Spacer()
                             .frame(height: 40)
 
-                        /// QUIZ ONE - TO UPDATE
+                        // QUIZ ONE - TO UPDATE
                         VStack(alignment: .leading, spacing: 5) {
                             Text("Intersections: \(scoreManager.score.quiz)")
                                 .font(.title2)
@@ -56,7 +56,7 @@ struct ScoreView: View {
                         .shadow(color: .black, radius: 3)
                         .padding(.horizontal)
 
-                        /// QUIZ TWO - TO UPDATE
+                        // QUIZ TWO - TO UPDATE
                         VStack(alignment: .leading, spacing: 5) {
                             Text("Quiz: \(scoreManager.score.quiz)")
                                 .font(.title2)
@@ -97,7 +97,7 @@ struct ScoreView: View {
                         .shadow(color: .black, radius: 3)
                         .padding()
 
-                        /// QUIZ THREE - TO UPDATE
+                        // QUIZ THREE - TO UPDATE
                         VStack(alignment: .leading, spacing: 5) {
                             Text("Dashboard lights: \(scoreManager.score.quiz)")
                                 .font(.title2)
