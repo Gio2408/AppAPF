@@ -15,9 +15,9 @@ struct ScoreView: View {
                         Spacer()
                             .frame(height: 40)
 
-                        // QUIZ ONE - TO UPDATE
+                        /// QUIZ ONE - TO UPDATE
                         VStack(alignment: .leading, spacing: 5) {
-                            Text("Intersections: \(scoreManager.score.quiz)")
+                            Text("Quiz: \(scoreManager.score.quiz)")
                                 .font(.title2)
                                 .fontWeight(.semibold)
                                 .foregroundColor(.black)
@@ -56,23 +56,23 @@ struct ScoreView: View {
                         .shadow(color: .black, radius: 3)
                         .padding(.horizontal)
 
-                        // QUIZ TWO - TO UPDATE
+                        /// QUIZ TWO - TO UPDATE
                         VStack(alignment: .leading, spacing: 5) {
-                            Text("Quiz: \(scoreManager.score.quiz)")
+                            Text("Warning lights: \(scoreManager.WarningScore.quiz)")
                                 .font(.title2)
                                 .fontWeight(.semibold)
                                 .foregroundColor(.black)
 
                             // HStack to align the score with the delete button
                             HStack {
-                                Text("Score: \(scoreManager.score.totalScore)/\(scoreManager.score.totalAnswers)")
+                                Text("Score: \(scoreManager.WarningScore.totalScore)/\(scoreManager.WarningScore.totalAnswers)")
                                     .font(.headline)
                                     .foregroundColor(.green)
                                 Spacer()
 
                                 Button(action: {
-                                    scoreManager.score.totalScore = 0
-                                    scoreManager.saveScore()
+                                    scoreManager.WarningScore.totalScore = 0
+                                    scoreManager.saveWarningScore()
                                 }) {
                                     Image(systemName: "trash")
                                         .padding(.horizontal)
@@ -82,10 +82,10 @@ struct ScoreView: View {
                             .padding(.bottom, 20)
 
                             // Progress bar QUIZ TWO
-                            ProgressView(value: Double(scoreManager.score.totalScore), total: Double(scoreManager.score.totalAnswers))
+                            ProgressView(value: Double(scoreManager.WarningScore.totalScore), total: Double(scoreManager.WarningScore.totalAnswers))
                                 .progressViewStyle(LinearProgressViewStyle())
                                 .padding(.bottom, 20)
-                            Text("\(scoreManager.score.totalScore*2)/\(scoreManager.score.totalAnswers*2) XP")
+                            Text("\(scoreManager.WarningScore.totalScore*2)/\(scoreManager.WarningScore.totalAnswers*2) XP")
                                 .foregroundColor(.blue)
                                 .font(.title3)
                                 .fontWeight(.black)
@@ -97,50 +97,13 @@ struct ScoreView: View {
                         .shadow(color: .black, radius: 3)
                         .padding()
 
-                        // QUIZ THREE - TO UPDATE
-                        VStack(alignment: .leading, spacing: 5) {
-                            Text("Dashboard lights: \(scoreManager.score.quiz)")
-                                .font(.title2)
-                                .fontWeight(.semibold)
-                                .foregroundColor(.black)
-
-                            // HStack to align the score with the delete button
-                            HStack {
-                                Text("Score: \(scoreManager.score.totalScore)/\(scoreManager.score.totalAnswers)")
-                                    .font(.headline)
-                                    .foregroundColor(.green)
-                                Spacer()
-
-                                Button(action: {
-                                    scoreManager.score.totalScore = 0
-                                    scoreManager.saveScore()
-                                }) {
-                                    Image(systemName: "trash")
-                                        .padding(.horizontal)
-                                        .foregroundColor(.black)
-                                }
-                            }
-                            .padding(.bottom, 20)
-
-                            // Progress bar QUIZ THREE
-                            ProgressView(value: Double(scoreManager.score.totalScore), total: Double(scoreManager.score.totalAnswers))
-                                .progressViewStyle(LinearProgressViewStyle())
-                                .padding(.bottom, 20)
-                            Text("\(scoreManager.score.totalScore*2)/\(scoreManager.score.totalAnswers*2) XP")
-                                .foregroundColor(.blue)
-                                .font(.title3)
-                                .fontWeight(.black)
-                                .frame(maxWidth: .infinity)
-                        }
-                        .padding()
-                        .background(Color.white.opacity(0.9))
-                        .cornerRadius(15)
-                        .shadow(color: .black, radius: 3)
-                        .padding(.horizontal)
+                        
                     }
                     .onAppear {
                         scoreManager.loadScore()
                         scoreManager.loadAnswers()
+                        scoreManager.loadWarningScore()
+                        scoreManager.loadWarningAnswers()
                     }
                 }
                 .navigationTitle("Score")
