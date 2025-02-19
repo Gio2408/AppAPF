@@ -22,6 +22,8 @@ struct ErrorsView: View {
                                     Text(error.question)
                                         .font(.system(size: 20, weight: .bold, design: .rounded))
                                         .foregroundColor(.black)
+                                        .lineLimit(nil) // Permette il testo su più righe
+                                        .fixedSize(horizontal: false, vertical: true) // Espande solo verticalmente
                                     
                                     Text("✅ Risposta corretta: \(error.correctAnswer)")
                                         .foregroundColor(.green)
@@ -32,13 +34,12 @@ struct ErrorsView: View {
                                         .font(.system(size: 18, design: .rounded))
                                 }
                             }
-                            .padding()
-                            .background(Color.white) // Rimuove lo sfondo del container
+                            .padding(24)
+                            .background(Color.white)
                             .shadow(color: .gray.opacity(0.3), radius: 4, x: 0, y: 2)
-                            .frame(width: 585, height: 100)
+                             // Espande orizzontalmente
+                            .cornerRadius(20)
                             .listRowBackground(Color.clear)
-                            
-                             
                         }
                         .onDelete { indices in
                             errorManager.errors.remove(atOffsets: indices)
