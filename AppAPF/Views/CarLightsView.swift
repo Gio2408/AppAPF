@@ -20,7 +20,7 @@ struct CarLightsView: View {
     let dates = [
         Data(
             question: "If you see a red warning light, what should you do first?",
-            correctAnswer: "C",
+            correctAnswer: "Check the car manual",
             imageName: "carLights1",
             answers: [
                 "A": "Ignore it and hope it goes out by itself",
@@ -31,7 +31,7 @@ struct CarLightsView: View {
         ),
         Data(
             question: "If the ABS (Anti-lock Braking System) warning light comes on, what should the driver do?",
-            correctAnswer: "C",
+            correctAnswer: "Check if the braking system is working correctly, but there might be a malfunction",
             imageName: "carLights2",
             answers: [
                 "A": "Continue driving without worry",
@@ -42,7 +42,7 @@ struct CarLightsView: View {
         ),
         Data(
             question: "Which color of warning lights generally indicates an urgent problem that requires immediate attention?",
-            correctAnswer: "D",
+            correctAnswer: "Red",
             imageName: "carLights3",
             answers: [
                 "A": "Green",
@@ -53,7 +53,7 @@ struct CarLightsView: View {
         ),
         Data(
             question: "If the engine temperature light turns red, what should you NOT do?",
-            correctAnswer: "A",
+            correctAnswer: "Continue driving as if nothing is wrong",
             imageName: "carLights4",
             answers: [
                 "A": "Continue driving as if nothing is wrong",
@@ -64,7 +64,7 @@ struct CarLightsView: View {
         ),
         Data(
             question: "If the low beam headlights light is on, what color is it?",
-            correctAnswer: "B",
+            correctAnswer: "Green",
             imageName: "carLights5",
             answers: [
                 "A": "Blue",
@@ -75,7 +75,7 @@ struct CarLightsView: View {
         ),
         Data(
             question: "Which of these warning lights indicates a malfunction with the brake lights?",
-            correctAnswer: "B",
+            correctAnswer: "A yellow light with a light bulb and an exclamation point",
             imageName: "carLights6",
             answers: [
                 "A": "A red light with an exclamation point inside a circle",
@@ -86,7 +86,7 @@ struct CarLightsView: View {
         ),
         Data(
             question: "If the handbrake is engaged and you start driving, which warning light stays on?",
-            correctAnswer: "A",
+            correctAnswer: "A red light with a 'P' inside a circle",
             imageName: "carLights7",
             answers: [
                 "A": "A red light with a 'P' inside a circle",
@@ -97,7 +97,7 @@ struct CarLightsView: View {
         ),
         Data(
             question: "If a red light with a circle and an exclamation point appears, what does it indicate?",
-            correctAnswer: "A",
+            correctAnswer: "A problem with the brakes or brake fluid",
             imageName: "carLights8",
             answers: [
                 "A": "A problem with the brakes or brake fluid",
@@ -108,7 +108,7 @@ struct CarLightsView: View {
         ),
         Data(
             question: "If the seatbelt light is on, what does it mean?",
-            correctAnswer: "B",
+            correctAnswer: "Someone in the car hasn’t fastened their seatbelt",
             imageName: "carLights9",
             answers: [
                 "A": "The car won’t start until the seatbelt is fastened",
@@ -119,7 +119,7 @@ struct CarLightsView: View {
         ),
         Data(
             question: "What color is this light generally?",
-            correctAnswer: "D",
+            correctAnswer: "Red",
             imageName: "carLights10",
             answers: [
                 "A": "Yellow",
