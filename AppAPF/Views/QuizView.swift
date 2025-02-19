@@ -62,7 +62,7 @@ struct QuizView: View {
                 .resizable()
                 .scaledToFit()
                 .edgesIgnoringSafeArea(.all)
-                .blur(radius: 7)
+                .blur(radius: 8)
             VStack {
                 if  scoreManager.currentQuestion < quizTurns.count {
                     let turn = quizTurns[scoreManager.currentQuestion]
@@ -89,12 +89,13 @@ struct QuizView: View {
                         }) {
                             Text("True")
                                 .font(.headline)
+                                .fontWeight(.black)
                                 .padding()
                                 .frame(width: 120, height: 50)
                                 .background(Color.green)
-                                .foregroundColor(.white)
-                                .cornerRadius(10)
-                                .shadow(radius: 5)
+                                .foregroundColor(.black)
+                                .cornerRadius(20)
+                                .opacity(0.8)
                         }
                         .padding()
 
@@ -105,12 +106,14 @@ struct QuizView: View {
                         }) {
                             Text("False")
                                 .font(.headline)
+                                .fontWeight(.black)
                                 .padding()
                                 .frame(width: 120, height: 50)
                                 .background(Color.red)
-                                .foregroundColor(.white)
-                                .cornerRadius(10)
-                                .shadow(radius: 5)
+                                .foregroundColor(.black)
+                                .cornerRadius(20)
+                                .opacity(0.8)
+                                
                         }
                         .padding()
                     }
@@ -118,23 +121,23 @@ struct QuizView: View {
                     // Show error message (correct or incorrect answer)
                     if let errorMessage = errorMessage {
                         Text(errorMessage)
-                            .font(.subheadline)
-                            .foregroundColor(errorMessage == "Correct answer!" ? .green : .red)
-                            .padding(.top, 20)
+                            .font(.title)
+                            .fontWeight(.bold)
+                            .foregroundColor(Color.black)
+                            
                     }
                 } else {
                     Text("You completed the quiz! Score: \(scoreManager.mTotalScore)/\(quizTurns.count)")
                         .font(.title)
                         .fontWeight(.bold)
-                        .foregroundColor(.green)
+                        .foregroundColor(.black)
                         .padding(.top, 30)
                     
                 }
             }//VStack end
             .padding()
-            .background(Color.white)
+            
             .cornerRadius(10)
-            .shadow(radius: 10)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
             
             // Back button in the top-left corner using NavigationLink
