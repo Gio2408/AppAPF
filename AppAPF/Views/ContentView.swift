@@ -1,6 +1,5 @@
 import SwiftUI
 import AVFoundation
-
 struct ContentView: View {
     @StateObject var scoreManager = ScoreManager()
     @StateObject var errorManager = ErrorManager()
