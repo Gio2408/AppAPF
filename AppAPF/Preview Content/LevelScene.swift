@@ -225,7 +225,7 @@ class LevelScene: SKScene {
             let label = SKLabelNode(text: "LEVEL COMPLETE!")
             label.fontName = "AvenirNext-Bold"
             label.fontSize = 80
-            label.fontColor = .yellow
+            label.fontColor = .white
             label.position = CGPoint(x: 0, y: 0)
             label.zPosition = 150
             label.alpha = 0 // Initially invisible

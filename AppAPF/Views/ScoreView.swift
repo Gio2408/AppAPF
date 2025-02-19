@@ -7,10 +7,8 @@ struct ScoreView: View {
     var body: some View {
         NavigationView {
             ZStack { // Background ZStack
-                Image("backv")
-                    .resizable()
-                    .scaledToFill()
-                    .ignoresSafeArea()
+                Color(red: 0.65, green: 0.80, blue: 0.45)
+                    .edgesIgnoringSafeArea(.all)
 
                 ScrollView {
                     VStack {

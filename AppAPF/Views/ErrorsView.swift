@@ -1,13 +1,14 @@
 import SwiftUI
 
 struct ErrorsView: View {
-    @EnvironmentObject var errorManager: ErrorManager
+    @EnvironmentObject var errorManager: ErrorManager // Access to the errorManager object
     
     var body: some View {
         NavigationView {
+            
             ZStack {
                 // Sfondo verde chiaro per un look più giocoso
-                Color(red: 0.4, green: 0.6, blue: 0.2)
+                Color(red: 0.65, green: 0.80, blue: 0.45)
                     .edgesIgnoringSafeArea(.all)
                 
                 VStack {
@@ -46,11 +47,21 @@ struct ErrorsView: View {
                     .listStyle(PlainListStyle()) // Per mantenere l'aspetto senza bordi
                     .padding(.horizontal, 16)
                 }
-            }
-            .navigationTitle("Errori")
-            .onAppear {
-                errorManager.loadErrors()
+                .navigationTitle("Mistakes")
+                .onAppear {
+                    errorManager.loadErrors()
+                }
+                
             }
         }
     }
+    
 }
+    
+    struct ErrorsView_Previews: PreviewProvider {
+        static var previews: some View {
+            ErrorsView()
+                .environmentObject(ErrorManager()) // Provide an environment object for the preview
+        }
+    }
+
