@@ -32,7 +32,7 @@ struct QuizView: View {
     func checkAnswer(turn: QuizTurn) { // turn: a variable needed for the function, so it doesn’t give an error (turn = quizTurns)
         if scoreManager.currentQuestion == 0 { // If: reinitialize all variables for safety
             scoreManager.resetScore()
-            errorManager.errors.removeAll() // Removes all previous errors, so only the recently made ones will be shown
+            errorManager.deleteErrors() // Removes all previous errors, so only the recently made ones will be shown
         }
         if selectedAnswer != turn.correctAnswer {
             // Add the error if the answer is wrong
