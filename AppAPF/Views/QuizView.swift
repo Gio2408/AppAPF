@@ -62,7 +62,6 @@ struct QuizView: View {
         ZStack (alignment: .topLeading) {
             Image("road2")
                 .resizable()
-                .scaledToFit()
                 .edgesIgnoringSafeArea(.all)
                 .blur(radius: 8)
             VStack {
@@ -79,9 +78,7 @@ struct QuizView: View {
                         .fontWeight(.medium)
                         .multilineTextAlignment(.center)
                         .foregroundColor(.black)
-                        .padding(.top, 20)
-                        .padding(.horizontal, 30)
-
+                        .padding(.top, 40)
 
                     // Answer buttons
                     HStack {
@@ -123,7 +120,8 @@ struct QuizView: View {
                     // Show error message (correct or incorrect answer)
                     if let errorMessage = errorMessage {
                         Text(errorMessage)
-                            .font(.title)
+                            .padding(.top, 10)
+                            .font(.subheadline)
                             .fontWeight(.bold)
                             .foregroundColor(Color.black)
                             
@@ -134,7 +132,13 @@ struct QuizView: View {
                         .fontWeight(.bold)
                         .foregroundColor(.black)
                         .padding(.top, 30)
-                    
+                        .onAppear {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 2) { // 2-second delay
+                                isInQuizView = false
+                                presentationMode.wrappedValue.dismiss()
+                                
+                            }
+                        }
                 }
             }//VStack end
             .padding()
