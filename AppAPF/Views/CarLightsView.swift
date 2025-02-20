@@ -20,7 +20,7 @@ struct CarLightsView: View {
     let dates = [
         Data(
             question: "What to do when you see a red light?",
-            correctAnswer: "C",
+            correctAnswer: "Stop in a safe place and check the problem",
             imageName: "carLights1",
             answers: [
                 "A": "Ignore it and hope it goes out by itself",
@@ -31,7 +31,7 @@ struct CarLightsView: View {
         ),
         Data(
             question: "(Anti-lock Braking System) ABS light on: What to do?",
-            correctAnswer: "C",
+            correctAnswer: "Check if the braking system is working correctly",
             imageName: "carLights2",
             answers: [
                 "A": "Continue driving without worry",
@@ -42,7 +42,7 @@ struct CarLightsView: View {
         ),
         Data(
             question: "What color warning light signals a critical issue?",
-            correctAnswer: "D",
+            correctAnswer: "Red",
             imageName: "carLights3",
             answers: [
                 "A": "Green",
@@ -53,7 +53,7 @@ struct CarLightsView: View {
         ),
         Data(
             question: "Engine temp light red: What NOT to do?",
-            correctAnswer: "A",
+            correctAnswer: "Continue driving as if nothing is wrong",
             imageName: "carLights4",
             answers: [
                 "A": "Continue driving as if nothing is wrong",
@@ -64,7 +64,7 @@ struct CarLightsView: View {
         ),
         Data(
             question: "Color of low beam headlight indicator?",
-            correctAnswer: "B",
+            correctAnswer: "Green",
             imageName: "carLights5",
             answers: [
                 "A": "Blue",
@@ -75,7 +75,7 @@ struct CarLightsView: View {
         ),
         Data(
             question: "Which warning light indicates brake light problem?",
-            correctAnswer: "B",
+            correctAnswer: "Yellow bulb - exclamation light",
             imageName: "carLights6",
             answers: [
                 "A": "Red circle light with (!)",
@@ -86,7 +86,7 @@ struct CarLightsView: View {
         ),
         Data(
             question: "Handbrake engaged: Which light stays on?",
-            correctAnswer: "A",
+            correctAnswer: "A red light with a 'P' inside a circle",
             imageName: "carLights7",
             answers: [
                 "A": "A red light with a 'P' inside a circle",
@@ -97,7 +97,7 @@ struct CarLightsView: View {
         ),
         Data(
             question: "Red circle with exclamation point: Meaning?",
-            correctAnswer: "A",
+            correctAnswer: "A problem with the brakes or brake fluid",
             imageName: "carLights8",
             answers: [
                 "A": "A problem with the brakes or brake fluid",
@@ -108,7 +108,7 @@ struct CarLightsView: View {
         ),
         Data(
             question: "If the seatbelt light is on, what does it mean?",
-            correctAnswer: "B",
+            correctAnswer: "Someone in the car hasn’t fastened their seatbelt",
             imageName: "carLights9",
             answers: [
                 "A": "The car won’t start until the seatbelt is fastened",
@@ -119,7 +119,7 @@ struct CarLightsView: View {
         ),
         Data(
             question: "What color is this light generally?",
-            correctAnswer: "D",
+            correctAnswer: "Red",
             imageName: "carLights10",
             answers: [
                 "A": "Yellow",
@@ -187,7 +187,7 @@ struct CarLightsView: View {
                         .padding()
 
                     VStack(spacing: 2) {
-                        ForEach(turn.answers.keys.sorted(), id: \.self) { answer in
+                        ForEach(turn.answers.values.sorted(), id: \.self) { answer in
                             Button(action: {
                                 withAnimation(.smooth(duration: 0.1)) { // Customize animation
                                     selectedAnswer = answer
@@ -195,10 +195,9 @@ struct CarLightsView: View {
                                 }
                             }) {
                                 HStack {
-                                    Text("\(answer):")
+                                    Text("\(answer)")
                                         .font(.headline)
                                         .fontWeight(.medium)
-                                        .frame(width: 40)
                                         .foregroundColor(.black)
 
                                     Text(turn.answers[answer] ?? "")
