@@ -140,37 +140,7 @@ class Level2Scene: SKScene {
             }
         }
     }
-    
-    // Reset the position of the cars
-   /* func startAnimation(completion: @escaping () -> Void) {
-        
-        bumblebee?.position = CGPoint(x: 81, y: -1500) //y:-440 Initial position of Bumblebee
-        car1?.position = CGPoint(x: 800, y: 80) //x:320 Initial position of Car1
-        car2?.position = CGPoint(x: -80, y: 1500)//y:391
-        car3?.position = CGPoint(x: -800, y: -69)//x:265
-        
-        guard let bumblebee = bumblebee else { return }
-        let moveAction = SKAction.moveBy(x: 0, y: 1060, duration: 2.0)
-        moveAction.timingMode = .easeInEaseOut
-        bumblebee.run(moveAction, completion: completion)
-        
-        guard let car1 = car1 else { return }
-        let moveActionCar1 = SKAction.moveBy(x: -480, y: 0, duration: 2.0)
-        moveActionCar1.timingMode = .easeInEaseOut
-        car1.run(moveActionCar1)
-        
-        guard let car2 = car2 else { return }
-        let moveActionCar2 = SKAction.moveBy(x: 0, y: -1109, duration: 2.0)
-        moveActionCar2.timingMode = .easeInEaseOut
-        car2.run(moveActionCar2)
-        
-        guard let car3 = car3 else { return }
-        let moveActionCar3 = SKAction.moveBy(x: 535, y: 0, duration: 2.0)
-        moveActionCar3.timingMode = .easeInEaseOut
-        car3.run(moveActionCar3)
-    }*/
-    
-    // Move Car1 horizontally
+
     func moveCar1(completion: @escaping () -> Void) {
         
         guard let car1 = car1 else { return }

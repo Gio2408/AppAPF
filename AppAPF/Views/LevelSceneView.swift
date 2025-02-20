@@ -16,7 +16,6 @@ struct LevelSceneView: View {
         scene.size = CGSize(width: 1170, height: 2532)
         scene.scaleMode = .aspectFill
         
-        // Assicurati di passare il callback per notificare il completamento del livello
         if let levelScene = scene as? LevelScene {
             levelScene.levelCompleteCallback = {
                 self.isLevelComplete = true
@@ -52,10 +51,9 @@ struct LevelSceneView: View {
                 }
                 Spacer()
 
-                // Mostra il pulsante "Continue" se il livello è completato
                 if isLevelComplete {
                     Button(action: {
-                        levelScene = 2  // Passa al livello successivo
+                        levelScene = 2
                         isLevelComplete = false
                     }) {
                         Text("Continue")

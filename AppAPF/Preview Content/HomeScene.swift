@@ -34,6 +34,12 @@ class HomeScene: SKScene {
             scoreLabel.fontSize = 50
             scoreLabel.fontColor = .black
         }
+        
+        if let scoreLabel = road.childNode(withName: "palermo") as? SKLabelNode {
+            scoreLabel.fontName = "HelveticaNeue-Bold"
+            scoreLabel.fontSize = 36
+            scoreLabel.fontColor = .black
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

@@ -15,7 +15,7 @@ struct ScoreView: View {
                         Spacer()
                             .frame(height: 40)
 
-                        /// QUIZ ONE - TO UPDATE
+                        // QUIZ ONE - TO UPDATE
                         VStack(alignment: .leading, spacing: 5) {
                             Text("Quiz: \(scoreManager.score.quiz)")
                                 .font(.title2)
@@ -55,7 +55,7 @@ struct ScoreView: View {
                         .cornerRadius(15)
                         .padding(.horizontal)
 
-                        /// QUIZ TWO - TO UPDATE
+                        // QUIZ TWO - TO UPDATE
                         VStack(alignment: .leading, spacing: 5) {
                             Text("Warning lights: \(scoreManager.WarningScore.quiz)")
                                 .font(.title2)

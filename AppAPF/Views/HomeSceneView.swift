@@ -32,13 +32,6 @@ struct HomeSceneView: View {
                 .foregroundColor(.black)
                 .padding([.top], 8)
                 .padding([.leading, .trailing], 17)
-            
-            /*Text("PALERMO")
-                .font(.caption)
-                .fontWeight(.heavy)
-                .foregroundColor(.black)
-                .padding([.top], 368)
-                .padding(.leading, 317)*/
         }
     }
 }
