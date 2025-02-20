@@ -33,12 +33,12 @@ struct HomeSceneView: View {
                 .padding([.top], 8)
                 .padding([.leading, .trailing], 17)
             
-            Text("PALERMO")
+            /*Text("PALERMO")
                 .font(.caption)
                 .fontWeight(.heavy)
                 .foregroundColor(.black)
                 .padding([.top], 368)
-                .padding(.leading, 317)
+                .padding(.leading, 317)*/
         }
     }
 }

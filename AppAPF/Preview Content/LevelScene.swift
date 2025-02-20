@@ -147,7 +147,7 @@ class LevelScene: SKScene {
         bumblebee?.position = CGPoint(x: 81, y: -1500) //y:-440 Initial position of Bumblebee
         car1?.position = CGPoint(x: 800, y: 80) //x:320 Initial position of Car1
         car2?.position = CGPoint(x: -80, y: 1500)//y:391
-        car3?.position = CGPoint(x: -800, y: -69)//x:265
+        car3?.position = CGPoint(x: -870, y: -69)//x:265
         
         guard let bumblebee = bumblebee else { return }
         let moveAction = SKAction.moveBy(x: 0, y: 1150, duration: 2.0)
