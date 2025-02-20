@@ -6,6 +6,9 @@ class HomeScene: SKScene {
     var carButton = SKSpriteNode()
     var quizButton = SKSpriteNode()
     var carLights = SKSpriteNode()
+    var label1 = SKLabelNode()
+    var label2 = SKLabelNode()
+    var label3 = SKLabelNode()
     
     var onCarButtonTapped: (() -> Void)?
     var onExitTapped: (() -> Void)?
@@ -15,6 +18,22 @@ class HomeScene: SKScene {
         carButton = road.childNode(withName: "carButton") as! SKSpriteNode
         quizButton = road.childNode(withName: "quizButton") as! SKSpriteNode
         carLights = road.childNode(withName: "carLights") as! SKSpriteNode
+    
+        if let scoreLabel = quizButton.childNode(withName: "Label1") as? SKLabelNode{
+            scoreLabel.fontName = "HelveticaNeue-Bold"
+            scoreLabel.fontSize = 50
+            scoreLabel.fontColor = .black
+        }
+        if let scoreLabel = carLights.childNode(withName: "MCQs") as? SKLabelNode {
+            scoreLabel.fontName = "HelveticaNeue-Bold"
+            scoreLabel.fontSize = 50
+            scoreLabel.fontColor = .black
+        }
+        if let scoreLabel = carButton.childNode(withName: "Game") as? SKLabelNode {
+            scoreLabel.fontName = "HelveticaNeue-Bold"
+            scoreLabel.fontSize = 50
+            scoreLabel.fontColor = .black
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
