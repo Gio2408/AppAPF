@@ -199,6 +199,7 @@ struct CarLightsView: View {
                                         .font(.headline)
                                         .fontWeight(.medium)
                                         .foregroundColor(.black)
+                                        .frame(maxWidth: .infinity, alignment: .center)
 
                                     Text(turn.answers[answer] ?? "")
                                         .font(.body)
