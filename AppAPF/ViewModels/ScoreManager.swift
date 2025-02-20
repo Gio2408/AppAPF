@@ -50,6 +50,8 @@ class ScoreManager: ObservableObject {
     func saveScore(){
         score.totalScore = mTotalScore
         UserDefaults.standard.set(score.totalScore, forKey: scoreKey)
+        objectWillChange.send()
+
     }
     
     func loadScore(){
@@ -61,6 +63,8 @@ class ScoreManager: ObservableObject {
     func saveWarningScore(){
         WarningScore.totalScore = mWarningTotalScore
         UserDefaults.standard.set(WarningScore.totalScore, forKey: WarningScoreKey)
+        objectWillChange.send()
+
     }
     
     func loadWarningScore(){

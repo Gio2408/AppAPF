@@ -95,7 +95,7 @@ struct ErrorsView: View {
     // Error Row Component
     private func errorRow(error: QuizError) -> some View {
         HStack(spacing: 20) {
-            VStack(alignment: .leading, spacing: 5) {
+            VStack(alignment: .center) {
                 Text(error.question)
                     .font(.system(size: 20, weight: .bold, design: .rounded))
                     .foregroundColor(.black)
@@ -113,15 +113,16 @@ struct ErrorsView: View {
                     .font(.system(size: 18, design: .rounded))
             }
         }
+        .frame(width: 280)
         .padding()
         .background(Color.white)
         .cornerRadius(20)
-        .padding(.horizontal, 16)
+        .padding(.horizontal, 20)
     }
 
     private func errorRow2(error: QuizError) -> some View {
         HStack(spacing: 20) {
-            VStack(alignment: .leading, spacing: 5) {
+            VStack(alignment: .center) {
                 Text(error.question)
                     .font(.system(size: 20, weight: .bold, design: .rounded))
                     .foregroundColor(.black)
@@ -140,10 +141,11 @@ struct ErrorsView: View {
                     .font(.system(size: 18, design: .rounded))
             }
         }
+        .frame(width: 280)
         .padding()
         .background(Color.white)
         .cornerRadius(20)
-        .padding(.horizontal, 16)
+        .padding(.horizontal, 20)
     }
 }
 

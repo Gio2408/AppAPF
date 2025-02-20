@@ -97,16 +97,16 @@ struct ScoreView: View {
 
                         
                     }
-                    .onAppear {
-                        scoreManager.loadScore()
-                        scoreManager.loadAnswers()
-                        scoreManager.loadWarningScore()
-                        scoreManager.loadWarningAnswers()
-                    }
+                    
                 }
                 .navigationTitle("Score")
             }
             .background(Color.clear)
+        }.onAppear {
+            scoreManager.loadScore()
+            scoreManager.loadAnswers()
+            scoreManager.loadWarningScore()
+            scoreManager.loadWarningAnswers()
         }
     }
 }
